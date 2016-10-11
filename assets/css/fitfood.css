@@ -1,0 +1,279 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #303030;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+a, a:link, a:hover, a:visited, a:active {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+#Wrapper {
+    width: 94%;
+    margin: auto;
+}
+
+#Title {
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 4%;
+}
+
+#Slogan {
+    color: #a0a0a0;
+}
+
+#MenuContain nav {
+    margin-top: 10%;
+    background: #303030;
+    border: none;
+}
+
+#MenuContain #bs-example-navbar-collapse-1, #MenuContain .container-fluid {
+    padding: 0;
+}
+
+#MenuContain ul {
+    width: 100%;
+}
+
+#MenuContain li.active, #MenuContain li {
+    width: 33%;
+}
+
+@media (max-width: 768px) {
+    #MenuContain li.active, #MenuContain li {
+        width: 100%;
+    }
+}
+
+#MenuContain li.active a, #MenuContain a {
+    background: #303030;
+    color: #ffffff;
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: right;
+    font-size: 14px;
+}
+
+#MenuContain li.active a {
+    font-weight: bold;
+}
+
+#MenuContain li.active a:hover, #MenuContain a:hover {
+    color: #a0a0a0;
+}
+
+#WrapperBody {
+    margin-top: 2%;
+}
+
+.ContentLink, .ContentLink:link, .ContentLink:hover, .ContentLink:visited, .ContentLink:active {
+    text-decoration: none;
+    border-bottom: 2px solid #ffffff;
+}
+
+.ContentLink:hover {
+    color: #a0a0a0;
+}
+
+#Logo, #LogoTitle, #LogoThankyou, #LogoTitleThankyou {
+    display: inline-block;
+}
+
+#Logo {
+    width: 35%;
+}
+
+#Logo img {
+    width: 100%;
+    height: 100%;
+}
+
+#LogoTitle {
+    font-size: 40px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+.ThumbnailHome {
+    position: relative;;
+}
+
+.ThumbnailLayer {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: absolute;
+    top: 0;
+    background-color: #000000;
+    opacity: 0.6;
+}
+
+.ThumbnailCaption {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #ffffff;
+    display: none;
+    position: absolute;
+    top: 0;
+    background-color: transparent;
+    opacity: 1;
+}
+
+.ThumbnailHome:hover .ThumbnailLayer, .ThumbnailHome:hover .ThumbnailCaption {
+    display: block;
+}
+
+.Caption {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.CaptionTitle {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.CaptionTitle:hover {
+    border-bottom: 2px solid #ffffff;
+}
+
+.CaptionDescription {
+    font-size: 14px;
+    color: #a0a0a0 !important;
+}
+
+.CaptionDescription:hover {
+    border-bottom: 2px solid #a0a0a0;
+}
+
+.ThumbnailCaptionLink {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
+
+#WrapperFooter {
+    margin-top: 6%;
+    margin-bottom: 6%;
+}
+
+#FooterCopyright a {
+    color: #a0a0a0;
+    font-size: 13px;
+}
+
+#FooterCopyright a:hover {
+    border-bottom: 2px solid #a0a0a0;
+}
+
+#OrderFormTitle {
+    font-weight: bold;
+    font-size: 36px;
+}
+
+#OrderFormBody {
+    color: #666666;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.InputRequired {
+    background: url(../img/checkout_require.gif) no-repeat 10px 13px;
+    text-indent: 16px;
+}
+
+#OrderFormMealPackQuantity {
+    border: 1px solid #eee;
+}
+
+.OrderFormMealPackQuantityInput {
+    padding: 0;
+    outline: none;
+}
+
+#GoogleMap {
+    height: 500px;
+    color: #666666;
+}
+
+#FooterOpen li {
+    display: inline-block;
+    margin-left: 6%;
+}
+
+#FooterOpen a {
+    background: #202020;
+    border: 1px solid #202020;
+    width: 32px;
+    height: 32px;
+}
+
+#FooterOpen i {
+    font-size: 17px;
+    color: #a0a0a0;
+}
+
+#FooterOpen a:hover {
+    background: #000000;
+}
+
+#FooterOpen a:hover i {
+    color: #ffffff;
+}
+
+#MenuImage {
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    -ms-transition: all 0.2s ease-in-out;
+}
+
+#MenuImage:hover {
+    cursor: pointer;
+    cursor: hand;
+    -webkit-transform: scale(1.03);
+    -moz-transform: scale(1.03);
+    -o-transform: scale(1.03);
+    transform: scale(1.03);
+}
+
+#LogoThankyou {
+    width: 20%;
+}
+
+#LogoThankyou img {
+    width: 100%;
+    height: 100%;
+}
+
+#LogoTitleThankyou {
+    font-size: 30px;
+    font-weight: bold;
+    vertical-align: middle;
+}
+
+#OrderLang li {
+    display: inline-block;
+}
+
+#LastWeekMenu {
+    font-size: 20px;
+    font-weight: bold;
+    outline: none;
+}

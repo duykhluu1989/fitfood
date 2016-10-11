@@ -1,0 +1,16 @@
+{
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework": "5.2.*",
+        "maatwebsite/excel": "~2.1.0",
+        "barryvdh/laravel-ide-helper": "^2.1",
+        "doctrine/dbal": "^2.5",
+        "devfactory/minify": "1.0.*",
+        "eventviva/php-image-resize": "1.5.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
