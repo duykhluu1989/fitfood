@@ -6,6 +6,7 @@
         "barryvdh/laravel-ide-helper": "^2.1",
         "doctrine/dbal": "^2.5",
         "devfactory/minify": "1.0.*",
+        "predis/predis": "~1.0",
         "eventviva/php-image-resize": "1.5.*"
     },
     "autoload": {
