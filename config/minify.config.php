@@ -40,8 +40,8 @@ return array(
     |
     */
 
-    'css_build_path' => '/../assets/css/',
-    'css_url_path' => '/../assets/css/',
+    'css_build_path' => '/../assets/mini/',
+    'css_url_path' => '/assets/mini/',
 
     /*
     |--------------------------------------------------------------------------
@@ -55,8 +55,8 @@ return array(
     |
     */
 
-    'js_build_path' => '/../assets/js/',
-    'js_url_path' => '/../assets/js/',
+    'js_build_path' => '/../assets/mini/',
+    'js_url_path' => '/assets/mini/',
 
 	/*
     |--------------------------------------------------------------------------

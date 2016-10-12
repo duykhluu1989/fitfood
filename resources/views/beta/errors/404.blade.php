@@ -12,7 +12,7 @@
     <meta property="og:description" content="Weekly meals for a healthy lifestyle" />
     <meta property="og:url" content="http://fitfood.vn" />
     <meta property="og:site_name" content="Fitfood" />
-    <meta property="og:image" content="{{ asset('assets/img/logo.png') }}" />
+    <meta property="og:image" content="{{ asset('/../assets/img/logo.png') }}" />
     <meta property="og:locale" content="vi_VN" />
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <title>Fitfood - Weekly meals for a healthy lifestyle</title>
