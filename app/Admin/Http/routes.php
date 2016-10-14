@@ -11,268 +11,272 @@
 |
 */
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['prefix' => 'admin'], function() {
 
-    Route::get('logout', 'UserController@logout');
+    Route::group(['middleware' => 'auth'], function() {
 
-    Route::get('/', 'UserController@home');
+        Route::get('logout', 'UserController@logout');
 
-    Route::get('user/changePassword/{id}', 'UserController@changeUserPassword');
+        Route::get('/', 'UserController@home');
 
-    Route::post('user/changePassword/{id}', 'UserController@changeUserPassword');
+        Route::get('user/changePassword/{id}', 'UserController@changeUserPassword');
 
-});
+        Route::post('user/changePassword/{id}', 'UserController@changeUserPassword');
 
-Route::group(['middleware' => ['auth', 'permission']], function() {
+    });
 
-    Route::get('phpinfo', 'UserController@phpinfo');
+    Route::group(['middleware' => ['auth', 'permission']], function() {
 
-    Route::get('user', 'UserController@listUser');
+        Route::get('phpinfo', 'UserController@phpinfo');
 
-    Route::get('user/create', 'UserController@createUser');
+        Route::get('user', 'UserController@listUser');
 
-    Route::post('user/create', 'UserController@createUser');
+        Route::get('user/create', 'UserController@createUser');
 
-    Route::get('user/edit/{id}', 'UserController@editUser');
+        Route::post('user/create', 'UserController@createUser');
 
-    Route::post('user/edit/{id}', 'UserController@editUser');
+        Route::get('user/edit/{id}', 'UserController@editUser');
 
-    Route::get('role', 'UserController@listRole');
+        Route::post('user/edit/{id}', 'UserController@editUser');
 
-    Route::get('role/create', 'UserController@createRole');
+        Route::get('role', 'UserController@listRole');
 
-    Route::post('role/create', 'UserController@createRole');
+        Route::get('role/create', 'UserController@createRole');
 
-    Route::get('role/edit/{id}', 'UserController@editRole');
+        Route::post('role/create', 'UserController@createRole');
 
-    Route::post('role/edit/{id}', 'UserController@editRole');
+        Route::get('role/edit/{id}', 'UserController@editRole');
 
-    Route::get('order/quickSearch', 'OrderController@quickSearchOrder');
+        Route::post('role/edit/{id}', 'UserController@editRole');
 
-    Route::get('order', 'OrderController@listOrder');
+        Route::get('order/quickSearch', 'OrderController@quickSearchOrder');
 
-    Route::get('order/export', 'OrderController@exportOrder');
+        Route::get('order', 'OrderController@listOrder');
 
-    Route::get('order/detail/{id}', 'OrderController@detailOrder');
+        Route::get('order/export', 'OrderController@exportOrder');
 
-    Route::post('order/transaction/pay/{id}', 'OrderController@confirmPaymentOrder');
+        Route::get('order/detail/{id}', 'OrderController@detailOrder');
 
-    Route::post('order/cancel/{id}', 'OrderController@cancelOrder');
+        Route::post('order/transaction/pay/{id}', 'OrderController@confirmPaymentOrder');
 
-    Route::post('order/cancelItem/{id}', 'OrderController@cancelOrderItem');
+        Route::post('order/cancel/{id}', 'OrderController@cancelOrder');
 
-    Route::post('order/itemMeal/change', 'OrderController@changeOrderItemMeal');
+        Route::post('order/cancelItem/{id}', 'OrderController@cancelOrderItem');
 
-    Route::post('order/itemMeal/delete', 'OrderController@deleteOrderItemMeal');
+        Route::post('order/itemMeal/change', 'OrderController@changeOrderItemMeal');
 
-    Route::post('order/note/edit', 'OrderController@editOrderNote');
+        Route::post('order/itemMeal/delete', 'OrderController@deleteOrderItemMeal');
 
-    Route::get('order/move/currentWeek/{id}', 'OrderController@moveOrderToCurrentWeek');
+        Route::post('order/note/edit', 'OrderController@editOrderNote');
 
-    Route::post('order/remove/warning/{id}', 'OrderController@removeOrderWarning');
+        Route::get('order/move/currentWeek/{id}', 'OrderController@moveOrderToCurrentWeek');
 
-    Route::post('order/set/warning/{id}', 'OrderController@setOrderWarning');
+        Route::post('order/remove/warning/{id}', 'OrderController@removeOrderWarning');
 
-    Route::post('order/itemMeal/edit/shippingTime', 'OrderController@editOrderItemShippingTime');
+        Route::post('order/set/warning/{id}', 'OrderController@setOrderWarning');
 
-    Route::get('order/address/edit/{id}', 'OrderController@editOrderAddress');
+        Route::post('order/itemMeal/edit/shippingTime', 'OrderController@editOrderItemShippingTime');
 
-    Route::post('order/address/edit/{id}', 'OrderController@editOrderAddress');
+        Route::get('order/address/edit/{id}', 'OrderController@editOrderAddress');
 
-    Route::post('order/itemMeal/add/customMeal/{id}', 'OrderController@addCustomMealForOrderItem');
+        Route::post('order/address/edit/{id}', 'OrderController@editOrderAddress');
 
-    Route::post('order/get/autoComplete/recipe', 'OrderController@getAutoCompleteRecipeData');
+        Route::post('order/itemMeal/add/customMeal/{id}', 'OrderController@addCustomMealForOrderItem');
 
-    Route::post('order/itemMeal/change/{id}', 'OrderController@changeOrderItem');
+        Route::post('order/get/autoComplete/recipe', 'OrderController@getAutoCompleteRecipeData');
 
-    Route::get('order/reorder/{id}', 'OrderController@reOrder');
+        Route::post('order/itemMeal/change/{id}', 'OrderController@changeOrderItem');
 
-    Route::post('order/reorder/{id}', 'OrderController@reOrder');
+        Route::get('order/reorder/{id}', 'OrderController@reOrder');
 
-    Route::post('checkDiscountCode', 'OrderController@checkDiscountCode');
+        Route::post('order/reorder/{id}', 'OrderController@reOrder');
 
-    Route::get('cooking', 'OrderController@listCooking');
+        Route::post('checkDiscountCode', 'OrderController@checkDiscountCode');
 
-    Route::get('cooking/export', 'OrderController@exportCooking');
+        Route::get('cooking', 'OrderController@listCooking');
 
-    Route::get('assignShipping', 'OrderController@assignShipping');
+        Route::get('cooking/export', 'OrderController@exportCooking');
 
-    Route::post('assignShipping/order', 'OrderController@assignOrderShipper');
+        Route::get('assignShipping', 'OrderController@assignShipping');
 
-    Route::post('assignShipping/priority', 'OrderController@assignOrderShippingPriority');
+        Route::post('assignShipping/order', 'OrderController@assignOrderShipper');
 
-    Route::get('shipping', 'OrderController@listShipping');
+        Route::post('assignShipping/priority', 'OrderController@assignOrderShippingPriority');
 
-    Route::post('shipping/finish/{date}', 'OrderController@finishShipping');
+        Route::get('shipping', 'OrderController@listShipping');
 
-    Route::get('shipping/detail/{id}/{date}', 'OrderController@detailShipping');
+        Route::post('shipping/finish/{date}', 'OrderController@finishShipping');
 
-    Route::get('shipping/detail/export/{id}/{date}', 'OrderController@exportDetailShipping');
+        Route::get('shipping/detail/{id}/{date}', 'OrderController@detailShipping');
 
-    Route::get('mealPack', 'MenuController@listMealPack');
+        Route::get('shipping/detail/export/{id}/{date}', 'OrderController@exportDetailShipping');
 
-    Route::get('mealPack/create', 'MenuController@createMealPack');
+        Route::get('mealPack', 'MenuController@listMealPack');
 
-    Route::post('mealPack/create', 'MenuController@createMealPack');
+        Route::get('mealPack/create', 'MenuController@createMealPack');
 
-    Route::get('mealPack/edit/{id}', 'MenuController@editMealPack');
+        Route::post('mealPack/create', 'MenuController@createMealPack');
 
-    Route::post('mealPack/edit/{id}', 'MenuController@editMealPack');
+        Route::get('mealPack/edit/{id}', 'MenuController@editMealPack');
 
-    Route::get('customer', 'CustomerController@listCustomer');
+        Route::post('mealPack/edit/{id}', 'MenuController@editMealPack');
 
-    Route::get('customer/export', 'CustomerController@exportCustomer');
+        Route::get('customer', 'CustomerController@listCustomer');
 
-    Route::get('customer/detail/{id}', 'CustomerController@detailCustomer');
+        Route::get('customer/export', 'CustomerController@exportCustomer');
 
-    Route::get('customer/edit/{id}', 'CustomerController@editCustomer');
+        Route::get('customer/detail/{id}', 'CustomerController@detailCustomer');
 
-    Route::post('customer/edit/{id}', 'CustomerController@editCustomer');
+        Route::get('customer/edit/{id}', 'CustomerController@editCustomer');
 
-    Route::get('shipper', 'ShippingController@listShipper');
+        Route::post('customer/edit/{id}', 'CustomerController@editCustomer');
 
-    Route::get('shipper/create', 'ShippingController@createShipper');
+        Route::get('shipper', 'ShippingController@listShipper');
 
-    Route::post('shipper/create', 'ShippingController@createShipper');
+        Route::get('shipper/create', 'ShippingController@createShipper');
 
-    Route::get('shipper/edit/{id}', 'ShippingController@editShipper');
+        Route::post('shipper/create', 'ShippingController@createShipper');
 
-    Route::post('shipper/edit/{id}', 'ShippingController@editShipper');
+        Route::get('shipper/edit/{id}', 'ShippingController@editShipper');
 
-    Route::get('area', 'ShippingController@listArea');
+        Route::post('shipper/edit/{id}', 'ShippingController@editShipper');
 
-    Route::get('area/create', 'ShippingController@createArea');
+        Route::get('area', 'ShippingController@listArea');
 
-    Route::post('area/create', 'ShippingController@createArea');
+        Route::get('area/create', 'ShippingController@createArea');
 
-    Route::get('area/edit/{id}', 'ShippingController@editArea');
+        Route::post('area/create', 'ShippingController@createArea');
 
-    Route::post('area/edit/{id}', 'ShippingController@editArea');
+        Route::get('area/edit/{id}', 'ShippingController@editArea');
 
-    Route::get('discount', 'DiscountController@listDiscount');
+        Route::post('area/edit/{id}', 'ShippingController@editArea');
 
-    Route::get('discount/create', 'DiscountController@createDiscount');
+        Route::get('discount', 'DiscountController@listDiscount');
 
-    Route::post('discount/create', 'DiscountController@createDiscount');
+        Route::get('discount/create', 'DiscountController@createDiscount');
 
-    Route::get('discount/edit/{id}', 'DiscountController@editDiscount');
+        Route::post('discount/create', 'DiscountController@createDiscount');
 
-    Route::post('discount/edit/{id}', 'DiscountController@editDiscount');
+        Route::get('discount/edit/{id}', 'DiscountController@editDiscount');
 
-    Route::post('discount/generate', 'DiscountController@generateCode');
+        Route::post('discount/edit/{id}', 'DiscountController@editDiscount');
 
-    Route::post('discount/get/autoComplete/customer', 'DiscountController@getAutoCompleteCustomerData');
+        Route::post('discount/generate', 'DiscountController@generateCode');
 
-    Route::get('discount/create/many', 'DiscountController@createManyDiscount');
+        Route::post('discount/get/autoComplete/customer', 'DiscountController@getAutoCompleteCustomerData');
 
-    Route::post('discount/create/many', 'DiscountController@createManyDiscount');
+        Route::get('discount/create/many', 'DiscountController@createManyDiscount');
 
-    Route::get('discount/delete/{id}', 'DiscountController@deleteDiscount');
+        Route::post('discount/create/many', 'DiscountController@createManyDiscount');
 
-    Route::get('category', 'MenuController@listCategory');
+        Route::get('discount/delete/{id}', 'DiscountController@deleteDiscount');
 
-    Route::get('category/create', 'MenuController@createCategory');
+        Route::get('category', 'MenuController@listCategory');
 
-    Route::post('category/create', 'MenuController@createCategory');
+        Route::get('category/create', 'MenuController@createCategory');
 
-    Route::get('category/edit/{id}', 'MenuController@editCategory');
+        Route::post('category/create', 'MenuController@createCategory');
 
-    Route::post('category/edit/{id}', 'MenuController@editCategory');
+        Route::get('category/edit/{id}', 'MenuController@editCategory');
 
-    Route::get('unit', 'MenuController@listUnit');
+        Route::post('category/edit/{id}', 'MenuController@editCategory');
 
-    Route::get('unit/create', 'MenuController@createUnit');
+        Route::get('unit', 'MenuController@listUnit');
 
-    Route::post('unit/create', 'MenuController@createUnit');
+        Route::get('unit/create', 'MenuController@createUnit');
 
-    Route::get('unit/edit/{id}', 'MenuController@editUnit');
+        Route::post('unit/create', 'MenuController@createUnit');
 
-    Route::post('unit/edit/{id}', 'MenuController@editUnit');
+        Route::get('unit/edit/{id}', 'MenuController@editUnit');
 
-    Route::get('resource', 'MenuController@listResource');
+        Route::post('unit/edit/{id}', 'MenuController@editUnit');
 
-    Route::get('resource/create', 'MenuController@createResource');
+        Route::get('resource', 'MenuController@listResource');
 
-    Route::post('resource/create', 'MenuController@createResource');
+        Route::get('resource/create', 'MenuController@createResource');
 
-    Route::get('resource/edit/{id}', 'MenuController@editResource');
+        Route::post('resource/create', 'MenuController@createResource');
 
-    Route::post('resource/edit/{id}', 'MenuController@editResource');
+        Route::get('resource/edit/{id}', 'MenuController@editResource');
 
-    Route::get('recipe', 'MenuController@listRecipe');
+        Route::post('resource/edit/{id}', 'MenuController@editResource');
 
-    Route::get('recipe/create', 'MenuController@createRecipe');
+        Route::get('recipe', 'MenuController@listRecipe');
 
-    Route::post('recipe/create', 'MenuController@createRecipe');
+        Route::get('recipe/create', 'MenuController@createRecipe');
 
-    Route::get('recipe/edit/{id}', 'MenuController@editRecipe');
+        Route::post('recipe/create', 'MenuController@createRecipe');
 
-    Route::post('recipe/edit/{id}', 'MenuController@editRecipe');
+        Route::get('recipe/edit/{id}', 'MenuController@editRecipe');
 
-    Route::post('recipe/get/autoComplete/resource', 'MenuController@getAutoCompleteResourceData');
+        Route::post('recipe/edit/{id}', 'MenuController@editRecipe');
 
-    Route::get('recipe/export', 'MenuController@exportRecipe');
+        Route::post('recipe/get/autoComplete/resource', 'MenuController@getAutoCompleteResourceData');
 
-    Route::get('menu', 'MenuController@listMenu');
+        Route::get('recipe/export', 'MenuController@exportRecipe');
 
-    Route::get('menu/create', 'MenuController@createMenu');
+        Route::get('menu', 'MenuController@listMenu');
 
-    Route::post('menu/create', 'MenuController@createMenu');
+        Route::get('menu/create', 'MenuController@createMenu');
 
-    Route::get('menu/edit/{id}', 'MenuController@editMenu');
+        Route::post('menu/create', 'MenuController@createMenu');
 
-    Route::post('menu/edit/{id}', 'MenuController@editMenu');
+        Route::get('menu/edit/{id}', 'MenuController@editMenu');
 
-    Route::post('menu/get/autoComplete/recipe', 'MenuController@getAutoCompleteRecipeData');
+        Route::post('menu/edit/{id}', 'MenuController@editMenu');
 
-    Route::get('blogCategory', 'BlogController@listCategory');
+        Route::post('menu/get/autoComplete/recipe', 'MenuController@getAutoCompleteRecipeData');
 
-    Route::get('blogCategory/create', 'BlogController@createCategory');
+        Route::get('blogCategory', 'BlogController@listCategory');
 
-    Route::post('blogCategory/create', 'BlogController@createCategory');
+        Route::get('blogCategory/create', 'BlogController@createCategory');
 
-    Route::get('blogCategory/edit/{id}', 'BlogController@editCategory');
+        Route::post('blogCategory/create', 'BlogController@createCategory');
 
-    Route::post('blogCategory/edit/{id}', 'BlogController@editCategory');
+        Route::get('blogCategory/edit/{id}', 'BlogController@editCategory');
 
-    Route::get('article', 'BlogController@listArticle');
+        Route::post('blogCategory/edit/{id}', 'BlogController@editCategory');
 
-    Route::get('article/create', 'BlogController@createArticle');
+        Route::get('article', 'BlogController@listArticle');
 
-    Route::post('article/create', 'BlogController@createArticle');
+        Route::get('article/create', 'BlogController@createArticle');
 
-    Route::get('article/edit/{id}', 'BlogController@editArticle');
+        Route::post('article/create', 'BlogController@createArticle');
 
-    Route::post('article/edit/{id}', 'BlogController@editArticle');
+        Route::get('article/edit/{id}', 'BlogController@editArticle');
 
-    Route::post('article/get/autoComplete/tag', 'BlogController@getAutoCompleteTagData');
+        Route::post('article/edit/{id}', 'BlogController@editArticle');
 
-    Route::get('tag', 'BlogController@listTag');
+        Route::post('article/get/autoComplete/tag', 'BlogController@getAutoCompleteTagData');
 
-    Route::get('tag/create', 'BlogController@createTag');
+        Route::get('tag', 'BlogController@listTag');
 
-    Route::post('tag/create', 'BlogController@createTag');
+        Route::get('tag/create', 'BlogController@createTag');
 
-    Route::get('tag/edit/{id}', 'BlogController@editTag');
+        Route::post('tag/create', 'BlogController@createTag');
 
-    Route::post('tag/edit/{id}', 'BlogController@editTag');
+        Route::get('tag/edit/{id}', 'BlogController@editTag');
 
-    Route::get('widget', 'BlogController@listWidget');
+        Route::post('tag/edit/{id}', 'BlogController@editTag');
 
-    Route::get('widget/create', 'BlogController@createWidget');
+        Route::get('widget', 'BlogController@listWidget');
 
-    Route::post('widget/create', 'BlogController@createWidget');
+        Route::get('widget/create', 'BlogController@createWidget');
 
-    Route::get('widget/edit/{id}', 'BlogController@editWidget');
+        Route::post('widget/create', 'BlogController@createWidget');
 
-    Route::post('widget/edit/{id}', 'BlogController@editWidget');
+        Route::get('widget/edit/{id}', 'BlogController@editWidget');
 
-});
+        Route::post('widget/edit/{id}', 'BlogController@editWidget');
 
-Route::group(['middleware' => 'guest'], function() {
+    });
 
-    Route::get('login', 'UserController@login');
+    Route::group(['middleware' => 'guest'], function() {
 
-    Route::post('login', ['middleware' => 'throttle:5,30', 'uses' => 'UserController@login']);
+        Route::get('login', 'UserController@login');
+
+        Route::post('login', ['middleware' => 'throttle:5,30', 'uses' => 'UserController@login']);
+
+    });
 
 });

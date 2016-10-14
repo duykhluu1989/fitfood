@@ -21,10 +21,10 @@ class Authenticate
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
-                if(strpos($request->url(), '/logout') === false)
-                    return redirect()->guest('login?redirectUrl=' . urlencode($request->fullUrl()));
+                if(strpos($request->url(), 'admin/logout') === false)
+                    return redirect()->guest('admin/login?redirectUrl=' . urlencode($request->fullUrl()));
                 else
-                    return redirect()->guest('login');
+                    return redirect()->guest('admin/login');
             }
         }
 
