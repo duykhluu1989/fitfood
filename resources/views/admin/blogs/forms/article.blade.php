@@ -222,11 +222,11 @@
 
     <?php
     echo Minify::javascript([
-        '/../assets/js/tinymce.min.js',
         '/../assets/js/jquery.caret.min.js',
         '/../assets/js/jquery.tag-editor.min.js',
     ])->withFullUrl();
     ?>
+    <script type="text/javascript" src="{{ asset('assets/js/tinymce/tinymce.min.js') }}"></script>
     <script type="text/javascript">
 
         tinymce.init({
