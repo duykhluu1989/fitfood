@@ -23,7 +23,7 @@
     if($countHomeSliders == 0)
     {
         $homeSliders[0] = [
-            'image_src' => asset('/../assets/images/slider/slider.jpg'),
+            'image_src' => asset('assets/images/slider/slider.jpg'),
             'caption' => 'Weekly meals for a healthy lifestyle',
         ];
 
@@ -79,7 +79,7 @@
                     <a href="https://www.facebook.com/fitfoodvietnam" class="link">@lang('home_page.checkFaqs')</a>
                 </div>
                 <div class="right">
-                    <img src="{{ asset('/../assets/images/about_us.jpg') }}" alt="Fitfood" border="0" />
+                    <img src="{{ asset('assets/images/about_us.jpg') }}" alt="Fitfood" border="0" />
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -94,15 +94,15 @@
         <div class="container">
             <div class="row">
                 <div class="block-3 text-center">
-                    <img src="{{ asset('/../assets/images/icon-breakfast.png') }}" alt="Fitfood" border="0" />
+                    <img src="{{ asset('assets/images/icon-breakfast.png') }}" alt="Fitfood" border="0" />
                     <p>Breakfast</p>
                 </div>
                 <div class="block-3 text-center">
-                    <img src="{{ asset('/../assets/images/icon-lunch.png') }}" alt="Fitfood" border="0" />
+                    <img src="{{ asset('assets/images/icon-lunch.png') }}" alt="Fitfood" border="0" />
                     <p>Lunch</p>
                 </div>
                 <div class="block-3 text-center">
-                    <img src="{{ asset('/../assets/images/icon-dinner.png') }}" alt="Fitfood" border="0" />
+                    <img src="{{ asset('assets/images/icon-dinner.png') }}" alt="Fitfood" border="0" />
                     <p>Dinner</p>
                 </div>
                 <div class="clearfix"></div>
@@ -120,19 +120,19 @@
                             <div class="carousel-caption">monday menu</div>
                             -->
                             <div class="item-menu">
-                                <img class="img-responsive" src="{{ asset('/../assets/images/menu_breakfast.png') }}" alt="Fitfood" border="0" />
+                                <img class="img-responsive" src="{{ asset('assets/images/menu_breakfast.png') }}" alt="Fitfood" border="0" />
                                 <div class="overlay">
                                     <h2>Breakfast</h2>
                                 </div>
                             </div>
                             <div class="item-menu">
-                                <img class="img-responsive" src="{{ asset('/../assets/images/menu_lunch.png') }}" alt="Fitfood" border="0" />
+                                <img class="img-responsive" src="{{ asset('assets/images/menu_lunch.png') }}" alt="Fitfood" border="0" />
                                 <div class="overlay">
                                     <h2>Lunch</h2>
                                 </div>
                             </div>
                             <div class="item-menu">
-                                <img class="img-responsive" src="{{ asset('/../assets/images/menu_dinner.png') }}" alt="Fitfood" border="0" />
+                                <img class="img-responsive" src="{{ asset('assets/images/menu_dinner.png') }}" alt="Fitfood" border="0" />
                                 <div class="overlay">
                                     <h2>Dinner</h2>
                                 </div>
@@ -169,7 +169,7 @@
         </div>
     </div>
 
-    <div class="home-blog" style="background-image:url('{{ asset('/../assets/images/bg-blog.jpg') }}')">
+    <div class="home-blog" style="background-image:url('{{ asset('assets/images/bg-blog.jpg') }}')">
         <div class="container">
             <div class="row">
                 <div class="lasted-new">
@@ -316,9 +316,9 @@
                         <div class="think">
                             <p>Cảm ơn Fitfood luôn là người đồng hành và chăm lo cho khách hàng khó tính như chế mấy tháng qua. Có Fitfood Tú khỏi phải lo nghĩ hôm nay ăn gì...Cứ tập thôi, còn ăn cứ để Fitfood lo hề!</p>
                         </div>
-                        <img src="{{ asset('/../assets/images/avatar/avatar1.jpg') }}" alt="Fitfood" border="0" class="avatar FitfoodPopupImage" data-mfp-src="{{ asset('/../assets/images/minhtu.png') }}" />
+                        <img src="{{ asset('assets/images/avatar/avatar1.jpg') }}" alt="Fitfood" border="0" class="avatar FitfoodPopupImage" data-mfp-src="{{ asset('assets/images/minhtu.png') }}" />
                         <div class="name">
-                            <h5><a class="FitfoodPopupImage" href="{{ asset('/../assets/images/minhtu.png') }}">Nguyễn Minh Tú</a></h5>
+                            <h5><a class="FitfoodPopupImage" href="{{ asset('assets/images/minhtu.png') }}">Nguyễn Minh Tú</a></h5>
                             <span class="post-meta">@lang('home_page.model')</span>
                         </div>
                     </div>
@@ -326,9 +326,9 @@
                         <div class="think">
                             <p>Để có một thân hình đẹp thì mọi thứ đều phải cố gắng.</p>
                         </div>
-                        <img src="{{ asset('/../assets/images/avatar/avatar2.jpg') }}" alt="Fitfood" border="0" class="avatar FitfoodPopupImage" data-mfp-src="{{ asset('/../assets/images/iriscao.png') }}" />
+                        <img src="{{ asset('assets/images/avatar/avatar2.jpg') }}" alt="Fitfood" border="0" class="avatar FitfoodPopupImage" data-mfp-src="{{ asset('assets/images/iriscao.png') }}" />
                         <div class="name">
-                            <h5><a class="FitfoodPopupImage" href="{{ asset('/../assets/images/iriscao.png') }}">Iris Cao</a></h5>
+                            <h5><a class="FitfoodPopupImage" href="{{ asset('assets/images/iriscao.png') }}">Iris Cao</a></h5>
                             <span class="post-meta">@lang('home_page.writer')</span>
                         </div>
                     </div>
@@ -336,9 +336,9 @@
                         <div class="think">
                             <p>Bắt đầu với Fitfood.vn, thực đơn giảm cân giao tận nơi hằng ngày với đồ ăn ngon xuất thần mà vẫn tốt cho dáng gầy xương mai.</p>
                         </div>
-                        <img src="{{ asset('/../assets/images/avatar/avatar3.jpg') }}" alt="Fitfood" border="0" class="avatar FitfoodPopupImage" data-mfp-src="{{ asset('/../assets/images/hamlettruong.png') }}" />
+                        <img src="{{ asset('assets/images/avatar/avatar3.jpg') }}" alt="Fitfood" border="0" class="avatar FitfoodPopupImage" data-mfp-src="{{ asset('assets/images/hamlettruong.png') }}" />
                         <div class="name">
-                            <h5><a class="FitfoodPopupImage" href="{{ asset('/../assets/images/hamlettruong.png') }}">Hamlet Trương</a></h5>
+                            <h5><a class="FitfoodPopupImage" href="{{ asset('assets/images/hamlettruong.png') }}">Hamlet Trương</a></h5>
                             <span class="post-meta">@lang('home_page.writer')</span>
                         </div>
                     </div>

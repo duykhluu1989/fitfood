@@ -9,7 +9,7 @@
         if(!empty($currentCategory->image_src))
             $blogBanner = $currentCategory->image_src;
         else
-            $blogBanner = asset('/../assets/images/page-header/blog.jpg');
+            $blogBanner = asset('assets/images/page-header/blog.jpg');
         if(App::getLocale() == 'en' && !empty($currentCategory->name_en))
             $blogTitle = $currentCategory->name_en;
         else
@@ -17,7 +17,7 @@
         ?>
         @include('beta.layouts.partials.header', ['banner' => $blogBanner, 'title' => $blogTitle])
     @else
-        @include('beta.layouts.partials.header', ['banner' => asset('/../assets/images/page-header/blog.jpg'), 'title' => 'Blog'])
+        @include('beta.layouts.partials.header', ['banner' => asset('assets/images/page-header/blog.jpg'), 'title' => 'Blog'])
     @endif
 
     <div class="container">

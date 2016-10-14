@@ -12,7 +12,7 @@
     <meta property="og:description" content="Weekly meals for a healthy lifestyle" />
     <meta property="og:url" content="http://fitfood.vn" />
     <meta property="og:site_name" content="Fitfood" />
-    <meta property="og:image" content="{{ asset('/../assets/img/logo.png') }}" />
+    <meta property="og:image" content="{{ asset('assets/img/logo.png') }}" />
     <meta property="og:locale" content="vi_VN" />
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <title>Fitfood - Weekly meals for a healthy lifestyle</title>
@@ -47,7 +47,7 @@
             <p>(+84) 9 3278 8120 <br />	(+84) 9 7124 8950</p>
         </div>
         <div class="block logo text-center">
-            <img src="{{ asset('/../assets/images/logo-ver.png') }}" alt="Fitfood" border="0" />
+            <img src="{{ asset('assets/images/logo-ver.png') }}" alt="Fitfood" border="0" />
         </div>
         <div class="block social text-center">
             <a href="https://www.facebook.com/fitfoodvietnam"><i class="fa fa-facebook" aria-hidden="true"></i></a>

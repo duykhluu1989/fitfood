@@ -17,7 +17,7 @@
     if(!empty($article->image_src))
         $blogBanner = $article->image_src;
     else
-        $blogBanner = asset('/../assets/images/page-header/blog.jpg');
+        $blogBanner = asset('assets/images/page-header/blog.jpg');
     if(App::getLocale() == 'en' && !empty($currentCategory->name_en))
         $categoryTitle = $currentCategory->name_en;
     else

@@ -4,7 +4,7 @@
 
     @include('beta.layouts.partials.menu')
 
-    @include('beta.layouts.partials.header', ['banner' => asset('/../assets/images/page-header/menu.jpg'), 'title' => 'Menu'])
+    @include('beta.layouts.partials.header', ['banner' => asset('assets/images/page-header/menu.jpg'), 'title' => 'Menu'])
 
     <div class="container">
         <div class="row">

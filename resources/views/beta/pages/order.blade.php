@@ -4,7 +4,7 @@
 
     @include('beta.layouts.partials.menu')
 
-    @include('beta.layouts.partials.header', ['banner' => asset('/../assets/images/page-header/order.jpg'), 'title' => 'Order'])
+    @include('beta.layouts.partials.header', ['banner' => asset('assets/images/page-header/order.jpg'), 'title' => 'Order'])
 
     <div class="container">
         <div class="row">
@@ -19,17 +19,17 @@
                         </div>
                         <div class="row how-to-order">
                             <div class="col text-center">
-                                <img src="{{ asset('/../assets/images/fill_order_form.png') }}" alt="Fitfood" border="0" />
+                                <img src="{{ asset('assets/images/fill_order_form.png') }}" alt="Fitfood" border="0" />
                                 <h5>@lang('order_form.fillForm')</h5>
                                 <p>@lang('order_form.fillFormText')</p>
                             </div>
                             <div class="col text-center">
-                                <img src="{{ asset('/../assets/images/confirm.png') }}" alt="Fitfood" border="0" />
+                                <img src="{{ asset('assets/images/confirm.png') }}" alt="Fitfood" border="0" />
                                 <h5>@lang('order_form.confirm')</h5>
                                 <p>@lang('order_form.confirmText')</p>
                             </div>
                             <div class="col text-center">
-                                <img src="{{ asset('/../assets/images/enjoy.png') }}" alt="Fitfood" border="0" />
+                                <img src="{{ asset('assets/images/enjoy.png') }}" alt="Fitfood" border="0" />
                                 <h5>@lang('order_form.enjoy')</h5>
                                 <p>@lang('order_form.enjoyText')</p>
                             </div>
