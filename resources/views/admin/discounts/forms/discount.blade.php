@@ -4,10 +4,10 @@
             <button type="submit" class="btn btn-primary">{{ empty($discount->id) ? 'Create' : 'Update' }}</button>
 
             @if(!empty($discount->id) && $discount->times_used == 0)
-                <a href="{{ url('discount/delete', ['id' => $discount->id]) }}" class="btn btn-primary btn-outline" onclick="return showConfirmMessage();">Delete</a>
+                <a href="{{ url('admin/discount/delete', ['id' => $discount->id]) }}" class="btn btn-primary btn-outline" onclick="return showConfirmMessage();">Delete</a>
             @endif
 
-            <a href="{{ url('discount') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+            <a href="{{ url('admin/discount') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>
 </div>
@@ -230,7 +230,7 @@
                         showLoadingScreen();
 
                         $.ajax({
-                            url: '{{ url('discount/generate') }}',
+                            url: '{{ url('admin/discount/generate') }}',
                             type: 'post',
                             data: '_token={{ csrf_token() }}&number=' + inputNumberCharacterVal,
                             success: function(result) {
@@ -288,7 +288,7 @@
                 source: function(request, response) {
 
                     $.ajax({
-                        url: '{{ url('discount/get/autoComplete/customer') }}',
+                        url: '{{ url('admin/discount/get/autoComplete/customer') }}',
                         type: 'post',
                         data: '_token={{ csrf_token() }}&term=' + request.term,
                         success: function(result) {

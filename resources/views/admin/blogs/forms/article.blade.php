@@ -2,7 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($article->id) ? 'Create' : 'Update' }}</button>
-            <a href="{{ url('article') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+            <a href="{{ url('admin/article') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>
 </div>
@@ -213,7 +213,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($article->id) ? 'Create' : 'Update' }}</button>
-            <a href="{{ url('article') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+            <a href="{{ url('admin/article') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>
 </div>
@@ -275,7 +275,7 @@
                 autocomplete: {
                     source: function(request, response) {
                         $.ajax({
-                            url: '{{ url('article/get/autoComplete/tag') }}',
+                            url: '{{ url('admin/article/get/autoComplete/tag') }}',
                             type: 'post',
                             data: '_token={{ csrf_token() }}&term=' + request.term,
                             success: function(result) {

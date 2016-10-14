@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('resource/create') }}">
+    <form method="post" action="{{ url('admin/resource/create') }}">
 
         @include('admin.menus.forms.resource', ['resource' => $resource])
 

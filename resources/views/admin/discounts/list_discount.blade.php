@@ -14,10 +14,10 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $discounts])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('discount/create') }}" data-toggle="tooltip" title="New Discount" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/discount/create') }}" data-toggle="tooltip" title="New Discount" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
-                        <a href="{{ url('discount/create/many') }}" data-toggle="tooltip" title="New Many Discount" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/discount/create/many') }}" data-toggle="tooltip" title="New Many Discount" class="btn btn-primary btn-outline">
                             <i class="fa fa-random fa-fw"></i>
                         </a>
                     </div>
@@ -43,7 +43,7 @@
                     @foreach($discounts as $discount)
                         <tr>
                             <td>
-                                <a href="{{ url('discount/edit', ['id' => $discount->id]) }}" class="btn btn-primary btn-outline">{{ $discount->id }}</a>
+                                <a href="{{ url('admin/discount/edit', ['id' => $discount->id]) }}" class="btn btn-primary btn-outline">{{ $discount->id }}</a>
                             </td>
                             <td>{{ $discount->code }}</td>
                             <td>{{ $discount->type }}</td>

@@ -2,7 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($unit->id) ? 'Create' : 'Update' }}</button>
-            <a href="{{ url('unit') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+            <a href="{{ url('admin/unit') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>
 </div>

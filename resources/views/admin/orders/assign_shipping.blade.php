@@ -33,12 +33,12 @@
                         <th>Name</th>
                         <th>Address</th>
                         <th>
-                            <a href="{{ url('assignShipping?' . $queryString . (isset($sort['district']) ? ($sort['district'] == 'ASC' ? '&sort[district]=DESC' : '') : '&sort[district]=ASC')) }}">
+                            <a href="{{ url('admin/assignShipping?' . $queryString . (isset($sort['district']) ? ($sort['district'] == 'ASC' ? '&sort[district]=DESC' : '') : '&sort[district]=ASC')) }}">
                                 District
                             </a>
                         </th>
                         <th>
-                            <a href="{{ url('assignShipping?' . $queryString . (isset($sort['latlong']) ? ($sort['latlong'] == 'ASC' ? '&sort[latlong]=DESC' : '') : '&sort[latlong]=ASC')) }}">
+                            <a href="{{ url('admin/assignShipping?' . $queryString . (isset($sort['latlong']) ? ($sort['latlong'] == 'ASC' ? '&sort[latlong]=DESC' : '') : '&sort[latlong]=ASC')) }}">
                                 LatLong
                             </a>
                         </th>
@@ -47,7 +47,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <form id="FilterForm" action="{{ url('assignShipping') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/assignShipping') }}" method="get">
                         <tr>
                             <td>
                                 <select class="form-control" id="AssignShipperDropDownAll">
@@ -103,7 +103,7 @@
                             </td>
                             <td class="ShipperNameColumn" id="ShipperNameColumn_{{ $order->id }}">{{ (!empty($order->shipper) ? $order->shipper->name : '') }}</td>
                             <td>
-                                <a href="{{ url('order/detail', ['id' => $order->id]) }}" class="btn btn-primary btn-outline">{{ $order->id }}</a>
+                                <a href="{{ url('admin/order/detail', ['id' => $order->id]) }}" class="btn btn-primary btn-outline">{{ $order->id }}</a>
                             </td>
                             <td>{{ $order->order_id }}</td>
                             <td>{{ $order->customer->phone }}</td>
@@ -148,7 +148,7 @@
 
             $('#DatePicker').change(function() {
 
-                window.location.href = '{{ url('assignShipping') }}?date=' + $(this).val();
+                window.location.href = '{{ url('admin/assignShipping') }}?date=' + $(this).val();
 
             });
 
@@ -170,7 +170,7 @@
 
                     $.ajax({
 
-                        url: '{{ url('assignShipping/order') }}',
+                        url: '{{ url('admin/assignShipping/order') }}',
                         type: 'post',
                         data: '_token={{ csrf_token() }}&order=all&shipper=' + elemVal + '<?php echo $queryString; ?>',
                         success: function(result) {
@@ -216,7 +216,7 @@
 
                     $.ajax({
 
-                        url: '{{ url('assignShipping/order') }}',
+                        url: '{{ url('admin/assignShipping/order') }}',
                         type: 'post',
                         data: '_token={{ csrf_token() }}&order=' + orderIdArr[1] + '&shipper=' + elemVal + '&date=<?php echo $date; ?>',
                         success: function(result) {
@@ -248,7 +248,7 @@
 
                     $.ajax({
 
-                        url: '{{ url('assignShipping/priority') }}',
+                        url: '{{ url('admin/assignShipping/priority') }}',
                         type: 'post',
                         data: '_token={{ csrf_token() }}&order=all&priority=' + elemVal + '<?php echo $queryString; ?>',
                         success: function(result) {
@@ -293,7 +293,7 @@
 
                     $.ajax({
 
-                        url: '{{ url('assignShipping/priority') }}',
+                        url: '{{ url('admin/assignShipping/priority') }}',
                         type: 'post',
                         data: '_token={{ csrf_token() }}&order=' + orderIdArr[1] + '&priority=' + elemVal + '&date=<?php echo $date; ?>',
                         success: function(result) {

@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('tag/edit', ['id' => $tag->id]) }}">
+    <form method="post" action="{{ url('admin/tag/edit', ['id' => $tag->id]) }}">
 
         @include('admin.blogs.forms.tag', ['tag' => $tag])
 

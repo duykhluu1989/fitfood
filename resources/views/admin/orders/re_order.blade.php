@@ -7,7 +7,7 @@
 @section('content')
 
     <div class="col-sm-12">
-        <form action="{{ url('order/reorder', ['id' => $fromOrder->id]) }}" method="post" id="OrderForm" autocomplete="off">
+        <form action="{{ url('admin/order/reorder', ['id' => $fromOrder->id]) }}" method="post" id="OrderForm" autocomplete="off">
             <div class="row">
                 <div class="col-sm-4">
                     <br />
@@ -620,7 +620,7 @@
                     showLoadingScreen();
 
                     $.ajax({
-                        url: '{{ url('checkDiscountCode') }}',
+                        url: '{{ url('admin/checkDiscountCode') }}',
                         type: 'post',
                         data: '_token={{ csrf_token() }}&price=' + totalTempVal + '&code=' + discountCode.trim() + '&phone=' + $('#OrderInputPhone').val().trim(),
                         success: function(result) {

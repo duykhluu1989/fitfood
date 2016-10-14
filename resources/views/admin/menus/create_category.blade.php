@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('category/create') }}">
+    <form method="post" action="{{ url('admin/category/create') }}">
 
         @include('admin.menus.forms.category', ['category' => $category])
 

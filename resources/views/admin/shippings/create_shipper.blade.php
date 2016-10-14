@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('shipper/create') }}">
+    <form method="post" action="{{ url('admin/shipper/create') }}">
 
         @include('admin.shippings.forms.shipper', ['shipper' => $shipper])
 

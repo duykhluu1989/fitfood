@@ -50,7 +50,7 @@ class ShippingController extends Controller
             if(count($errors) == 0)
             {
                 $shipper->save();
-                return redirect('shipper');
+                return redirect('admin/shipper');
             }
 
             return view($view, ['shipper' => $shipper, 'errors' => $errors]);
@@ -101,7 +101,7 @@ class ShippingController extends Controller
             if(count($errors) == 0)
             {
                 $area->save();
-                return redirect('area');
+                return redirect('admin/area');
             }
 
             return view($view, ['area' => $area, 'errors' => $errors]);

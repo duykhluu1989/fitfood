@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('user/changePassword', ['id' => $user->id]) }}">
+    <form method="post" action="{{ url('admin/user/changePassword', ['id' => $user->id]) }}">
 
         <div class="col-sm-12">
             <div class="panel panel-default">

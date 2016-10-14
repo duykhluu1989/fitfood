@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('blogCategory/edit', ['id' => $category->id]) }}" enctype="multipart/form-data">
+    <form method="post" action="{{ url('admin/blogCategory/edit', ['id' => $category->id]) }}" enctype="multipart/form-data">
 
         @include('admin.blogs.forms.category', ['category' => $category])
 

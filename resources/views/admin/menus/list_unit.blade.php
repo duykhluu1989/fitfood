@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $units])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('unit/create') }}" data-toggle="tooltip" title="New Unit" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/unit/create') }}" data-toggle="tooltip" title="New Unit" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -33,7 +33,7 @@
                     @foreach($units as $unit)
                         <tr>
                             <td>
-                                <a href="{{ url('unit/edit', ['id' => $unit->id]) }}" class="btn btn-primary btn-outline">{{ $unit->id }}</a>
+                                <a href="{{ url('admin/unit/edit', ['id' => $unit->id]) }}" class="btn btn-primary btn-outline">{{ $unit->id }}</a>
                             </td>
                             <td>{{ $unit->name }}</td>
                             <td<?php echo ($unit->status == App\Libraries\Util::STATUS_ACTIVE_VALUE ? ' class="info"' : ''); ?>></td>

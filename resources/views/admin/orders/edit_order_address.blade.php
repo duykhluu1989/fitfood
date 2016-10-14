@@ -6,13 +6,13 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('order/address/edit', ['id' => $order->id]) }}">
+    <form method="post" action="{{ url('admin/order/address/edit', ['id' => $order->id]) }}">
 
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ url('order/detail', ['id' => $order->id]) }}" class="btn btn-primary btn-outline pull-right">Back</a>
+                    <a href="{{ url('admin/order/detail', ['id' => $order->id]) }}" class="btn btn-primary btn-outline pull-right">Back</a>
                 </div>
             </div>
         </div>

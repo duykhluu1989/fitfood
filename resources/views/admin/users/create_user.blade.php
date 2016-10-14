@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('user/create') }}">
+    <form method="post" action="{{ url('admin/user/create') }}">
 
         @include('admin.users.forms.user', ['user' => $user])
 

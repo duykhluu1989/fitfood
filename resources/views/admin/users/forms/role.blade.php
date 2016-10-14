@@ -2,7 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($role->id) ? 'Create' : 'Update' }}</button>
-            <a href="{{ url('role') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+            <a href="{{ url('admin/role') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>
 </div>
@@ -61,7 +61,7 @@ $routes = Route::getRoutes();
     <div class="panel panel-default">
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($role->id) ? 'Create' : 'Update' }}</button>
-            <a href="{{ url('role') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+            <a href="{{ url('admin/role') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>
 </div>

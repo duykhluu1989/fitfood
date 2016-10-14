@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $categories])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('category/create') }}" data-toggle="tooltip" title="New Category" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/category/create') }}" data-toggle="tooltip" title="New Category" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -33,7 +33,7 @@
                     @foreach($categories as $category)
                         <tr>
                             <td>
-                                <a href="{{ url('category/edit', ['id' => $category->id]) }}" class="btn btn-primary btn-outline">{{ $category->id }}</a>
+                                <a href="{{ url('admin/category/edit', ['id' => $category->id]) }}" class="btn btn-primary btn-outline">{{ $category->id }}</a>
                             </td>
                             <td>{{ $category->name }}</td>
                             <td<?php echo ($category->status == App\Libraries\Util::STATUS_ACTIVE_VALUE ? ' class="info"' : ''); ?>></td>

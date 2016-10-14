@@ -17,7 +17,7 @@
         '/../assets/css/jquery.datetimepicker.min.css',
     ])->withFullUrl();
     ?>
-    <link href="{{ asset('/../assets/css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/sb-admin-2.css') }}" rel="stylesheet">
     @yield('stylesheet')
 </head>
 <body>
@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url('/') }}">Fitfood Admin</a>
+            <a class="navbar-brand" href="{{ url('admin//') }}">Fitfood Admin</a>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li class="dropdown">
@@ -41,10 +41,10 @@
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li>
-                        <a href="{{ url('user/changePassword', ['id' => auth()->user()->id]) }}"><i class="fa fa-lock fa-fw"></i> Change Password</a>
+                        <a href="{{ url('admin/user/changePassword', ['id' => auth()->user()->id]) }}"><i class="fa fa-lock fa-fw"></i> Change Password</a>
                     </li>
                     <li>
-                        <a href="{{ url('logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <a href="{{ url('admin/logout') }}"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 </ul>
             </li>
@@ -53,7 +53,7 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li class="sidebar-search">
-                        <form action="{{ url('order/quickSearch') }}" method="get">
+                        <form action="{{ url('admin/order/quickSearch') }}" method="get">
                             <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Quick Search Order" name="keyword" />
                                 <span class="input-group-btn">
@@ -68,10 +68,10 @@
                         <a href="javascript:void(0)"><i class="fa fa-user fa-fw"></i> User<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li {{ (Request::is('role') ? 'class="active"' : '') }}>
-                                <a href="{{ url('role') }}">List Role</a>
+                                <a href="{{ url('admin/role') }}">List Role</a>
                             </li>
                             <li {{ (Request::is('user') ? 'class="active"' : '') }}>
-                                <a href="{{ url('user') }}">List User</a>
+                                <a href="{{ url('admin/user') }}">List User</a>
                             </li>
                         </ul>
                     </li>
@@ -79,16 +79,16 @@
                         <a href="javascript:void(0)"><i class="fa fa-pencil fa-fw"></i> Blog<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li {{ (Request::is('blogCategory') ? 'class="active"' : '') }}>
-                                <a href="{{ url('blogCategory') }}">List Category</a>
+                                <a href="{{ url('admin/blogCategory') }}">List Category</a>
                             </li>
                             <li {{ (Request::is('article') ? 'class="active"' : '') }}>
-                                <a href="{{ url('article') }}">List Article</a>
+                                <a href="{{ url('admin/article') }}">List Article</a>
                             </li>
                             <li {{ (Request::is('tag') ? 'class="active"' : '') }}>
-                                <a href="{{ url('tag') }}">List Tag</a>
+                                <a href="{{ url('admin/tag') }}">List Tag</a>
                             </li>
                             <li {{ (Request::is('widget') ? 'class="active"' : '') }}>
-                                <a href="{{ url('widget') }}">List Widget</a>
+                                <a href="{{ url('admin/widget') }}">List Widget</a>
                             </li>
                         </ul>
                     </li>
@@ -96,10 +96,10 @@
                         <a href="javascript:void(0)"><i class="fa fa-truck fa-fw"></i> Shipping<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li {{ (Request::is('shipper') ? 'class="active"' : '') }}>
-                                <a href="{{ url('shipper') }}">List Shipper</a>
+                                <a href="{{ url('admin/shipper') }}">List Shipper</a>
                             </li>
                             <li {{ (Request::is('area') ? 'class="active"' : '') }}>
-                                <a href="{{ url('area') }}">List District</a>
+                                <a href="{{ url('admin/area') }}">List District</a>
                             </li>
                         </ul>
                     </li>
@@ -107,22 +107,22 @@
                         <a href="javascript:void(0)"><i class="fa fa-file-text fa-fw"></i> Menu<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li {{ (Request::is('category') ? 'class="active"' : '') }}>
-                                <a href="{{ url('category') }}">List Category</a>
+                                <a href="{{ url('admin/category') }}">List Category</a>
                             </li>
                             <li {{ (Request::is('unit') ? 'class="active"' : '') }}>
-                                <a href="{{ url('unit') }}">List Unit</a>
+                                <a href="{{ url('admin/unit') }}">List Unit</a>
                             </li>
                             <li {{ (Request::is('resource') ? 'class="active"' : '') }}>
-                                <a href="{{ url('resource') }}">List Resource</a>
+                                <a href="{{ url('admin/resource') }}">List Resource</a>
                             </li>
                             <li {{ (Request::is('recipe') ? 'class="active"' : '') }}>
-                                <a href="{{ url('recipe') }}">List Recipe</a>
+                                <a href="{{ url('admin/recipe') }}">List Recipe</a>
                             </li>
                             <li {{ (Request::is('menu') ? 'class="active"' : '') }}>
-                                <a href="{{ url('menu') }}">List Menu</a>
+                                <a href="{{ url('admin/menu') }}">List Menu</a>
                             </li>
                             <li {{ (Request::is('mealPack') ? 'class="active"' : '') }}>
-                                <a href="{{ url('mealPack') }}">List Meal Pack</a>
+                                <a href="{{ url('admin/mealPack') }}">List Meal Pack</a>
                             </li>
                         </ul>
                     </li>
@@ -130,7 +130,7 @@
                         <a href="javascript:void(0)"><i class="fa fa-gift fa-fw"></i> Discount<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li {{ (Request::is('discount') ? 'class="active"' : '') }}>
-                                <a href="{{ url('discount') }}">List Discount</a>
+                                <a href="{{ url('admin/discount') }}">List Discount</a>
                             </li>
                         </ul>
                     </li>
@@ -138,7 +138,7 @@
                         <a href="javascript:void(0)"><i class="fa fa-users fa-fw"></i> Customer<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li {{ (Request::is('customer') ? 'class="active"' : '') }}>
-                                <a href="{{ url('customer') }}">List Customer</a>
+                                <a href="{{ url('admin/customer') }}">List Customer</a>
                             </li>
                         </ul>
                     </li>
@@ -146,16 +146,16 @@
                         <a href="javascript:void(0)"><i class="fa fa-inbox fa-fw"></i> Order<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li {{ (Request::is('order') ? 'class="active"' : '') }}>
-                                <a href="{{ url('order') }}">List Order</a>
+                                <a href="{{ url('admin/order') }}">List Order</a>
                             </li>
                             <li {{ (Request::is('cooking') ? 'class="active"' : '') }}>
-                                <a href="{{ url('cooking') }}">List Cooking</a>
+                                <a href="{{ url('admin/cooking') }}">List Cooking</a>
                             </li>
                             <li {{ (Request::is('assignShipping') ? 'class="active"' : '') }}>
-                                <a href="{{ url('assignShipping') }}">Assign Shipping</a>
+                                <a href="{{ url('admin/assignShipping') }}">Assign Shipping</a>
                             </li>
-                            <li {{ (Request::url('shipping') ? 'class="active"' : '') }}>
-                                <a href="{{ url('shipping') }}">List Shipping</a>
+                            <li {{ (Request::is('shipping') ? 'class="active"' : '') }}>
+                                <a href="{{ url('admin/shipping') }}">List Shipping</a>
                             </li>
                         </ul>
                     </li>

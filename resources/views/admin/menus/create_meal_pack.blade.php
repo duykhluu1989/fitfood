@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('mealPack/create') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ url('admin/mealPack/create') }}" enctype="multipart/form-data">
 
         @include('admin.menus.forms.meal_pack', ['mealPack' => $mealPack])
 

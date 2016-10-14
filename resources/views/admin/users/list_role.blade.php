@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $roles])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('role/create') }}" data-toggle="tooltip" title="New Role" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/role/create') }}" data-toggle="tooltip" title="New Role" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -26,7 +26,7 @@
                     <tr>
                         <th>Name</th>
                     </tr>
-                    <form id="FilterForm" action="{{ url('role') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/role') }}" method="get">
                         <tr>
                             <td>
                                 <input type="text" class="form-control" name="filter[name]" value="{{ (isset($filter['name']) ? $filter['name'] : '') }}" />
@@ -40,7 +40,7 @@
                     @foreach($roles as $role)
                         <tr>
                             <td>
-                                <a href="{{ url('role/edit', ['id' => $role->id]) }}" class="btn btn-primary btn-outline">{{ $role->name }}</a>
+                                <a href="{{ url('admin/role/edit', ['id' => $role->id]) }}" class="btn btn-primary btn-outline">{{ $role->name }}</a>
                             </td>
                         </tr>
                     @endforeach

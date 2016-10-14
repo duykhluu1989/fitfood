@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <a href="{{ url('order/export?' . $queryString) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/order/export?' . $queryString) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
                             <i class="fa fa-download fa-fw"></i>
                         </a>
                     </div>
@@ -40,7 +40,7 @@
                         <th>Warning</th>
                         <th>Status</th>
                     </tr>
-                    <form id="FilterForm" action="{{ url('order') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/order') }}" method="get">
                         <tr>
                             <td>
                                 <input type="text" class="form-control" name="filter[order_id]" value="{{ (isset($filter['order_id']) ? $filter['order_id'] : '') }}" />
@@ -102,7 +102,7 @@
                         </tr>
                         <tr<?php echo $rowClass; ?>>
                             <td>
-                                <a href="{{ url('order/detail', ['id' => $order->id]) }}" class="btn btn-primary btn-outline">{{ $order->id }}</a>
+                                <a href="{{ url('admin/order/detail', ['id' => $order->id]) }}" class="btn btn-primary btn-outline">{{ $order->id }}</a>
                             </td>
                             <td>{{ $order->order_id }}</td>
                             <td>{{ $order->financial_status }}</td>
@@ -228,7 +228,7 @@
 
             $('#DatePicker').change(function() {
 
-                window.location.href = '{{ url('order') }}?date=' + $(this).val();
+                window.location.href = '{{ url('admin/order') }}?date=' + $(this).val();
 
             });
 

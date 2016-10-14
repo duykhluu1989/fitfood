@@ -2,7 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($menu->id) ? 'Create' : 'Update' }}</button>
-            <a href="{{ url('menu') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+            <a href="{{ url('admin/menu') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>
 </div>
@@ -155,7 +155,7 @@
                 source: function(request, response) {
 
                     $.ajax({
-                        url: '{{ url('menu/get/autoComplete/recipe') }}',
+                        url: '{{ url('admin/menu/get/autoComplete/recipe') }}',
                         type: 'post',
                         data: '_token={{ csrf_token() }}&term=' + request.term,
                         success: function(result) {

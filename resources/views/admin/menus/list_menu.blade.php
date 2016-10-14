@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $menus])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('menu/create') }}" data-toggle="tooltip" title="New Menu" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/menu/create') }}" data-toggle="tooltip" title="New Menu" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -30,7 +30,7 @@
                         <th>Type</th>
                         <th>Status</th>
                     </tr>
-                    <form id="FilterForm" action="{{ url('menu') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/menu') }}" method="get">
                         <tr>
                             <td></td>
                             <td>
@@ -70,7 +70,7 @@
                     @foreach($menus as $menu)
                         <tr>
                             <td>
-                                <a href="{{ url('menu/edit', ['id' => $menu->id]) }}" class="btn btn-primary btn-outline">{{ $menu->id }}</a>
+                                <a href="{{ url('admin/menu/edit', ['id' => $menu->id]) }}" class="btn btn-primary btn-outline">{{ $menu->id }}</a>
                             </td>
                             <td>{{ $menu->name }}</td>
                             <td>

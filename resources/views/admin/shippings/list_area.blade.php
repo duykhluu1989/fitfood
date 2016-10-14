@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $areas])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('area/create') }}" data-toggle="tooltip" title="New District" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/area/create') }}" data-toggle="tooltip" title="New District" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -35,7 +35,7 @@
                     @foreach($areas as $area)
                         <tr>
                             <td>
-                                <a href="{{ url('area/edit', ['id' => $area->id]) }}" class="btn btn-primary btn-outline">{{ $area->id }}</a>
+                                <a href="{{ url('admin/area/edit', ['id' => $area->id]) }}" class="btn btn-primary btn-outline">{{ $area->id }}</a>
                             </td>
                             <td>{{ $area->name }}</td>
                             <td>{{ App\Libraries\Util::formatMoney($area->shipping_price) }}</td>

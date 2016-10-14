@@ -6,13 +6,13 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('widget/edit', ['id' => $widget->id]) }}" enctype="multipart/form-data">
+    <form method="post" action="{{ url('admin/widget/edit', ['id' => $widget->id]) }}" enctype="multipart/form-data">
 
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ url('widget') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+                    <a href="{{ url('admin/widget') }}" class="btn btn-primary btn-outline pull-right">Back</a>
                 </div>
             </div>
         </div>

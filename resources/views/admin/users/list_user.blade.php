@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $users])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('user/create') }}" data-toggle="tooltip" title="New User" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/user/create') }}" data-toggle="tooltip" title="New User" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -29,7 +29,7 @@
                         <th>Active</th>
                         <th></th>
                     </tr>
-                    <form id="FilterForm" action="{{ url('user') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/user') }}" method="get">
                         <tr>
                             <td>
                                 <input type="text" class="form-control" name="filter[username]" value="{{ (isset($filter['username']) ? $filter['username'] : '') }}" />
@@ -68,7 +68,7 @@
                     @foreach($users as $user)
                         <tr>
                             <td>
-                                <a href="{{ url('user/edit', ['id' => $user->id]) }}" class="btn btn-primary btn-outline">{{ $user->username }}</a>
+                                <a href="{{ url('admin/user/edit', ['id' => $user->id]) }}" class="btn btn-primary btn-outline">{{ $user->username }}</a>
                             </td>
                             <td>
                                 @foreach($user->userRoles as $userRole)
@@ -77,7 +77,7 @@
                             </td>
                             <td<?php echo ($user->status == App\Libraries\Util::STATUS_ACTIVE_VALUE ? ' class="info"' : ''); ?>></td>
                             <td>
-                                <a href="{{ url('user/changePassword', ['id' => $user->id]) }}" data-toggle="tooltip" title="Change Password" class="btn btn-primary btn-outline">
+                                <a href="{{ url('admin/user/changePassword', ['id' => $user->id]) }}" data-toggle="tooltip" title="Change Password" class="btn btn-primary btn-outline">
                                     <i class="fa fa-lock fa-fw"></i>
                                 </a>
                             </td>

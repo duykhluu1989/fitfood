@@ -66,7 +66,7 @@ class DiscountController extends Controller
                     unset($discount->customer_id_str);
 
                 $discount->save();
-                return redirect('discount');
+                return redirect('admin/discount');
             }
 
             return view($view, ['discount' => $discount, 'errors' => $errors]);
@@ -171,7 +171,7 @@ class DiscountController extends Controller
                     $newDiscount->save();
                 }
 
-                return redirect('discount');
+                return redirect('admin/discount');
             }
 
             return view('admin.discounts.create_many_discount', ['discount' => $discount, 'errors' => $errors]);
@@ -185,6 +185,6 @@ class DiscountController extends Controller
         $discount = Discount::where('times_used', 0)->find($id);
         $discount->delete();
 
-        return redirect('discount');
+        return redirect('admin/discount');
     }
 }

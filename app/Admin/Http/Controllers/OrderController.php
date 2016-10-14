@@ -36,7 +36,7 @@ class OrderController extends Controller
             $order = Order::where('order_id', 'like', '%' . $keyword)->first();
 
             if(!empty($order))
-                return redirect('order/detail/' . $order->id);
+                return redirect('admin/order/detail/' . $order->id);
 
             return redirect($request->server('HTTP_REFERER'))->with('QuickSearchOrderError', 'Found no order with ID like ' . $keyword);
         }
@@ -533,7 +533,7 @@ class OrderController extends Controller
             DB::rollBack();
         }
 
-        return redirect('order/detail/' . $order->id);
+        return redirect('admin/order/detail/' . $order->id);
     }
 
     public function cancelOrder(Request $request, $id)
@@ -684,7 +684,7 @@ class OrderController extends Controller
             DB::rollBack();
         }
 
-        return redirect('order/detail/' . $order->id);
+        return redirect('admin/order/detail/' . $order->id);
     }
 
     public function cancelOrderItem(Request $request, $id)
@@ -795,7 +795,7 @@ class OrderController extends Controller
             DB::rollBack();
         }
 
-        return redirect('order/detail/' . $orderItem->order_id);
+        return redirect('admin/order/detail/' . $orderItem->order_id);
     }
 
     public function changeOrderItemMeal(Request $request)
@@ -1125,7 +1125,7 @@ class OrderController extends Controller
             }
         }
 
-        return redirect('order/detail/' . $order->id);
+        return redirect('admin/order/detail/' . $order->id);
     }
 
     public function removeOrderWarning(Request $request, $id)
@@ -1357,7 +1357,7 @@ class OrderController extends Controller
 
                     DB::commit();
 
-                    return redirect('order/detail/' . $order->id);
+                    return redirect('admin/order/detail/' . $order->id);
                 }
                 catch(\Exception $e)
                 {
@@ -1416,7 +1416,7 @@ class OrderController extends Controller
             DB::rollBack();
         }
 
-        return redirect('order/detail/' . $orderItem->order_id);
+        return redirect('admin/order/detail/' . $orderItem->order_id);
     }
 
     public function getAutoCompleteRecipeData(Request $request)
@@ -1465,7 +1465,7 @@ class OrderController extends Controller
             $doubles = json_decode($toPack->double, true);
 
         if($fromOrderItem->meal_pack == $toPack->name)
-            return redirect('order/detail/' . $fromOrderItem->order_id)->with('orderError', 'Can not change to same pack');
+            return redirect('admin/order/detail/' . $fromOrderItem->order_id)->with('orderError', 'Can not change to same pack');
 
         if(!empty($toPack->breakfast) || !empty($toPack->lunch) || !empty($toPack->dinner))
             $toMain = true;
@@ -1520,7 +1520,7 @@ class OrderController extends Controller
             }
 
             if($stillHaveMain == false)
-                return redirect('order/detail/' . $fromOrderItem->order_id)->with('orderError', 'Can not change to pack ' . $toPack->name);
+                return redirect('admin/order/detail/' . $fromOrderItem->order_id)->with('orderError', 'Can not change to pack ' . $toPack->name);
         }
 
         try
@@ -1639,10 +1639,10 @@ class OrderController extends Controller
         {
             DB::rollBack();
 
-            return redirect('order/detail/' . $fromOrderItem->order_id)->with('orderError', $e->getMessage());
+            return redirect('admin/order/detail/' . $fromOrderItem->order_id)->with('orderError', $e->getMessage());
         }
 
-        return redirect('order/detail/' . $fromOrderItem->order_id);
+        return redirect('admin/order/detail/' . $fromOrderItem->order_id);
     }
 
     public function reOrder(Request $request, $id)
@@ -1700,7 +1700,7 @@ class OrderController extends Controller
             }
 
             if($validator->fails() || $hasPack == false || $totalMealPack > 5)
-                return redirect('order/reorder/' . $fromOrder->id)->with('OrderError', trans('order_form.validate'));
+                return redirect('admin/order/reorder/' . $fromOrder->id)->with('OrderError', trans('order_form.validate'));
 
             try
             {
@@ -2093,7 +2093,7 @@ class OrderController extends Controller
 
                 DB::commit();
 
-                return redirect('order/detail/' . $order->id);
+                return redirect('admin/order/detail/' . $order->id);
             }
             catch(\Exception $e)
             {
@@ -2101,7 +2101,7 @@ class OrderController extends Controller
 
                 Log::info($e->getLine() . ' ' . $e->getMessage());
 
-                return redirect('order/reorder/' . $fromOrder->id)->with('OrderError', trans('order_form.error'));
+                return redirect('admin/order/reorder/' . $fromOrder->id)->with('OrderError', trans('order_form.error'));
             }
         }
 

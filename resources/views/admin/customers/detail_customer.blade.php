@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="col-sm-4">
-                            <a href="{{ url('customer/edit', ['id' => $customer->id]) }}" data-toggle="tooltip" title="Edit Customer" class="btn btn-primary btn-outline">
+                            <a href="{{ url('admin/customer/edit', ['id' => $customer->id]) }}" data-toggle="tooltip" title="Edit Customer" class="btn btn-primary btn-outline">
                                 <i class="fa fa-edit fa-fw"></i>
                             </a>
                         </div>
@@ -86,12 +86,12 @@
                         <td>{{ App\Libraries\Util::formatMoney($customer->total_spent) }}</td>
                         <td>
                             @if(!empty($customer->firstOrder))
-                                <a href="{{ url('order/detail', ['id' => $customer->firstOrder->id]) }}" class="btn btn-primary btn-outline">{{ $customer->firstOrder->id }}</a>
+                                <a href="{{ url('admin/order/detail', ['id' => $customer->firstOrder->id]) }}" class="btn btn-primary btn-outline">{{ $customer->firstOrder->id }}</a>
                             @endif
                         </td>
                         <td>
                             @if(!empty($customer->lastOrder))
-                                <a href="{{ url('order/detail', ['id' => $customer->lastOrder->id]) }}" class="btn btn-primary btn-outline">{{ $customer->lastOrder->id }}</a>
+                                <a href="{{ url('admin/order/detail', ['id' => $customer->lastOrder->id]) }}" class="btn btn-primary btn-outline">{{ $customer->lastOrder->id }}</a>
                             @endif
                         </td>
                     </tr>
@@ -101,7 +101,7 @@
                     <tr>
                         <td colspan="4">
                             @foreach($customer->orders as $order)
-                                <a href="{{ url('order/detail', ['id' => $order->id]) }}" class="btn btn-primary btn-outline">{{ $order->id }}</a>
+                                <a href="{{ url('admin/order/detail', ['id' => $order->id]) }}" class="btn btn-primary btn-outline">{{ $order->id }}</a>
                             @endforeach
                         </td>
                     </tr>

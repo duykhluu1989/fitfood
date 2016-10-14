@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $tags])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('tag/create') }}" data-toggle="tooltip" title="New Tag" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/tag/create') }}" data-toggle="tooltip" title="New Tag" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -28,7 +28,7 @@
                         <th>Name</th>
                         <th>Article</th>
                     </tr>
-                    <form id="FilterForm" action="{{ url('tag') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/tag') }}" method="get">
                         <tr>
                             <td></td>
                             <td>
@@ -44,7 +44,7 @@
                     @foreach($tags as $tag)
                         <tr>
                             <td>
-                                <a href="{{ url('tag/edit', ['id' => $tag->id]) }}" class="btn btn-primary btn-outline">{{ $tag->id }}</a>
+                                <a href="{{ url('admin/tag/edit', ['id' => $tag->id]) }}" class="btn btn-primary btn-outline">{{ $tag->id }}</a>
                             </td>
                             <td>{{ $tag->name }}</td>
                             <td>{{ $tag->article }}</td>

@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $shippers])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('shipper/create') }}" data-toggle="tooltip" title="New Shipper" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/shipper/create') }}" data-toggle="tooltip" title="New Shipper" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -34,7 +34,7 @@
                     @foreach($shippers as $shipper)
                         <tr>
                             <td>
-                                <a href="{{ url('shipper/edit', ['id' => $shipper->id]) }}" class="btn btn-primary btn-outline">{{ $shipper->id }}</a>
+                                <a href="{{ url('admin/shipper/edit', ['id' => $shipper->id]) }}" class="btn btn-primary btn-outline">{{ $shipper->id }}</a>
                             </td>
                             <td>{{ $shipper->name }}</td>
                             <td>{{ $shipper->phone }}</td>

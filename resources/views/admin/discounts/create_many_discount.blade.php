@@ -6,13 +6,13 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('discount/create/many') }}">
+    <form method="post" action="{{ url('admin/discount/create/many') }}">
 
         <div class="col-sm-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <button type="submit" class="btn btn-primary">Create</button>
-                    <a href="{{ url('discount') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+                    <a href="{{ url('admin/discount') }}" class="btn btn-primary btn-outline pull-right">Back</a>
                 </div>
             </div>
         </div>

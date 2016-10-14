@@ -45,7 +45,7 @@
                         <label class="form-control">Total Bill: {{ App\Libraries\Util::formatMoney($totalBill) }}</label>
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('shipping/detail/export', ['id' => $shipper->id, 'date' => $date]) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/shipping/detail/export', ['id' => $shipper->id, 'date' => $date]) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
                             <i class="fa fa-download fa-fw"></i>
                         </a>
                     </div>
@@ -108,7 +108,7 @@
                                 </tr>
                                 <tr<?php echo $rowClass; ?>>
                                     <td>
-                                        <a href="{{ url('order/detail', ['id' => $order->id]) }}" class="btn btn-primary btn-outline">{{ $order->id }}</a>
+                                        <a href="{{ url('admin/order/detail', ['id' => $order->id]) }}" class="btn btn-primary btn-outline">{{ $order->id }}</a>
                                     </td>
                                     <td>{{ $order->order_id }}</td>
                                     <td>

@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('role/edit', ['id' => $role->id]) }}">
+    <form method="post" action="{{ url('admin/role/edit', ['id' => $role->id]) }}">
 
         @include('admin.users.forms.role', ['role' => $role])
 

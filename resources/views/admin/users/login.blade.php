@@ -16,7 +16,7 @@
         '/../assets/css/jquery-ui.min.css',
     ])->withFullUrl();
     ?>
-    <link href="{{ asset('/../assets/css/sb-admin-2.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/sb-admin-2.css') }}" rel="stylesheet">
 </head>
 <body>
 <div class="container">

@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $mealPacks])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('mealPack/create') }}" data-toggle="tooltip" title="New Meal Pack" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/mealPack/create') }}" data-toggle="tooltip" title="New Meal Pack" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -47,7 +47,7 @@
                         ?>
                         <tr>
                             <td>
-                                <a href="{{ url('mealPack/edit', ['id' => $mealPack->id]) }}" class="btn btn-primary btn-outline">{{ $mealPack->id }}</a>
+                                <a href="{{ url('admin/mealPack/edit', ['id' => $mealPack->id]) }}" class="btn btn-primary btn-outline">{{ $mealPack->id }}</a>
                             </td>
                             <td>{{ $mealPack->name }}</td>
                             <td>{{ $mealPack->name_en }}</td>

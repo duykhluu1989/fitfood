@@ -38,7 +38,7 @@ class UserController extends Controller
                     if(!empty($input['redirectUrl']))
                         return redirect($input['redirectUrl']);
                     else
-                        return redirect('admin');
+                        return redirect('admin/admin');
                 }
             }
         }
@@ -50,7 +50,7 @@ class UserController extends Controller
     {
         Auth::logout();
 
-        return redirect('login');
+        return redirect('admin/login');
     }
 
     public function home()
@@ -199,7 +199,7 @@ class UserController extends Controller
 
                     Db::commit();
 
-                    return redirect('admin/user');
+                    return redirect('admin/admin/user');
                 }
                 catch(\Exception $e)
                 {
@@ -252,7 +252,7 @@ class UserController extends Controller
             {
                 $user->password = Hash::make($input['password']);
                 $user->save();
-                return redirect('admin/user/changePassword/' . $user->id)->with('successMessage', 'Change password successfully');
+                return redirect('admin/admin/user/changePassword/' . $user->id)->with('successMessage', 'Change password successfully');
             }
 
             return view('admin.users.change_password', ['user' => $user, 'errors' => $errors]);
@@ -322,7 +322,7 @@ class UserController extends Controller
             if(count($errors) == 0)
             {
                 $role->save();
-                return redirect('admin/role');
+                return redirect('admin/admin/role');
             }
 
             return view($view, ['role' => $role, 'errors' => $errors]);

@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $articles])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('article/create') }}" data-toggle="tooltip" title="New Article" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/article/create') }}" data-toggle="tooltip" title="New Article" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -33,7 +33,7 @@
                         <th>View</th>
                         <th>Created</th>
                     </tr>
-                    <form id="FilterForm" action="{{ url('article') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/article') }}" method="get">
                         <tr>
                             <td></td>
                             <td>
@@ -67,7 +67,7 @@
                     @foreach($articles as $article)
                         <tr>
                             <td>
-                                <a href="{{ url('article/edit', ['id' => $article->id]) }}" class="btn btn-primary btn-outline">{{ $article->id }}</a>
+                                <a href="{{ url('admin/article/edit', ['id' => $article->id]) }}" class="btn btn-primary btn-outline">{{ $article->id }}</a>
                             </td>
                             <td>{{ $article->name }}</td>
                             <td>{{ $article->name_en }}</td>

@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('area/edit', ['id' => $area->id]) }}">
+    <form method="post" action="{{ url('admin/area/edit', ['id' => $area->id]) }}">
 
         @include('admin.shippings.forms.area', ['area' => $area])
 

@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('user/edit', ['id' => $user->id]) }}">
+    <form method="post" action="{{ url('admin/user/edit', ['id' => $user->id]) }}">
 
         @include('admin.users.forms.user', ['user' => $user])
 

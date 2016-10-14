@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $widgets])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('widget/create') }}" data-toggle="tooltip" title="New Widget" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/widget/create') }}" data-toggle="tooltip" title="New Widget" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -29,7 +29,7 @@
                         <th>Type</th>
                         <th>Active</th>
                     </tr>
-                    <form id="FilterForm" action="{{ url('widget') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/widget') }}" method="get">
                         <tr>
                             <td></td>
                             <td>
@@ -46,7 +46,7 @@
                     @foreach($widgets as $widget)
                         <tr>
                             <td>
-                                <a href="{{ url('widget/edit', ['id' => $widget->id]) }}" class="btn btn-primary btn-outline">{{ $widget->id }}</a>
+                                <a href="{{ url('admin/widget/edit', ['id' => $widget->id]) }}" class="btn btn-primary btn-outline">{{ $widget->id }}</a>
                             </td>
                             <td>{{ $widget->name }}</td>
                             <td>{{ App\Libraries\Util::getWidgetType($widget->type) }}</td>

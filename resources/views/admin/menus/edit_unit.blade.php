@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('unit/edit', ['id' => $unit->id]) }}">
+    <form method="post" action="{{ url('admin/unit/edit', ['id' => $unit->id]) }}">
 
         @include('admin.menus.forms.unit', ['unit' => $unit])
 

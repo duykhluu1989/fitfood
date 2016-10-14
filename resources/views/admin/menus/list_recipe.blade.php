@@ -14,10 +14,10 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $recipes])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('recipe/create') }}" data-toggle="tooltip" title="New Recipe" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/recipe/create') }}" data-toggle="tooltip" title="New Recipe" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
-                        <a href="{{ url('recipe/export?' . $queryString) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/recipe/export?' . $queryString) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
                             <i class="fa fa-download fa-fw"></i>
                         </a>
                     </div>
@@ -39,7 +39,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <form id="FilterForm" action="{{ url('recipe') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/recipe') }}" method="get">
                         <tr>
                             <td></td>
                             <td>
@@ -70,7 +70,7 @@
                             @if($i == 0)
                                 <tr>
                                     <td rowspan="{{ $countResource }}">
-                                        <a href="{{ url('recipe/edit', ['id' => $recipe->id]) }}" class="btn btn-primary btn-outline">{{ $recipe->id }}</a>
+                                        <a href="{{ url('admin/recipe/edit', ['id' => $recipe->id]) }}" class="btn btn-primary btn-outline">{{ $recipe->id }}</a>
                                     </td>
                                     <td rowspan="{{ $countResource }}">{{ $recipe->name }}</td>
                                     <td rowspan="{{ $countResource }}">{{ $recipe->name_en }}</td>

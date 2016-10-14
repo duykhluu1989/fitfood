@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="col-sm-8">
-                        <a href="{{ url('cooking/export?date=' . $date) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/cooking/export?date=' . $date) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
                             <i class="fa fa-download fa-fw"></i>
                         </a>
                     </div>
@@ -176,7 +176,7 @@
 
             $('#DatePicker').change(function() {
 
-                window.location.href = '{{ url('cooking') }}?date=' + $(this).val();
+                window.location.href = '{{ url('admin/cooking') }}?date=' + $(this).val();
 
             });
 

@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="col-sm-4">
-                            <a href="{{ url('customer/export?' . $queryString) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
+                            <a href="{{ url('admin/customer/export?' . $queryString) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
                                 <i class="fa fa-download fa-fw"></i>
                             </a>
                         </div>
@@ -36,7 +36,7 @@
                         <th>Orders</th>
                         <th>Spent</th>
                     </tr>
-                    <form id="FilterForm" action="{{ url('customer') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/customer') }}" method="get">
                         <tr>
                             <td></td>
                             <td>
@@ -77,7 +77,7 @@
                     @foreach($customers as $customer)
                         <tr>
                             <td>
-                                <a href="{{ url('customer/detail', ['id' => $customer->id]) }}" class="btn btn-primary btn-outline">{{ $customer->id }}</a>
+                                <a href="{{ url('admin/customer/detail', ['id' => $customer->id]) }}" class="btn btn-primary btn-outline">{{ $customer->id }}</a>
                             </td>
                             <td>{{ $customer->customer_id }}</td>
                             <td>{{ $customer->phone }}</td>

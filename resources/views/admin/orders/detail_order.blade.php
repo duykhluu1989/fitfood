@@ -15,7 +15,7 @@
                     </button>
                 @endif
                 @if(empty($order->cancelled_at) && strtotime($order->start_week) - (App\Libraries\Util::TIMESTAMP_ONE_DAY * 5) > strtotime(date('Y-m-d')))
-                    <a href="{{ url('order/move/currentWeek', ['id' => $order->id]) }}" onclick="return showConfirmMessage();" data-toggle="tooltip" title="Move To Current Week" class="btn btn-primary btn-outline">
+                    <a href="{{ url('admin/order/move/currentWeek', ['id' => $order->id]) }}" onclick="return showConfirmMessage();" data-toggle="tooltip" title="Move To Current Week" class="btn btn-primary btn-outline">
                         <i class="fa fa-reply fa-fw"></i>
                     </a>
                 @endif
@@ -28,11 +28,11 @@
                     </button>
                 @endif
                 @if(empty($order->cancelled_at))
-                    <a href="{{ url('order/address/edit', ['id' => $order->id]) }}" data-toggle="tooltip" title="Edit Address" class="btn btn-primary btn-outline">
+                    <a href="{{ url('admin/order/address/edit', ['id' => $order->id]) }}" data-toggle="tooltip" title="Edit Address" class="btn btn-primary btn-outline">
                         <i class="fa fa-edit fa-fw"></i>
                     </a>
                 @endif
-                    <a href="{{ url('order/reorder', ['id' => $order->id]) }}" data-toggle="tooltip" title="Re Order" class="btn btn-primary btn-outline">
+                    <a href="{{ url('admin/order/reorder', ['id' => $order->id]) }}" data-toggle="tooltip" title="Re Order" class="btn btn-primary btn-outline">
                        <i class="fa fa-copy fa-fw"></i>
                     </a>
                 @if(empty($order->cancelled_at) && $order->fulfillment_status != App\Libraries\Util::FULFILLMENT_STATUS_FULFILLED_VALUE)
@@ -97,7 +97,7 @@
                     @endif
                     @if($order->orderDiscount)
                         <tr>
-                            <th colspan="3">Discount Code: <a href="{{ url('discount/edit', ['id' => $order->orderDiscount->discount->id]) }}" target="_blank">{{ $order->orderDiscount->code }}</a></th>
+                            <th colspan="3">Discount Code: <a href="{{ url('admin/discount/edit', ['id' => $order->orderDiscount->discount->id]) }}" target="_blank">{{ $order->orderDiscount->code }}</a></th>
                             <td id="TotalDiscount">{{ App\Libraries\Util::formatMoney(-$order->total_discounts) }}</td>
                         </tr>
                     @endif
@@ -624,7 +624,7 @@
                         <h4 class="modal-title">Confirm Payment</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="{{ url('order/transaction/pay', ['id' => $order->id]) }}">
+                        <form method="post" action="{{ url('admin/order/transaction/pay', ['id' => $order->id]) }}">
                             <div class="form-group">
                                 <label>Method</label>
                                 <select name="method" id="ConfirmPaymentMethodDropDown" class="form-control">
@@ -693,7 +693,7 @@
                         <h4 class="modal-title">Cancel Order</h4>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="{{ url('order/cancel', ['id' => $order->id]) }}">
+                        <form method="post" action="{{ url('admin/order/cancel', ['id' => $order->id]) }}">
                             <div class="form-group">
                                 <label>Cancel Reason</label>
                                 <input type="text" name="cancel_reason" class="form-control" />
@@ -819,7 +819,7 @@
 
                     $.ajax({
 
-                        url: '{{ url('order/itemMeal/change') }}',
+                        url: '{{ url('admin/order/itemMeal/change') }}',
                         type: 'post',
                         data: '_token={{ csrf_token() }}&to=' + toIdArr[2] + '&target=' + targetIdArr[1],
                         success: function(result) {
@@ -851,7 +851,7 @@
 
                 $.ajax({
 
-                    url: '{{ url('order/itemMeal/delete') }}',
+                    url: '{{ url('admin/order/itemMeal/delete') }}',
                     type: 'post',
                     data: '_token={{ csrf_token() }}&meal=' + mealArr[1],
                     success: function(result) {
@@ -934,7 +934,7 @@
 
                 $.ajax({
 
-                    url: '{{ url('order/itemMeal/edit/shippingTime') }}',
+                    url: '{{ url('admin/order/itemMeal/edit/shippingTime') }}',
                     type: 'post',
                     data: '_token={{ csrf_token() }}&order=<?php echo $order->id ?>&date=' + shippingClassArr[1] + '&shipping=' + shippingTime,
                     success: function(result) {
@@ -976,7 +976,7 @@
 
                 $.ajax({
 
-                    url: '{{ url('order/note/edit') }}',
+                    url: '{{ url('admin/order/note/edit') }}',
                     type: 'post',
                     data: '_token={{ csrf_token() }}&order=<?php echo $order->id ?>&note=' + noteText,
                     success: function(result) {
@@ -1023,7 +1023,7 @@
                     var idArr = $(this).prop('id').split('_');
 
                     $('#CancelOrderItemTitle').html('Cancel Pack - ' + $('#OrderItemPackName_' + idArr[1]).html());
-                    $('#CancelOrderItemModal').find('form').prop('action', '<?php echo url('order/cancelItem'); ?>/' + idArr[1]);
+                    $('#CancelOrderItemModal').find('form').prop('action', '<?php echo url('admin/order/cancelItem'); ?>/' + idArr[1]);
                     $('#CancelOrderItemModal').modal('show');
 
                 });
@@ -1033,7 +1033,7 @@
                     var idArr = $(this).prop('id').split('_');
 
                     $('#AddCustomOrderItemMealDetailTitle').html('Add Custom Meal For Pack - ' + $('#OrderItemPackName_' + idArr[1]).html());
-                    $('#AddCustomOrderItemMealDetailModal').find('form').prop('action', '<?php echo url('order/itemMeal/add/customMeal'); ?>/' + idArr[1]);
+                    $('#AddCustomOrderItemMealDetailModal').find('form').prop('action', '<?php echo url('admin/order/itemMeal/add/customMeal'); ?>/' + idArr[1]);
                     $('#AddCustomOrderItemMealDetailModal').modal('show');
 
                 });
@@ -1044,7 +1044,7 @@
                     source: function(request, response) {
 
                         $.ajax({
-                            url: '{{ url('order/get/autoComplete/recipe') }}',
+                            url: '{{ url('admin/order/get/autoComplete/recipe') }}',
                             type: 'post',
                             data: '_token={{ csrf_token() }}&term=' + request.term,
                             success: function(result) {
@@ -1088,7 +1088,7 @@
                     var idArr = $(this).prop('id').split('_');
 
                     $('#ChangeOrderItemTitle').html('Change Pack - ' + $('#OrderItemPackName_' + idArr[1]).html());
-                    $('#ChangeOrderItemModal').find('form').prop('action', '<?php echo url('order/itemMeal/change'); ?>/' + idArr[1]);
+                    $('#ChangeOrderItemModal').find('form').prop('action', '<?php echo url('admin/order/itemMeal/change'); ?>/' + idArr[1]);
                     $('#ChangeOrderItemModal').modal('show');
 
                 });
@@ -1101,7 +1101,7 @@
 
                     $.ajax({
 
-                        url: '{{ url('order/remove/warning', ['id' => $order->id]) }}',
+                        url: '{{ url('admin/order/remove/warning', ['id' => $order->id]) }}',
                         type: 'post',
                         data: '_token={{ csrf_token() }}',
                         success: function(result) {
@@ -1126,7 +1126,7 @@
 
                     $.ajax({
 
-                        url: '{{ url('order/set/warning', ['id' => $order->id]) }}',
+                        url: '{{ url('admin/order/set/warning', ['id' => $order->id]) }}',
                         type: 'post',
                         data: '_token={{ csrf_token() }}',
                         success: function(result) {

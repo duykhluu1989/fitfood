@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('recipe/create') }}">
+    <form method="post" action="{{ url('admin/recipe/create') }}">
 
         @include('admin.menus.forms.recipe', ['recipe' => $recipe])
 

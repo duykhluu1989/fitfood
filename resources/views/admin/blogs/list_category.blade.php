@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $categories])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('blogCategory/create') }}" data-toggle="tooltip" title="New Category" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/blogCategory/create') }}" data-toggle="tooltip" title="New Category" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -31,7 +31,7 @@
                         <th>Slug EN</th>
                         <th>Active</th>
                     </tr>
-                    <form id="FilterForm" action="{{ url('blogCategory') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/blogCategory') }}" method="get">
                         <tr>
                             <td></td>
                             <td>
@@ -52,7 +52,7 @@
                     @foreach($categories as $category)
                         <tr>
                             <td>
-                                <a href="{{ url('blogCategory/edit', ['id' => $category->id]) }}" class="btn btn-primary btn-outline">{{ $category->id }}</a>
+                                <a href="{{ url('admin/blogCategory/edit', ['id' => $category->id]) }}" class="btn btn-primary btn-outline">{{ $category->id }}</a>
                             </td>
                             <td>{{ $category->name }}</td>
                             <td>{{ $category->name_en }}</td>

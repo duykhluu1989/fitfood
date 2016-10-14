@@ -2,7 +2,7 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($area->id) ? 'Create' : 'Update' }}</button>
-            <a href="{{ url('area') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+            <a href="{{ url('admin/area') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>
 </div>

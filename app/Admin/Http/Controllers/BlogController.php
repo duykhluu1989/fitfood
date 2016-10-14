@@ -129,7 +129,7 @@ class BlogController extends Controller
 
                     Db::commit();
 
-                    return redirect('blogCategory');
+                    return redirect('admin/blogCategory');
                 }
                 catch(\Exception $e)
                 {
@@ -355,7 +355,7 @@ class BlogController extends Controller
 
                     Db::commit();
 
-                    return redirect('article');
+                    return redirect('admin/article');
                 }
                 catch(\Exception $e)
                 {
@@ -432,7 +432,7 @@ class BlogController extends Controller
                     $tag->article = 0;
 
                 $tag->save();
-                return redirect('tag');
+                return redirect('admin/tag');
             }
 
             return view($view, ['tag' => $tag, 'errors' => $errors]);
@@ -672,7 +672,7 @@ class BlogController extends Controller
 
                     Db::commit();
 
-                    return redirect('widget');
+                    return redirect('admin/widget');
                 }
                 catch(\Exception $e)
                 {

@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('discount/create') }}">
+    <form method="post" action="{{ url('admin/discount/create') }}">
 
         @include('admin.discounts.forms.discount', ['discount' => $discount])
 

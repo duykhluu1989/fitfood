@@ -3,9 +3,9 @@
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($user->id) ? 'Create' : 'Update' }}</button>
             @if(!empty($user->id))
-                <a href="{{ url('user/changePassword', ['id' => $user->id]) }}" class="btn btn-primary btn-outline">Change Password</a>
+                <a href="{{ url('admin/user/changePassword', ['id' => $user->id]) }}" class="btn btn-primary btn-outline">Change Password</a>
             @endif
-            <a href="{{ url('user') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+            <a href="{{ url('admin/user') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>
 </div>
@@ -88,9 +88,9 @@ foreach($user->userRoles as $userRole)
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($user->id) ? 'Create' : 'Update' }}</button>
             @if(!empty($user->id))
-                <a href="{{ url('user/changePassword', ['id' => $user->id]) }}" class="btn btn-primary btn-outline">Change Password</a>
+                <a href="{{ url('admin/user/changePassword', ['id' => $user->id]) }}" class="btn btn-primary btn-outline">Change Password</a>
             @endif
-            <a href="{{ url('user') }}" class="btn btn-primary btn-outline pull-right">Back</a>
+            <a href="{{ url('admin/user') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>
 </div>

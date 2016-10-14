@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <form method="post" action="{{ url('menu/edit', ['id' => $menu->id]) }}" enctype="multipart/form-data">
+    <form method="post" action="{{ url('admin/menu/edit', ['id' => $menu->id]) }}" enctype="multipart/form-data">
 
         @include('admin.menus.forms.menu', ['menu' => $menu])
 

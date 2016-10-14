@@ -182,7 +182,7 @@
                                 <tr>
                                     <td>
                                         @if($shipperId != 0)
-                                            <a href="{{ url('shipping/detail', ['id' => $shipperId, 'date' => $date]) }}" class="btn btn-primary btn-outline">
+                                            <a href="{{ url('admin/shipping/detail', ['id' => $shipperId, 'date' => $date]) }}" class="btn btn-primary btn-outline">
                                                 {{ $shippers[$shipperId] }}
                                             </a>
                                         @else
@@ -260,7 +260,7 @@
 
             $('#DatePicker').change(function() {
 
-                window.location.href = '{{ url('shipping') }}?date=' + $(this).val();
+                window.location.href = '{{ url('admin/shipping') }}?date=' + $(this).val();
 
             });
 
@@ -271,7 +271,7 @@
 
                     $.ajax({
 
-                        url: '{{ url('shipping/finish', ['date' => $date]) }}',
+                        url: '{{ url('admin/shipping/finish', ['date' => $date]) }}',
                         type: 'post',
                         data: '_token={{ csrf_token() }}',
                         success: function(result) {

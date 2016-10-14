@@ -14,7 +14,7 @@
                         @include('admin.layouts.partials.pagination', ['pagination' => $resources])
                     </div>
                     <div class="col-sm-6">
-                        <a href="{{ url('resource/create') }}" data-toggle="tooltip" title="New Resource" class="btn btn-primary btn-outline">
+                        <a href="{{ url('admin/resource/create') }}" data-toggle="tooltip" title="New Resource" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
                     </div>
@@ -35,7 +35,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <form id="FilterForm" action="{{ url('resource') }}" method="get">
+                    <form id="FilterForm" action="{{ url('admin/resource') }}" method="get">
                         <tr>
                             <td></td>
                             <td>
@@ -65,7 +65,7 @@
                     @foreach($resources as $resource)
                         <tr>
                             <td>
-                                <a href="{{ url('resource/edit', ['id' => $resource->id]) }}" class="btn btn-primary btn-outline">{{ $resource->id }}</a>
+                                <a href="{{ url('admin/resource/edit', ['id' => $resource->id]) }}" class="btn btn-primary btn-outline">{{ $resource->id }}</a>
                             </td>
                             <td>{{ $resource->category->name }}</td>
                             <td>{{ $resource->name }}</td>

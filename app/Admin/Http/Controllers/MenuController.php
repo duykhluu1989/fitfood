@@ -120,7 +120,7 @@ class MenuController extends Controller
 
                     Db::commit();
 
-                    return redirect('mealPack');
+                    return redirect('admin/mealPack');
                 }
                 catch(\Exception $e)
                 {
@@ -176,7 +176,7 @@ class MenuController extends Controller
             if(count($errors) == 0)
             {
                 $category->save();
-                return redirect('category');
+                return redirect('admin/category');
             }
 
             return view($view, ['category' => $category, 'errors' => $errors]);
@@ -225,7 +225,7 @@ class MenuController extends Controller
             if(count($errors) == 0)
             {
                 $unit->save();
-                return redirect('unit');
+                return redirect('admin/unit');
             }
 
             return view($view, ['unit' => $unit, 'errors' => $errors]);
@@ -309,7 +309,7 @@ class MenuController extends Controller
             if(count($errors) == 0)
             {
                 $resource->save();
-                return redirect('resource');
+                return redirect('admin/resource');
             }
 
             return view($view, ['resource' => $resource, 'errors' => $errors]);
@@ -448,7 +448,7 @@ class MenuController extends Controller
 
                     Db::commit();
 
-                    return redirect('recipe');
+                    return redirect('admin/recipe');
                 }
                 catch(\Exception $e)
                 {
@@ -818,7 +818,7 @@ class MenuController extends Controller
 
                     Db::commit();
 
-                    return redirect('menu');
+                    return redirect('admin/menu');
                 }
                 catch(\Exception $e)
                 {

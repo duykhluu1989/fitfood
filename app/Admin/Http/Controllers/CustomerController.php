@@ -186,7 +186,7 @@ class CustomerController extends Controller
 
                     DB::commit();
 
-                    return redirect('customer/detail/' . $customer->id);
+                    return redirect('admin/customer/detail/' . $customer->id);
                 }
                 catch(\Exception $e)
                 {
