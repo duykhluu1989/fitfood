@@ -2,7 +2,7 @@
 
 namespace App\Libraries;
 
-use Eventviva\ImageResize;
+use Image;
 
 class Util
 {
@@ -61,9 +61,9 @@ class Util
     const BANK_TRANSFER_HSBC_ACCOUNT_NUMBER = 'HSBC 091048330041';
 
     const SHIPPING_TIME_NIGHT_BEFORE_VALUE = 'THE_NIGHT_BEFORE';
-    const SHIPPING_TIME_NIGHT_BEFORE_LABEL = 'Tối hôm trước';
-    const SHIPPING_TIME_NIGHT_BEFORE_LABEL_EN = 'Night before';
-    const SHIPPING_TIME_NIGHT_BEFORE_LABEL_ADMIN = 'Buổi tối';
+    const SHIPPING_TIME_NIGHT_BEFORE_LABEL = 'Tối hôm trước (20:00 - 22:00)';
+    const SHIPPING_TIME_NIGHT_BEFORE_LABEL_EN = 'Night before (20:00 - 22:00)';
+    const SHIPPING_TIME_NIGHT_BEFORE_LABEL_ADMIN = 'Buổi tối (20:00 - 22:00)';
 
     const ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE = 50000;
     const ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_NO_COW_VALUE = 'CHANGE_INGREDIENT_NO_COW';
@@ -444,10 +444,10 @@ class Util
 
     public static function cropImage($imagePath, $width, $height)
     {
-        $image = new ImageResize($imagePath);
+        $image = Image::make($imagePath);
 
-        $imageWidth = $image->getSourceWidth();
-        $imageHeight = $image->getSourceHeight();
+        $imageWidth = $image->width();
+        $imageHeight = $image->height();
 
         if($imageWidth > $width && $imageHeight > $height)
             $image->resize($width, $height);

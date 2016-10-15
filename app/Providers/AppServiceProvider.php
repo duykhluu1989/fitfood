@@ -21,6 +21,13 @@ class AppServiceProvider extends ServiceProvider
             __DIR__ . '/../../vendor/tinymce/tinymce/tinymce.jquery.min.js' => base_path('assets/js/tinymce/tinymce.jquery.min.js'),
             __DIR__ . '/../../vendor/tinymce/tinymce/tinymce.min.js' => base_path('assets/js/tinymce/tinymce.min.js'),
         ], 'tinymce');
+
+        $this->publishes([
+            __DIR__ . '/../../vendor/studio-42/elfinder/css' => base_path('assets/js/elfinder/css'),
+            __DIR__ . '/../../vendor/studio-42/elfinder/img' => base_path('assets/js/elfinder/img'),
+            __DIR__ . '/../../vendor/studio-42/elfinder/js' => base_path('assets/js/elfinder/js'),
+            __DIR__ . '/../../vendor/studio-42/elfinder/sounds' => base_path('assets/js/elfinder/sounds'),
+        ], 'elfinder');
     }
 
     /**

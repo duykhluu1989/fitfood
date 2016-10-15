@@ -249,6 +249,12 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::post('article/get/autoComplete/tag', 'BlogController@getAutoCompleteTagData');
 
+        Route::get('article/open/elFinder', 'BlogController@openElFinder');
+
+        Route::get('article/connector/elFinder', 'BlogController@connectorElFinder');
+
+        Route::post('article/connector/elFinder', 'BlogController@connectorElFinder');
+
         Route::get('tag', 'BlogController@listTag');
 
         Route::get('tag/create', 'BlogController@createTag');

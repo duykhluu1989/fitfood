@@ -156,6 +156,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Devfactory\Minify\MinifyServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -205,6 +206,7 @@ return [
 
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Minify'=> Devfactory\Minify\Facades\MinifyFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

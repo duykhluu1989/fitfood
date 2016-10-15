@@ -9,6 +9,7 @@ use App\Models\BlogCategory;
 use App\Models\Article;
 use App\Models\Tag;
 use App\Models\Widget;
+use Barryvdh\Elfinder\Connector;
 
 class BlogController extends Controller
 {
@@ -686,5 +687,43 @@ class BlogController extends Controller
         }
 
         return view($view, ['widget' => $widget]);
+    }
+
+    public function openElFinder()
+    {
+        return view('admin.blogs.partials.elFinder');
+    }
+
+    public function connectorElFinder()
+    {
+        $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/article_images';
+
+        if(!file_exists($path))
+            mkdir($path, 0755, true);
+
+        $opts = [
+            'roots'  => [
+                [
+                    'driver'        => 'LocalFileSystem',
+                    'path'          => $path,
+                    'URL'           => 'http://' . request()->getHttpHost() . Util::UPLOAD_IMAGE_DIR . '/article_images',
+                    'uploadDeny'    => ['all'],
+                    'uploadAllow'   => ['image', 'text/plain'],
+                    'uploadOrder'   => ['deny', 'allow'],
+                    'accessControl' => 'App\Admin\Http\Controllers\BlogController::access',
+                ]
+            ]
+        ];
+
+        $connector = new Connector(new \elFinder($opts));
+        $connector->run();
+        return $connector->getResponse();
+    }
+
+    public static function access($attr, $path, $data, $volume)
+    {
+        return strpos(basename($path), '.') === 0       // if file/folder begins with '.' (dot)
+            ? !($attr == 'read' || $attr == 'write')    // set read+write to false, other (locked+hidden) set to true
+            :  null;                                    // else elFinder decide it itself
     }
 }

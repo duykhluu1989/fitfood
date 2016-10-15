@@ -1,6 +1,6 @@
 <p>Hi {{ $name }},</p>
-<p>Cám ơn bạn đã order tại Fitfood.vn, Email này xác nhận thông tin order của bạn đã được ghi nhận trên hệ thống của chúng tôi. Bạn vui lòng kiểm tra lại thông tin bên dưới và đừng ngần ngại liên hệ với chúng tôi nếu bạn muốn thay đổi thông tin.</p>
-<p>Thanks for placing your order at Fitfood.vn. This email confirms that we have recorded your order information in our system. Please kindly check the information below and feel free to contact us if you would like to change any info.</p>
+<p>Cám ơn bạn đã order tại Fitfood.vn, Email này xác nhận thông tin order của bạn đã được ghi nhận trên hệ thống của chúng tôi. Vui lòng không trả lời lại, bạn kiểm tra lại thông tin bên dưới và đừng ngần ngại gọi cho chúng tôi 0932 788 120 nếu bạn muốn thay đổi thông tin.</p>
+<p>Thanks for placing your order at Fitfood.vn. This automated email confirms that we have recorded your order information in our system. Please kindly check the information below and feel free to contact us 0932 788 120 if you would like to change any info.</p>
 <ul>
     <li>Tên | Name: {{ $name }}</li>
     <li>Số điện thoại | Phone: <a href="tel:{{ $phone }}" value="{{ $phone}}" target="_blank">{{ $phone }}</a></li>
