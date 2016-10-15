@@ -801,6 +801,7 @@
             $('#FitfoodOrderForm').submit(function() {
 
                 $('#FitfoodOrderFormSubmitButton').prop('disabled', 'disabled');
+                showLoadingScreen();
 
                 var idArr;
                 var mealPackQuantityList = $('.FitfoodOrderFormMealPackQuantityInput');
@@ -835,6 +836,7 @@
 
                     });
 
+                    closeLoadingScreen();
                     $('#FitfoodOrderFormSubmitButton').removeAttr('disabled', 'disabled');
                     return false;
                 }
@@ -852,6 +854,7 @@
 
                     });
 
+                    closeLoadingScreen();
                     $('#FitfoodOrderFormSubmitButton').removeAttr('disabled', 'disabled');
                     return false;
                 }
@@ -873,6 +876,7 @@
 
                     });
 
+                    closeLoadingScreen();
                     $('#FitfoodOrderFormSubmitButton').removeAttr('disabled', 'disabled');
                     return false;
                 }
