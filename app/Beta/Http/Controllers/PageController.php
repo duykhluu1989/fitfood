@@ -2,6 +2,7 @@
 
 namespace App\Beta\Http\Controllers;
 
+use Redis;
 use Cookie;
 use Log;
 use Validator;
@@ -30,6 +31,8 @@ use App\Models\Tag;
 
 class PageController extends Controller
 {
+    const CACHE_INSTAGRAM_PHOTOS = 'CACHE_INSTAGRAM_PHOTOS';
+
     public function home()
     {
         $widgets = Widget::getModelActiveWidget();
@@ -91,26 +94,34 @@ class PageController extends Controller
             ->limit(10)
             ->get();
 
-        $instagramContent = file_get_contents('https://www.instagram.com/fitfoodvn/media');
-        $instagramContent = json_decode($instagramContent, true);
-
-        $instagramPhotos = array();
-        if(isset($instagramContent['status']) && $instagramContent['status'] == 'ok' && isset($instagramContent['items']) && is_array($instagramContent['items']))
+        $instagramPhotos = Redis::command('get', [self::CACHE_INSTAGRAM_PHOTOS]);
+        if($instagramPhotos == null)
         {
-            $i = 1;
-            foreach($instagramContent['items'] as $item)
+            $instagramContent = file_get_contents('https://www.instagram.com/fitfoodvn/media');
+            $instagramContent = json_decode($instagramContent, true);
+
+            $instagramPhotos = array();
+            if(isset($instagramContent['status']) && $instagramContent['status'] == 'ok' && isset($instagramContent['items']) && is_array($instagramContent['items']))
             {
-                if($i == 10)
-                    break;
+                $i = 1;
+                foreach($instagramContent['items'] as $item)
+                {
+                    if($i == 10)
+                        break;
 
-                $instagramPhotos[] = [
-                    'url' => $item['link'],
-                    'image_src' => $item['images']['thumbnail']['url'],
-                ];
+                    $instagramPhotos[] = [
+                        'url' => $item['link'],
+                        'image_src' => $item['images']['thumbnail']['url'],
+                    ];
 
-                $i ++;
+                    $i ++;
+                }
             }
+
+            Redis::command('setex', [self::CACHE_INSTAGRAM_PHOTOS, Util::TIMESTAMP_ONE_DAY, json_encode($instagramPhotos)]);
         }
+        else
+            $instagramPhotos = json_decode($instagramPhotos, true);
 
         if($categorySlug == null)
         {
