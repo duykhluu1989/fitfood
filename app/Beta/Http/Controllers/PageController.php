@@ -2,7 +2,6 @@
 
 namespace App\Beta\Http\Controllers;
 
-use Redis;
 use Cookie;
 use Log;
 use Validator;
@@ -10,6 +9,7 @@ use App;
 use Mail;
 use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use App\Libraries\Util;
 use App\Models\Area;
 use App\Models\MealPack;
