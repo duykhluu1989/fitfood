@@ -26,8 +26,8 @@
                     <li<?php echo (Request::is('blog') ? ' class="active"' : ''); ?>>
                         <a href="{{ url('blog') }}">Blog</a>
                     </li>
-                    <li<?php echo (Request::is('faqs') ? ' class="active"' : ''); ?>>
-                        <a href="{{ url('faqs') }}">FAQ</a>
+                    <li<?php echo (Request::is('frequently-asked-questions') ? ' class="active"' : ''); ?>>
+                        <a href="{{ url('frequently-asked-questions') }}">FAQ</a>
                     </li>
                     <li>
                         <a href="https://www.facebook.com/fitfoodvietnam"><i class="fa fa-facebook" aria-hidden="true"></i></a>

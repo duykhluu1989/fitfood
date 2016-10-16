@@ -33,6 +33,6 @@ Route::group(['middleware' => ['locale', 'initMenu']], function() {
 
     Route::get('lang/{lan}', 'PageController@lang');
 
-    Route::get('faqs', 'PageController@faqs');
+    Route::get('frequently-asked-questions', 'PageController@faqs');
 
 });
