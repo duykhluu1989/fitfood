@@ -2,22 +2,55 @@
 
 namespace App\Admin\Http\Controllers;
 
+use Excel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use App\Models\Discount;
 use App\Libraries\Util;
 use App\Models\Customer;
 
 class DiscountController extends Controller
 {
-    public function listDiscount()
+    const CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE = 'CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE';
+
+    public function listDiscount(Request $request)
     {
-        $builder = Discount::select('*');
+        $input = $request->all();
+
+        $builder = Discount::select('*')->with('customer');
+
+        if(isset($input['filter']))
+        {
+            if(!empty($input['filter']['code']))
+                $builder->where('code', 'like', '%' . $input['filter']['code'] . '%');
+
+            if(!empty($input['filter']['type']))
+                $builder->where('type', $input['filter']['type']);
+
+            if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
+                $builder->where('status', $input['filter']['status']);
+
+            $filter = $input['filter'];
+            $queryString = '&' . http_build_query(['filter' => $input['filter']]);
+        }
+        else
+        {
+            $filter = null;
+            $queryString = null;
+        }
 
         $builder->orderBy('id', 'DESC');
 
         $discounts = $builder->paginate(Util::GRID_PER_PAGE);
 
-        return view('admin.discounts.list_discount', ['discounts' => $discounts]);
+        $exportData = Redis::command('get', [self::CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE]);
+
+        return view('admin.discounts.list_discount', [
+            'discounts' => $discounts,
+            'filter' => $filter,
+            'queryString' => $queryString,
+            'exportData' => $exportData,
+        ]);
     }
 
     public function createDiscount(Request $request)
@@ -154,6 +187,10 @@ class DiscountController extends Controller
 
             if(count($errors) == 0)
             {
+                $exportData[] = [
+                    'Code',
+                ];
+
                 for($i = 1;$i <= $discount->quantity;$i ++)
                 {
                     $newDiscount = new Discount();
@@ -169,7 +206,14 @@ class DiscountController extends Controller
                     $newDiscount->usage_unique = $discount->usage_unique;
                     $newDiscount->description = $discount->description;
                     $newDiscount->save();
+
+                    $exportData[] = [
+                        $newDiscount->code,
+                    ];
                 }
+
+                if(count($exportData) > 1)
+                    Redis::command('setex', [self::CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE, Util::TIMESTAMP_ONE_DAY, json_encode($exportData)]);
 
                 return redirect('admin/discount');
             }
@@ -186,5 +230,28 @@ class DiscountController extends Controller
         $discount->delete();
 
         return redirect('admin/discount');
+    }
+
+    public function exportDiscount()
+    {
+        $exportData = Redis::command('get', [self::CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE]);
+        if($exportData != null)
+        {
+            Redis::command('del', [self::CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE]);
+
+            $exportData = json_decode($exportData, true);
+
+            Excel::create('export-discount-' . date('Y-m-d'), function($excel) use($exportData) {
+
+                $excel->sheet('sheet1', function($sheet) use($exportData) {
+
+                    $sheet->fromArray($exportData, null, 'A1', true, false);
+
+                });
+
+            })->export('xls');
+        }
+        else
+            return redirect('admin/discount');
     }
 }

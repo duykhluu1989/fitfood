@@ -23,17 +23,17 @@
 
         <div class="col-sm-12">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Number Character</h3>
                         </div>
                         <div class="panel-body">
-                            <input type="text" class="form-control" name="discount[character]" value="{{ $discount->character }}" placeholder="Number Character (Min: 10 - Max: 255)" autofocus="autofocus" required="required" />
+                            <input type="text" class="form-control" name="discount[character]" value="{{ $discount->character }}" placeholder="Number Character (Min: 6 - Max: 255)" autofocus="autofocus" required="required" />
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Code Quantity</h3>
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Usage Unique</h3>
@@ -51,6 +51,18 @@
                         <div class="panel-body">
                             <label class="checkbox-inline">
                                 <input<?php echo ($discount->usage_unique ? ' checked="checked"' : ''); ?> type="checkbox" name="discount[usage_unique]" value="usage_unique" /><b>Active</b>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Export</h3>
+                        </div>
+                        <div class="panel-body">
+                            <label class="checkbox-inline">
+                                <input checked="checked" type="checkbox" name="discount[export]" value="Export" /><b>Active</b>
                             </label>
                         </div>
                     </div>

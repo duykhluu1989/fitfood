@@ -171,6 +171,8 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::get('discount/delete/{id}', 'DiscountController@deleteDiscount');
 
+        Route::get('discount/export', 'DiscountController@exportDiscount');
+
         Route::get('category', 'MenuController@listCategory');
 
         Route::get('category/create', 'MenuController@createCategory');
