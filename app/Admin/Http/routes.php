@@ -257,6 +257,8 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::post('article/connector/elFinder', 'BlogController@connectorElFinder');
 
+        Route::get('article/delete/{id}', 'BlogController@deleteArticle');
+
         Route::get('tag', 'BlogController@listTag');
 
         Route::get('tag/create', 'BlogController@createTag');

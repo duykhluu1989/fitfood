@@ -42,7 +42,18 @@
                             </td>
                             <td></td>
                             <td></td>
-                            <td></td>
+                            <td>
+                                <select class="form-control DropDownFilterForm" name="filter[status]">
+                                    <option value=""></option>
+                                    @foreach(App\Libraries\Util::getStatus() as $value => $label)
+                                        @if(isset($filter['status']) && $filter['status'] !== '' && $filter['status'] == $value)
+                                            <option selected="selected" value="{{ $value }}">{{ $label }}</option>
+                                        @else
+                                            <option value="{{ $value }}">{{ $label }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </td>
                         </tr>
 
                         <input type="submit" style="display: none" />
@@ -69,5 +80,23 @@
             </div>
         </div>
     </div>
+
+@stop
+
+@section('script')
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            $('.DropDownFilterForm').change(function() {
+
+                $('#FilterForm').submit();
+
+            });
+
+        });
+
+    </script>
 
 @stop

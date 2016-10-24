@@ -136,15 +136,38 @@ class MenuController extends Controller
         return view($view, ['mealPack' => $mealPack]);
     }
 
-    public function listCategory()
+    public function listCategory(Request $request)
     {
+        $input = $request->all();
+
         $builder = Category::select('*');
+
+        if(isset($input['filter']))
+        {
+            if(!empty($input['filter']['name']))
+                $builder->where('name', 'like', '%' . $input['filter']['name'] . '%');
+
+            if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
+                $builder->where('status', $input['filter']['status']);
+
+            $filter = $input['filter'];
+            $queryString = '&' . http_build_query(['filter' => $input['filter']]);
+        }
+        else
+        {
+            $filter = null;
+            $queryString = null;
+        }
 
         $builder->orderBy('id', 'DESC');
 
         $categories = $builder->paginate(Util::GRID_PER_PAGE);
 
-        return view('admin.menus.list_category', ['categories' => $categories]);
+        return view('admin.menus.list_category', [
+            'categories' => $categories,
+            'filter' => $filter,
+            'queryString' => $queryString,
+        ]);
     }
 
     public function createCategory(Request $request)
@@ -185,15 +208,38 @@ class MenuController extends Controller
         return view($view, ['category' => $category]);
     }
 
-    public function listUnit()
+    public function listUnit(Request $request)
     {
+        $input = $request->all();
+
         $builder = Unit::select('*');
+
+        if(isset($input['filter']))
+        {
+            if(!empty($input['filter']['name']))
+                $builder->where('name', 'like', '%' . $input['filter']['name'] . '%');
+
+            if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
+                $builder->where('status', $input['filter']['status']);
+
+            $filter = $input['filter'];
+            $queryString = '&' . http_build_query(['filter' => $input['filter']]);
+        }
+        else
+        {
+            $filter = null;
+            $queryString = null;
+        }
 
         $builder->orderBy('id', 'DESC');
 
         $units = $builder->paginate(Util::GRID_PER_PAGE);
 
-        return view('admin.menus.list_unit', ['units' => $units]);
+        return view('admin.menus.list_unit', [
+            'units' => $units,
+            'filter' => $filter,
+            'queryString' => $queryString,
+        ]);
     }
 
     public function createUnit(Request $request)
@@ -253,6 +299,9 @@ class MenuController extends Controller
 
             if(!empty($input['filter']['code']))
                 $builder->where('code', 'like', '%' . $input['filter']['code'] . '%');
+
+            if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
+                $builder->where('status', $input['filter']['status']);
 
             $filter = $input['filter'];
             $queryString = '&' . http_build_query(['filter' => $input['filter']]);
@@ -618,6 +667,9 @@ class MenuController extends Controller
                     $builder->join('ff_resource', 'ff_recipe_resource.resource_id', '=', 'ff_resource.id');
                 $builder->where('ff_resource.name_en', 'like', '%' . $input['filter']['resource_en'] . '%');
             }
+
+            if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
+                $builder->where('status', $input['filter']['status']);
 
             $filter = $input['filter'];
             $queryString = '&' . http_build_query(['filter' => $input['filter']]);

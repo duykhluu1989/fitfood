@@ -24,6 +24,7 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Username</th>
                         <th>Role</th>
                         <th>Active</th>
@@ -31,6 +32,7 @@
                     </tr>
                     <form id="FilterForm" action="{{ url('admin/user') }}" method="get">
                         <tr>
+                            <td></td>
                             <td>
                                 <input type="text" class="form-control" name="filter[username]" value="{{ (isset($filter['username']) ? $filter['username'] : '') }}" />
                             </td>
@@ -68,8 +70,9 @@
                     @foreach($users as $user)
                         <tr>
                             <td>
-                                <a href="{{ url('admin/user/edit', ['id' => $user->id]) }}" class="btn btn-primary btn-outline">{{ $user->username }}</a>
+                                <a href="{{ url('admin/user/edit', ['id' => $user->id]) }}" class="btn btn-primary btn-outline">{{ $user->id }}</a>
                             </td>
+                            <td>{{ $user->username }}</td>
                             <td>
                                 @foreach($user->userRoles as $userRole)
                                     {{ $userRole->role->name }}<br />

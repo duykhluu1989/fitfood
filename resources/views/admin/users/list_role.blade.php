@@ -24,10 +24,12 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Name</th>
                     </tr>
                     <form id="FilterForm" action="{{ url('admin/role') }}" method="get">
                         <tr>
+                            <td></td>
                             <td>
                                 <input type="text" class="form-control" name="filter[name]" value="{{ (isset($filter['name']) ? $filter['name'] : '') }}" />
                             </td>
@@ -40,8 +42,9 @@
                     @foreach($roles as $role)
                         <tr>
                             <td>
-                                <a href="{{ url('admin/role/edit', ['id' => $role->id]) }}" class="btn btn-primary btn-outline">{{ $role->name }}</a>
+                                <a href="{{ url('admin/role/edit', ['id' => $role->id]) }}" class="btn btn-primary btn-outline">{{ $role->id }}</a>
                             </td>
+                            <td>{{ $role->name }}</td>
                         </tr>
                     @endforeach
                     </tbody>

@@ -27,6 +27,9 @@ class BlogController extends Controller
             if(!empty($input['filter']['name_en']))
                 $builder->where('name_en', 'like', '%' . $input['filter']['name_en'] . '%');
 
+            if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
+                $builder->where('status', $input['filter']['status']);
+
             $filter = $input['filter'];
             $queryString = '&' . http_build_query(['filter' => $input['filter']]);
         }
@@ -372,6 +375,39 @@ class BlogController extends Controller
         return view($view, ['article' => $article]);
     }
 
+    public function deleteArticle($id)
+    {
+        $article = Article::where('status', Util::STATUS_ARTICLE_DRAFT_VALUE)->find($id);
+
+        if(!empty($article->image_src))
+        {
+            $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/article';
+
+            $imageSrcParts = explode('/', $article->image_src);
+
+            $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
+
+            if(file_exists($oldFilePath) && is_file($oldFilePath))
+                unlink($oldFilePath);
+        }
+
+        if(!empty($article->thumbnail_src))
+        {
+            $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/article_thumbnail';
+
+            $imageSrcParts = explode('/', $article->thumbnail_src);
+
+            $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
+
+            if(file_exists($oldFilePath) && is_file($oldFilePath))
+                unlink($oldFilePath);
+        }
+
+        $article->delete();
+
+        return redirect('admin/article');
+    }
+
     public function listTag(Request $request)
     {
         $input = $request->all();
@@ -478,6 +514,9 @@ class BlogController extends Controller
         {
             if(!empty($input['filter']['name']))
                 $builder->where('name', 'like', '%' . $input['filter']['name'] . '%');
+
+            if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
+                $builder->where('status', $input['filter']['status']);
 
             $filter = $input['filter'];
             $queryString = '&' . http_build_query(['filter' => $input['filter']]);
