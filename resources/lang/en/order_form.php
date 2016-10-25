@@ -47,5 +47,6 @@ return [
     'subTotalPrice' => 'Subtotal',
     'cartTotal' => 'Cart total',
     'noteChangeIngredient' => 'Please note that an alternative meal within that day will be replaced for FIT/MEAT Package. For FULL Package, it will be double of one of the remaining meal',
+    'extraQuantity' => 'Extra Quantity',
 
 ];

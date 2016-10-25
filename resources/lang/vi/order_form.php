@@ -47,5 +47,6 @@ return [
     'subTotalPrice' => 'Tổng phụ',
     'cartTotal' => 'Tổng đơn hàng',
     'noteChangeIngredient' => 'Đối với gói FIT/MEAT LOVER, Fitfood sẽ thay thế các bữa ăn có thành phần bạn không ăn được bằng các bữa ăn khác trong ngày. Đối với gói FULL, Fitfood sẽ thay thế bằng 2 bữa ăn giống nhau trong ngày',
+    'extraQuantity' => 'Số lượng thêm',
 
 ];

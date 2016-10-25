@@ -232,6 +232,14 @@
                                                 <?php echo (App::getLocale() == 'en' ? App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL_EN : App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL); ?>
                                                 <span><?php echo App\Libraries\Util::formatMoney(App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?></span></label>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-6">
+                                                <h5>@lang('order_form.extraQuantity')</h5>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4">
+                                                <select class="form-control" id="FitfoodOrderDropDownExtraBreakfastQuantity" name="extra_breakfast_quantity" disabled="disabled"></select>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="box">
                                         <h4>@lang('order_form.discountCode')</h4>
@@ -547,7 +555,21 @@
                 if($('#FitfoodNoBreakfastMainMealPack_' + idArr[1]).length > 0)
                 {
                     if(elem.val() > 0)
+                    {
                         extraBreakfastElem.removeAttr('disabled');
+
+                        if($('#FitfoodOrderDropDownExtraBreakfastQuantity').prop('disabled') == false)
+                        {
+                            orderDropDownExtraBreakfastQuantityOldVal = $('#FitfoodOrderDropDownExtraBreakfastQuantity').val();
+
+                            var optionElemsHtml = '';
+                            for(var i = 1;i <= elem.val();i ++)
+                                optionElemsHtml += '<option value="' + i + '">' + i + '</option>';
+
+                            $('#FitfoodOrderDropDownExtraBreakfastQuantity').html(optionElemsHtml);
+                            $('#FitfoodOrderDropDownExtraBreakfastQuantity').trigger('change');
+                        }
+                    }
                     else
                     {
                         if(extraBreakfastElem.prop('checked') == true)
@@ -564,7 +586,7 @@
 
             var orderDropDownChangeIngredientOldVal;
 
-            $('#FitfoodOrderDropDownChangeIngredient').click(function(event) {
+            $('#FitfoodOrderDropDownChangeIngredient').click(function() {
 
                 orderDropDownChangeIngredientOldVal = $(this).val();
 
@@ -637,17 +659,76 @@
                 {
                     extraPriceVal += <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>;
                     totalTempVal += <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>;
+
+                    var maxExtraBreakfastQuantity = 0;
+                    $('.FitfoodOrderFormMealPackQuantityInput').each(function() {
+
+                        var elem = $(this);
+                        var idArr = elem.prop('id').split('_');
+
+                        if($('#FitfoodNoBreakfastMainMealPack_' + idArr[1]).length > 0)
+                        {
+                            if(elem.val() > 0)
+                                maxExtraBreakfastQuantity += parseInt(elem.val());
+                        }
+
+                    });
+
+                    var optionElemsHtml = '';
+                    for(var i = 1;i <= maxExtraBreakfastQuantity;i ++)
+                        optionElemsHtml += '<option value="' + i + '">' + i + '</option>';
+
+                    $('#FitfoodOrderDropDownExtraBreakfastQuantity').removeAttr('disabled').html(optionElemsHtml);
                 }
                 else
                 {
-                    extraPriceVal -= <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>;
-                    totalTempVal -= <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>;
+                    extraPriceVal -= ($('#FitfoodOrderDropDownExtraBreakfastQuantity').val() * <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>);
+                    totalTempVal -= ($('#FitfoodOrderDropDownExtraBreakfastQuantity').val() * <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>);
+
+                    $('#FitfoodOrderDropDownExtraBreakfastQuantity').html('').prop('disabled', 'disabled');
                 }
 
                 extraPriceElem.html(formatMoney(extraPriceVal.toString()));
                 totalTempElem.html(formatMoney(totalTempVal.toString()));
 
                 removeDiscount();
+
+            });
+
+            var orderDropDownExtraBreakfastQuantityOldVal;
+
+            $('#FitfoodOrderDropDownExtraBreakfastQuantity').click(function() {
+
+                orderDropDownExtraBreakfastQuantityOldVal = $(this).val();
+
+            }).change(function() {
+
+                var totalTempElem = $('#FitfoodTotalMealPackPrice');
+                var totalTempVal = parseInt(totalTempElem.html().split('.').join(''));
+
+                var extraPriceElem = $('#FitfoodExtraPrice');
+                var extraPriceVal = parseInt(extraPriceElem.html().split('.').join(''));
+
+                if($(this).val() > orderDropDownExtraBreakfastQuantityOldVal)
+                {
+                    extraPriceVal += (($(this).val() - orderDropDownExtraBreakfastQuantityOldVal) * <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>);
+                    totalTempVal += (($(this).val() - orderDropDownExtraBreakfastQuantityOldVal) * <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>);
+
+                    extraPriceElem.html(formatMoney(extraPriceVal.toString()));
+                    totalTempElem.html(formatMoney(totalTempVal.toString()));
+
+                    removeDiscount();
+                }
+                else if($(this).val() < orderDropDownExtraBreakfastQuantityOldVal)
+                {
+                    extraPriceVal -= ((orderDropDownExtraBreakfastQuantityOldVal - $(this).val()) * <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>);
+                    totalTempVal -= ((orderDropDownExtraBreakfastQuantityOldVal - $(this).val()) * <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>);
+
+                    extraPriceElem.html(formatMoney(extraPriceVal.toString()));
+                    totalTempElem.html(formatMoney(totalTempVal.toString()));
+
+                    removeDiscount();
+                }
 
             });
 

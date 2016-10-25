@@ -122,7 +122,7 @@
             });
 
             @if($exportData != null)
-                window.location = '<?php echo url('admin/discount/export'); ?>';
+            window.location = '<?php echo url('admin/discount/export'); ?>';
             @endif
 
         });

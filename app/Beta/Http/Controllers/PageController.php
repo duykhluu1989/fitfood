@@ -331,7 +331,7 @@ class PageController extends Controller
                 'district' => 'required|integer|min:1',
                 'shipping_time' => 'required|string',
                 'payment_gateway' => 'required|in:' . Util::PAYMENT_GATEWAY_CASH_VALUE . ',' . Util::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE . ',' . Util::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_VALUE . ',' . Util::PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_VALUE,
-                'mealPack' => 'required|array'
+                'mealPack' => 'required|array',
             ]);
 
             $hasPack = false;
@@ -355,6 +355,17 @@ class PageController extends Controller
 
             if($validator->fails() || $hasPack == false || $totalMealPack > 5)
                 return redirect('order')->with('OrderError', trans('order_form.validate'));
+
+            $extraBreakfastQuantity = 0;
+            $realExtraBreakfastQuantity = 0;
+
+            if(!empty($input['extra_breakfast']))
+            {
+                if(empty($input['extra_breakfast_quantity']) || !is_numeric($input['extra_breakfast_quantity']))
+                    return redirect('order')->with('OrderError', trans('order_form.validate'));
+                else
+                    $extraBreakfastQuantity = trim($input['extra_breakfast_quantity']);
+            }
 
             $startShippingDate = null;
 
@@ -459,7 +470,7 @@ class PageController extends Controller
                 if($mealValid == false)
                     throw new \Exception();
 
-                $addedExtraBreakfastOrderItemId = null;
+                $addedExtraBreakfastOrderItemIds = array();
                 $addedExtraBreakfast = false;
 
                 foreach($mealPacks as $mealPack)
@@ -530,7 +541,8 @@ class PageController extends Controller
 
                                         if(empty($mealPack->breakfast) && isset($doubles['lunch']) && isset($doubles['dinner']) && !empty($input['extra_breakfast']) && $addedExtraBreakfast == false)
                                         {
-                                            $addedExtraBreakfastOrderItemId = $orderItem->id;
+                                            if(!in_array($orderItem->id, $addedExtraBreakfastOrderItemIds))
+                                                $addedExtraBreakfastOrderItemIds[] = $orderItem->id;
                                             $orderItemMealDetail->extra = Util::STATUS_ACTIVE_VALUE;
                                         }
                                         else
@@ -544,7 +556,12 @@ class PageController extends Controller
                                         $orderItemMealDetail->save();
 
                                         if(empty($mealPack->breakfast) && isset($doubles['lunch']) && isset($doubles['dinner']) && !empty($input['extra_breakfast']) && $addedExtraBreakfast == false && $dayOfWeek == max($normalMenuDayOfWeek))
-                                            $addedExtraBreakfast = true;
+                                        {
+                                            $realExtraBreakfastQuantity ++;
+
+                                            if($realExtraBreakfastQuantity == $extraBreakfastQuantity)
+                                                $addedExtraBreakfast = true;
+                                        }
                                     }
 
                                     if(!empty($mealPack->lunch))
@@ -676,19 +693,22 @@ class PageController extends Controller
                         $mailExtraRequests[] = Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL;
                 }
 
-                if(!empty($input['extra_breakfast']))
+                if(!empty($input['extra_breakfast']) && $realExtraBreakfastQuantity > 0)
                 {
-                    $orderExtra = new OrderExtra();
-                    $orderExtra->order_id = $order->id;
-                    if($addedExtraBreakfastOrderItemId)
-                        $orderExtra->order_item_id = $addedExtraBreakfastOrderItemId;
-                    $orderExtra->price = Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5;
-                    $orderExtra->code = $input['extra_breakfast'];
-                    $orderExtra->save();
+                    for($i = 0;$i < $realExtraBreakfastQuantity;$i ++)
+                    {
+                        $orderExtra = new OrderExtra();
+                        $orderExtra->order_id = $order->id;
+                        if(isset($addedExtraBreakfastOrderItemIds[$i]))
+                            $orderExtra->order_item_id = $addedExtraBreakfastOrderItemIds[$i];
+                        $orderExtra->price = Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5;
+                        $orderExtra->code = $input['extra_breakfast'];
+                        $orderExtra->save();
 
-                    $order->total_extra_price += $orderExtra->price;
-                    $order->total_price += $orderExtra->price;
-                    $order->warning = Util::STATUS_ACTIVE_VALUE;
+                        $order->total_extra_price += $orderExtra->price;
+                        $order->total_price += $orderExtra->price;
+                        $order->warning = Util::STATUS_ACTIVE_VALUE;
+                    }
 
                     if(App::getLocale() == 'en')
                         $mailExtraRequests[] = Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL_EN;
