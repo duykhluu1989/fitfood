@@ -97,7 +97,21 @@ class PageController extends Controller
         $instagramPhotos = Redis::command('get', [self::CACHE_INSTAGRAM_PHOTOS]);
         if($instagramPhotos == null)
         {
-            $instagramContent = file_get_contents('https://www.instagram.com/fitfoodvn/media');
+            $curl = curl_init();
+
+            curl_setopt($curl, CURLOPT_URL, 'https://www.instagram.com/fitfoodvn/media');
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_FAILONERROR, true);
+            curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true );
+
+            $environment = app()->environment();
+            if($environment != 'production')
+                curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+
+            $instagramContent = curl_exec($curl);
+            curl_close($curl);
+
             $instagramContent = json_decode($instagramContent, true);
 
             $instagramPhotos = array();
