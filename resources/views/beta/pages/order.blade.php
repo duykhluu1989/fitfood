@@ -979,6 +979,10 @@
             $('#OrderFormMealPackQuantityInput_<?php echo $autoAddMealPackId; ?>').val(1).trigger('change');
             @endif
 
+            @if($showOrderPolicyPopup)
+            swal('@lang('order_form.sundayPolicy')');
+            @endif
+
         });
 
     </script>

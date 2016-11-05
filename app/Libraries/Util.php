@@ -17,6 +17,7 @@ class Util
 
     const TIMESTAMP_ONE_DAY = 86400;
     const MINUTE_ONE_MONTH_EXPIRED = 43200;
+    const MINUTE_ONE_HOUR_EXPIRED = 60;
 
     const STATUS_INACTIVE_VALUE = 0;
     const STATUS_ACTIVE_VALUE = 1;
@@ -145,6 +146,7 @@ class Util
     const TYPE_WIDGET_SLIDER_LABEL = 'Slider';
 
     const COOKIE_READ_ARTICLE_NAME = 'read_article';
+    const COOKIE_READ_ORDER_POLICY_NAME = 'read_order_policy';
 
     const UPLOAD_IMAGE_DIR = '/assets/upload';
 

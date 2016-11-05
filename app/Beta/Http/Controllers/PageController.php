@@ -912,12 +912,22 @@ class PageController extends Controller
 
         $autoAddMealPackId = $request->input('p');
 
+        if($dayOfWeekForOrder == 7 && $request->hasCookie(Util::COOKIE_READ_ORDER_POLICY_NAME) == false)
+        {
+            Cookie::queue(Util::COOKIE_READ_ORDER_POLICY_NAME, true, Util::MINUTE_ONE_HOUR_EXPIRED);
+            $showOrderPolicyPopup = true;
+        }
+        else
+            $showOrderPolicyPopup = false;
+
+
         return view('beta.pages.order', [
             'areas' => $areas,
             'mealPacks' => $mealPacks,
             'normalMenuDays' => $normalMenuDays,
             'currentNormalMenu' => $currentNormalMenu,
             'autoAddMealPackId' => $autoAddMealPackId,
+            'showOrderPolicyPopup' => $showOrderPolicyPopup,
         ]);
     }
 
