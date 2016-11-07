@@ -920,7 +920,6 @@ class PageController extends Controller
         else
             $showOrderPolicyPopup = false;
 
-
         return view('beta.pages.order', [
             'areas' => $areas,
             'mealPacks' => $mealPacks,

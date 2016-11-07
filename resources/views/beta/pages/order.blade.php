@@ -980,7 +980,13 @@
             @endif
 
             @if($showOrderPolicyPopup)
-            swal('@lang('order_form.sundayPolicy')');
+            sweetAlert({
+
+                title: '',
+                text: '@lang('order_form.sundayPolicy')',
+                allowOutsideClick: true
+
+            });
             @endif
 
         });
