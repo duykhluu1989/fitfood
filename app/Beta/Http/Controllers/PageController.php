@@ -825,62 +825,7 @@ class PageController extends Controller
                 if($order->payment_gateway != Util::PAYMENT_GATEWAY_CASH_VALUE)
                     $bankNumber = Util::getBankAccountNumber($order->payment_gateway);
 
-                try
-                {
-                    Mail::send('web.emails.order_confirm', [
-                        'name' => $orderAddress->name,
-                        'phone' => $customer->phone,
-                        'address' => $orderAddress->address,
-                        'mealPacks' => $mailMealPack,
-                        'paymentGateway' => Util::getPaymentMethod($order->payment_gateway, App::getLocale()),
-                        'deliveryTime' => $deliveryTime,
-                        'extraRequest' => $extraRequest,
-                        'totalPrice' => Util::formatMoney($order->total_price),
-                        'note' => $order->customer_note,
-                        'email' => $order->orderAddress->email,
-                        'bankNumber' => $bankNumber,
-                        'startShippingDate' => $startShippingDate,
-                    ], function($message) use($orderAddress) {
-
-                        $message->from('order@fitfood.vn', 'Fitfood');
-                        $message->to($orderAddress->email, $orderAddress->name);
-                        $message->subject('[FITFOOD.VN] Xác nhận order | Order Confirmation');
-
-                    });
-                }
-                catch(\Exception $e)
-                {
-
-                }
-
-                try
-                {
-                    Mail::send('web.emails.order_confirm', [
-                        'name' => $orderAddress->name,
-                        'phone' => $customer->phone,
-                        'address' => $orderAddress->address,
-                        'mealPacks' => $mailMealPack,
-                        'paymentGateway' => Util::getPaymentMethod($order->payment_gateway, App::getLocale()),
-                        'deliveryTime' => $deliveryTime,
-                        'extraRequest' => $extraRequest,
-                        'totalPrice' => Util::formatMoney($order->total_price),
-                        'note' => $order->customer_note,
-                        'email' => $order->orderAddress->email,
-                        'bankNumber' => $bankNumber,
-                        'startShippingDate' => $startShippingDate,
-                    ], function($message) use($orderAddress) {
-
-                        $message->from('order@fitfood.vn', 'Fitfood');
-                        $message->to('info@fitfood.vn', 'Fitfood');
-                        $message->cc('huong.ueh35@gmail.com', 'Fitfood');
-                        $message->subject('[FITFOOD.VN] Xác nhận order | Order Confirmation');
-
-                    });
-                }
-                catch(\Exception $e)
-                {
-
-                }
+                register_shutdown_function([get_class(new self), 'sendConfirmEmail'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate);
 
                 return redirect('thankYou')->with('OrderThankYou', json_encode([
                     'name' => $orderAddress->name,
@@ -928,6 +873,66 @@ class PageController extends Controller
             'autoAddMealPackId' => $autoAddMealPackId,
             'showOrderPolicyPopup' => $showOrderPolicyPopup,
         ]);
+    }
+
+    public static function sendConfirmEmail($order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate)
+    {
+        try
+        {
+            Mail::send('web.emails.order_confirm', [
+                'name' => $orderAddress->name,
+                'phone' => $customer->phone,
+                'address' => $orderAddress->address,
+                'mealPacks' => $mailMealPack,
+                'paymentGateway' => Util::getPaymentMethod($order->payment_gateway, App::getLocale()),
+                'deliveryTime' => $deliveryTime,
+                'extraRequest' => $extraRequest,
+                'totalPrice' => Util::formatMoney($order->total_price),
+                'note' => $order->customer_note,
+                'email' => $order->orderAddress->email,
+                'bankNumber' => $bankNumber,
+                'startShippingDate' => $startShippingDate,
+            ], function($message) use($orderAddress) {
+
+                $message->from('order@fitfood.vn', 'Fitfood');
+                $message->to($orderAddress->email, $orderAddress->name);
+                $message->subject('[FITFOOD.VN] Xác nhận order | Order Confirmation');
+
+            });
+        }
+        catch(\Exception $e)
+        {
+
+        }
+
+        try
+        {
+            Mail::send('web.emails.order_confirm', [
+                'name' => $orderAddress->name,
+                'phone' => $customer->phone,
+                'address' => $orderAddress->address,
+                'mealPacks' => $mailMealPack,
+                'paymentGateway' => Util::getPaymentMethod($order->payment_gateway, App::getLocale()),
+                'deliveryTime' => $deliveryTime,
+                'extraRequest' => $extraRequest,
+                'totalPrice' => Util::formatMoney($order->total_price),
+                'note' => $order->customer_note,
+                'email' => $order->orderAddress->email,
+                'bankNumber' => $bankNumber,
+                'startShippingDate' => $startShippingDate,
+            ], function($message) use($orderAddress) {
+
+                $message->from('order@fitfood.vn', 'Fitfood');
+                $message->to('info@fitfood.vn', 'Fitfood');
+                $message->cc('huong.ueh35@gmail.com', 'Fitfood');
+                $message->subject('[FITFOOD.VN] Xác nhận order | Order Confirmation');
+
+            });
+        }
+        catch(\Exception $e)
+        {
+
+        }
     }
 
     public function thankYou(Request $request)
