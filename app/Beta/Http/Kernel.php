@@ -50,6 +50,5 @@ class Kernel extends HttpKernel
         'guest' => \App\Beta\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'locale' => \App\Beta\Http\Middleware\Locale::class,
-        'initMenu' => \App\Beta\Http\Middleware\InitMenu::class,
     ];
 }

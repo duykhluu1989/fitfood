@@ -1,15 +1,18 @@
 <?php
 
-namespace App\Beta\Http\Middleware;
+namespace App\Console\Commands;
 
-use Closure;
-use Illuminate\Http\Request;
+use Illuminate\Console\Command;
 use App\Libraries\Util;
 use App\Models\Menu;
 
-class InitMenu
+class UpdateMenu extends Command
 {
-    public function handle(Request $request, Closure $next)
+    protected $signature = 'UpdateMenu';
+
+    protected $description = 'Update next week menu';
+
+    public function handle()
     {
         $nextWeekMenus = Menu::where('status', Util::STATUS_MENU_NEXT_WEEK_VALUE)->get();
         foreach($nextWeekMenus as $nextWeekMenu)
@@ -23,7 +26,5 @@ class InitMenu
                 $nextWeekMenu->save();
             }
         }
-
-        return $next($request);
     }
 }
