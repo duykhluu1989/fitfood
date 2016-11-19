@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['locale', 'initMenu']], function() {
+Route::group(['middleware' => ['locale']], function() {
 
     Route::get('/', 'PageController@home');
 
