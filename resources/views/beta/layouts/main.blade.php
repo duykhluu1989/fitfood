@@ -50,8 +50,9 @@
             <img src="{{ asset('assets/images/logo-ver.png') }}" alt="Fitfood" border="0" />
         </div>
         <div class="block social text-center">
-            <a href="https://www.facebook.com/fitfoodvietnam"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-            <a href="https://www.instagram.com/fitfoodvn"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://www.facebook.com/fitfoodvietnam" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://www.instagram.com/fitfoodvn" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://m.me/fitfoodvietnam" target="_blank"><i class="fa fa-comment" aria-hidden="true"></i></a>
         </div>
     </div>
 </div>

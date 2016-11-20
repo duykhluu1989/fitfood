@@ -226,7 +226,7 @@
     -->
     <h5>Bạn vẫn còn thắc mắc? Hãy gửi tin nhắn trên Facebook cho Fitfood để nhận được tư vấn MIỄN PHÍ</h5>
     <div align="center">
-        <a href="https://www.facebook.com/fitfoodvietnam" class="btn btn-default" target="_blank">Gửi tin nhắn ngay</a>
+        <a href="https://m.me/fitfoodvietnam" class="btn btn-default" target="_blank">Gửi tin nhắn ngay</a>
     </div>
     <!--
     <form role="form">

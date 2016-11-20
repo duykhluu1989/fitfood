@@ -142,7 +142,7 @@
     -->
     <h5>Can't Find What You Are Looking For? Send us a message on Facebook for FREE consultation</h5>
     <div align="center">
-        <a href="https://www.facebook.com/fitfoodvietnam" class="btn btn-default" target="_blank">Send message now</a>
+        <a href="https://m.me/fitfoodvietnam" class="btn btn-default" target="_blank">Send message now</a>
     </div>
     <!--
     <form role="form">
