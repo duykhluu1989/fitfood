@@ -60,7 +60,7 @@
         <p>Copyright © Fitfood.vn 2016</p>
     </div>
 </div>
-<a id="back-to-top" href="javascript:void(0)" class="back-to-top" title="Back to Top" data-toggle="tooltip" data-placement="top">
+<a id="back-to-top" href="javascript:void(0)" class="back-to-top" data-placement="top">
     <i class="fa fa-angle-up" aria-hidden="true"></i>
 </a>
 <?php
@@ -75,5 +75,22 @@ echo Minify::javascript([
 ])->withFullUrl();
 ?>
 @yield('script')
+<?php
+if(request()->hasCookie(App\Libraries\Util::COOKIE_SEE_BANNER_NAME) == false)
+{
+    if(request()->hasCookie(App\Libraries\Util::COOKIE_PLACE_ORDER_CUSTOMER_NAME))
+        $bannerSrc = App\Models\Banner::getCustomerBanner(request(), App\Libraries\Util::BANNER_CUSTOMER_TYPE_OLD);
+    else
+        $bannerSrc = App\Models\Banner::getCustomerBanner(request(), App\Libraries\Util::BANNER_CUSTOMER_TYPE_NEW);
+
+    if(!empty($bannerSrc))
+    {
+        Cookie::queue(App\Libraries\Util::COOKIE_SEE_BANNER_NAME, true, App\Libraries\Util::MINUTE_ONE_HOUR_EXPIRED);
+        ?>
+        @include('beta.layouts.partials.banner_popup', ['bannerSrc' => $bannerSrc])
+        <?php
+    }
+}
+?>
 </body>
 </html>

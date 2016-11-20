@@ -18,6 +18,7 @@ class Util
     const TIMESTAMP_ONE_DAY = 86400;
     const MINUTE_ONE_MONTH_EXPIRED = 43200;
     const MINUTE_ONE_HOUR_EXPIRED = 60;
+    const MINUTE_ONE_YEAR_EXPIRED = 525600;
 
     const STATUS_INACTIVE_VALUE = 0;
     const STATUS_ACTIVE_VALUE = 1;
@@ -145,8 +146,18 @@ class Util
     const TYPE_WIDGET_SLIDER_VALUE = 0;
     const TYPE_WIDGET_SLIDER_LABEL = 'Slider';
 
+    const BANNER_HOME_PAGE = 'home';
+    const BANNER_ORDER_PAGE = 'order';
+    const BANNER_MENU_PAGE = 'menu';
+    const BANNER_BLOG_PAGE = 'blog';
+
+    const BANNER_CUSTOMER_TYPE_NEW = 'New';
+    const BANNER_CUSTOMER_TYPE_OLD = 'Old';
+
     const COOKIE_READ_ARTICLE_NAME = 'read_article';
     const COOKIE_READ_ORDER_POLICY_NAME = 'read_order_policy';
+    const COOKIE_PLACE_ORDER_CUSTOMER_NAME = 'place_order';
+    const COOKIE_SEE_BANNER_NAME = 'see_banner';
 
     const UPLOAD_IMAGE_DIR = '/assets/upload';
 
@@ -459,5 +470,33 @@ class Util
             $image->resize($imageWidth, $height);
 
         $image->save($imagePath);
+    }
+
+    public static function getBannerPage($value = null)
+    {
+        $pages = [
+            self::BANNER_HOME_PAGE => self::BANNER_HOME_PAGE,
+            self::BANNER_MENU_PAGE => self::BANNER_MENU_PAGE,
+            self::BANNER_ORDER_PAGE => self::BANNER_ORDER_PAGE,
+            self::BANNER_BLOG_PAGE => self::BANNER_BLOG_PAGE,
+        ];
+
+        if($value !== null && isset($pages[$value]))
+            return $pages[$value];
+
+        return $pages;
+    }
+
+    public static function getBannerCustomerType($value = null)
+    {
+        $types = [
+            self::BANNER_CUSTOMER_TYPE_NEW => self::BANNER_CUSTOMER_TYPE_NEW,
+            self::BANNER_CUSTOMER_TYPE_OLD => self::BANNER_CUSTOMER_TYPE_OLD,
+        ];
+
+        if($value !== null && isset($types[$value]))
+            return $types[$value];
+
+        return $types;
     }
 }

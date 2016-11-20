@@ -140,6 +140,9 @@
                             <li {{ (Request::is('customer') ? 'class="active"' : '') }}>
                                 <a href="{{ url('admin/customer') }}">List Customer</a>
                             </li>
+                            <li {{ (Request::is('banner') ? 'class="active"' : '') }}>
+                                <a href="{{ url('admin/banner') }}">List Banner</a>
+                            </li>
                         </ul>
                     </li>
                     <li>

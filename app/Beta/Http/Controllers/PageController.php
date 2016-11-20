@@ -848,7 +848,8 @@ class PageController extends Controller
 
                 Log::info($e->getLine() . ' ' . $e->getMessage());
 
-                return redirect('order')->with('OrderError', trans('order_form.error'));
+                return redirect('order')
+                    ->with('OrderError', trans('order_form.error'));
             }
         }
 
@@ -940,6 +941,9 @@ class PageController extends Controller
         if($request->session()->has('OrderThankYou'))
         {
             $dataThankYou = json_decode($request->session()->pull('OrderThankYou'), true);
+
+            if($request->hasCookie(Util::COOKIE_PLACE_ORDER_CUSTOMER_NAME) == false)
+                Cookie::queue(Util::COOKIE_PLACE_ORDER_CUSTOMER_NAME, true, Util::MINUTE_ONE_YEAR_EXPIRED);
 
             return view('beta.pages.thank_you', $dataThankYou);
         }

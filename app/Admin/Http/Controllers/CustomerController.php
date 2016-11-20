@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Libraries\Util;
 use App\Models\Customer;
 use App\Models\Area;
+use App\Models\Banner;
 
 class CustomerController extends Controller
 {
@@ -200,5 +201,129 @@ class CustomerController extends Controller
         }
 
         return view('admin.customers.edit_customer', ['customer' => $customer, 'areas' => $areas]);
+    }
+
+    public function listBanner(Request $request)
+    {
+        $input = $request->all();
+
+        $builder = Banner::select('*');
+
+        if(isset($input['filter']))
+        {
+            if(!empty($input['filter']['name']))
+                $builder->where('name', 'like', '%' . $input['filter']['name'] . '%');
+
+            if(!empty($input['filter']['page']))
+                $builder->where('page', $input['filter']['page']);
+
+            if(!empty($input['filter']['customer_type']))
+                $builder->where('customer_type', $input['filter']['customer_type']);
+
+            if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
+                $builder->where('status', $input['filter']['status']);
+
+            $filter = $input['filter'];
+            $queryString = '&' . http_build_query(['filter' => $input['filter']]);
+        }
+        else
+        {
+            $filter = null;
+            $queryString = null;
+        }
+
+        $builder->orderBy('id', 'DESC');
+
+        $banners = $builder->paginate(Util::GRID_PER_PAGE);
+
+        return view('admin.customers.list_banner', [
+            'banners' => $banners,
+            'filter' => $filter,
+            'queryString' => $queryString,
+        ]);
+    }
+
+    public function createBanner(Request $request)
+    {
+        $banner = new Banner();
+
+        return $this->saveBanner($request, $banner, 'admin.customers.create_banner');
+    }
+
+    public function editBanner(Request $request, $id)
+    {
+        $banner = Banner::find($id);
+
+        return $this->saveBanner($request, $banner, 'admin.customers.edit_banner');
+    }
+
+    protected function saveBanner($request, $banner, $view)
+    {
+        if($request->isMethod('post'))
+        {
+            $input = $request->input('banner');
+
+            $file = $request->file('image');
+
+            $banner->name = isset($input['name']) ? trim($input['name']) : '';
+            $banner->start_time = !empty($input['start_time']) ? trim($input['start_time']) : null;
+            $banner->end_time = !empty($input['end_time']) ? trim($input['end_time']) : null;
+            $banner->page = isset($input['page']) ? trim($input['page']) : '';
+            $banner->customer_type = isset($input['customer_type']) ? trim($input['customer_type']) : '';
+            $banner->status = isset($input['status']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
+
+            $errors = $banner->validate();
+
+            if(count($errors) == 0)
+            {
+                try
+                {
+                    DB::beginTransaction();
+
+                    if(!empty($file))
+                    {
+                        if(in_array($file->getClientOriginalExtension(), Util::getValidImageExt()))
+                        {
+                            $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/banner';
+
+                            if(!file_exists($path))
+                                mkdir($path, 0755, true);
+
+                            $fileName = 'banner_' . str_replace('.', '', microtime(true)) . '.' . strtolower($file->getClientOriginalExtension());
+
+                            $file->move($path, $fileName);
+
+                            if(!empty($banner->image_src))
+                            {
+                                $imageSrcParts = explode('/', $banner->image_src);
+
+                                $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
+
+                                if(file_exists($oldFilePath) && is_file($oldFilePath))
+                                    unlink($oldFilePath);
+                            }
+
+                            $banner->image_src = 'http://' . $request->getHttpHost() . Util::UPLOAD_IMAGE_DIR . '/banner/' . $fileName;
+                        }
+                    }
+
+                    $banner->save();
+
+                    Db::commit();
+
+                    return redirect('admin/banner');
+                }
+                catch(\Exception $e)
+                {
+                    DB::rollBack();
+
+                    return view($view, ['banner' => $banner, 'errors' => [$e->getMessage()]]);
+                }
+            }
+
+            return view($view, ['banner' => $banner, 'errors' => $errors]);
+        }
+
+        return view($view, ['banner' => $banner]);
     }
 }

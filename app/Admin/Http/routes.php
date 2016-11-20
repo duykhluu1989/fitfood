@@ -279,6 +279,16 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::post('widget/edit/{id}', 'BlogController@editWidget');
 
+        Route::get('banner', 'CustomerController@listBanner');
+
+        Route::get('banner/create', 'CustomerController@createBanner');
+
+        Route::post('banner/create', 'CustomerController@createBanner');
+
+        Route::get('banner/edit/{id}', 'CustomerController@editBanner');
+
+        Route::post('banner/edit/{id}', 'CustomerController@editBanner');
+
     });
 
     Route::group(['middleware' => 'guest'], function() {
