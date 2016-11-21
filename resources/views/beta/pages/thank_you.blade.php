@@ -23,6 +23,7 @@
                                 <li>Số điện thoại | Phone: <a href="tel:{{ $phone }}" value="{{ $phone}}" target="_blank">{{ $phone }}</a></li>
                                 <li>Email: {{ $email }}</li>
                                 <li>Địa chỉ giao hàng | Delivery address: {{ $address }}</li>
+                                <li>Quận | District: {{ $district }}</li>
                                 <li>Khẩu phần mong muốn | Your desired package: {{ $mealPacks }}</li>
                                 <li>Hình thức thanh toán | Payment Method: {{ $paymentGateway }}</li>
                                 <li>Thời gian giao hàng | Delivery time: {{ $deliveryTime }}</li>
