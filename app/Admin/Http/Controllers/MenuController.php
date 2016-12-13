@@ -874,6 +874,18 @@ class MenuController extends Controller
 
         if($recipe->validateDelete())
         {
+            if(!empty($recipe->image_src))
+            {
+                $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/recipe';
+
+                $imageSrcParts = explode('/', $recipe->image_src);
+
+                $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
+
+                if(file_exists($oldFilePath) && is_file($oldFilePath))
+                    unlink($oldFilePath);
+            }
+
             $recipe->delete();
 
             foreach($recipe->recipeResources as $recipeResource)
@@ -899,6 +911,18 @@ class MenuController extends Controller
                 {
                     if($recipe->validateDelete())
                     {
+                        if(!empty($recipe->image_src))
+                        {
+                            $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/recipe';
+
+                            $imageSrcParts = explode('/', $recipe->image_src);
+
+                            $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
+
+                            if(file_exists($oldFilePath) && is_file($oldFilePath))
+                                unlink($oldFilePath);
+                        }
+
                         $recipe->delete();
 
                         foreach($recipe->recipeResources as $recipeResource)
@@ -1149,6 +1173,18 @@ class MenuController extends Controller
 
         if($menu->validateDelete())
         {
+            if(!empty($menu->image_src))
+            {
+                $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/menu';
+
+                $imageSrcParts = explode('/', $menu->image_src);
+
+                $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
+
+                if(file_exists($oldFilePath) && is_file($oldFilePath))
+                    unlink($oldFilePath);
+            }
+
             $menu->delete();
 
             foreach($menu->menuRecipes as $menuRecipe)
@@ -1174,6 +1210,18 @@ class MenuController extends Controller
                 {
                     if($menu->validateDelete())
                     {
+                        if(!empty($menu->image_src))
+                        {
+                            $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/menu';
+
+                            $imageSrcParts = explode('/', $menu->image_src);
+
+                            $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
+
+                            if(file_exists($oldFilePath) && is_file($oldFilePath))
+                                unlink($oldFilePath);
+                        }
+
                         $menu->delete();
 
                         foreach($menu->menuRecipes as $menuRecipe)
