@@ -17,6 +17,9 @@
                         <a href="{{ url('admin/menu/create') }}" data-toggle="tooltip" title="New Menu" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
+                        <button value="delete" data-toggle="tooltip" title="Delete" class="btn btn-primary btn-outline ControlButtonControlForm" disabled="disabled">
+                            <i class="fa fa-trash-o fa-fw"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -24,6 +27,11 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                        <th>
+                            @if($menus->total() > 0)
+                                <input class="CheckboxAllControlForm" type="checkbox" />
+                            @endif
+                        </th>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Recipe</th>
@@ -32,6 +40,7 @@
                     </tr>
                     <form id="FilterForm" action="{{ url('admin/menu') }}" method="get">
                         <tr>
+                            <td></td>
                             <td></td>
                             <td>
                                 <input type="text" class="form-control" name="filter[name]" value="{{ (isset($filter['name']) ? $filter['name'] : '') }}" />
@@ -67,68 +76,75 @@
                     </form>
                     </thead>
                     <tbody>
-                    @foreach($menus as $menu)
-                        <tr>
-                            <td>
-                                <a href="{{ url('admin/menu/edit', ['id' => $menu->id]) }}" class="btn btn-primary btn-outline">{{ $menu->id }}</a>
-                            </td>
-                            <td>{{ $menu->name }}</td>
-                            <td>
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>{{ App\Libraries\Util::MEAL_BREAKFAST_LABEL }}</th>
-                                        <th>{{ App\Libraries\Util::MEAL_LUNCH_LABEL }}</th>
-                                        <th>{{ App\Libraries\Util::MEAL_DINNER_LABEL }}</th>
-                                        <th>Active</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                    $dayOfWeek = [
-                                        1 => 'Monday',
-                                        2 => 'Tuesday',
-                                        3 => 'Wednesday',
-                                        4 => 'Thursday',
-                                        5 => 'Friday',
-                                    ];
-                                    $recipes = array();
-                                    foreach($menu->menuRecipes as $menuRecipe)
-                                        $recipes[$menuRecipe->day_of_week] = $menuRecipe;
-                                    ?>
-                                    @for($i = 1;$i <= 5;$i ++)
+                    <form id="ControlForm" action="{{ url('admin/recipe/control') }}" method="post">
+                        @foreach($menus as $menu)
+                            <tr>
+                                <td>
+                                    <input class="CheckboxControlForm" name="id[]" type="checkbox" value="{{ $menu->id }}" />
+                                </td>
+                                <td>
+                                    <a href="{{ url('admin/menu/edit', ['id' => $menu->id]) }}" class="btn btn-primary btn-outline">{{ $menu->id }}</a>
+                                </td>
+                                <td>{{ $menu->name }}</td>
+                                <td>
+                                    <table class="table table-bordered">
+                                        <thead>
                                         <tr>
-                                            <th>{{ $dayOfWeek[$i] }}</th>
-                                            @if(isset($recipes[$i]))
-                                                <td>
-                                                    @if(!empty($recipes[$i]->breakfastRecipe))
-                                                        {{ $recipes[$i]->breakfastRecipe->name }}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if(!empty($recipes[$i]->lunchRecipe))
-                                                        {{ $recipes[$i]->lunchRecipe->name }}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if(!empty($recipes[$i]->dinnerRecipe))
-                                                        {{ $recipes[$i]->dinnerRecipe->name }}
-                                                    @endif
-                                                </td>
-                                                <td<?php echo ($recipes[$i]->status == App\Libraries\Util::STATUS_ACTIVE_VALUE ? ' class="info"' : ''); ?>></td>
-                                            @else
-                                                <td colspan="4"></td>
-                                            @endif
+                                            <th></th>
+                                            <th>{{ App\Libraries\Util::MEAL_BREAKFAST_LABEL }}</th>
+                                            <th>{{ App\Libraries\Util::MEAL_LUNCH_LABEL }}</th>
+                                            <th>{{ App\Libraries\Util::MEAL_DINNER_LABEL }}</th>
+                                            <th>Active</th>
                                         </tr>
-                                    @endfor
-                                    </tbody>
-                                </table>
-                            </td>
-                            <td>{{ App\Libraries\Util::getMenuType($menu->type) }}</td>
-                            <td>{{ App\Libraries\Util::getMenuStatus($menu->status) }}</td>
-                        </tr>
-                    @endforeach
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        $dayOfWeek = [
+                                            1 => 'Monday',
+                                            2 => 'Tuesday',
+                                            3 => 'Wednesday',
+                                            4 => 'Thursday',
+                                            5 => 'Friday',
+                                        ];
+                                        $recipes = array();
+                                        foreach($menu->menuRecipes as $menuRecipe)
+                                            $recipes[$menuRecipe->day_of_week] = $menuRecipe;
+                                        ?>
+                                        @for($i = 1;$i <= 5;$i ++)
+                                            <tr>
+                                                <th>{{ $dayOfWeek[$i] }}</th>
+                                                @if(isset($recipes[$i]))
+                                                    <td>
+                                                        @if(!empty($recipes[$i]->breakfastRecipe))
+                                                            {{ $recipes[$i]->breakfastRecipe->name }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if(!empty($recipes[$i]->lunchRecipe))
+                                                            {{ $recipes[$i]->lunchRecipe->name }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if(!empty($recipes[$i]->dinnerRecipe))
+                                                            {{ $recipes[$i]->dinnerRecipe->name }}
+                                                        @endif
+                                                    </td>
+                                                    <td<?php echo ($recipes[$i]->status == App\Libraries\Util::STATUS_ACTIVE_VALUE ? ' class="info"' : ''); ?>></td>
+                                                @else
+                                                    <td colspan="4"></td>
+                                                @endif
+                                            </tr>
+                                        @endfor
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>{{ App\Libraries\Util::getMenuType($menu->type) }}</td>
+                                <td>{{ App\Libraries\Util::getMenuStatus($menu->status) }}</td>
+                            </tr>
+                        @endforeach
+
+                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                    </form>
                     </tbody>
                 </table>
             </div>
@@ -137,23 +153,5 @@
             </div>
         </div>
     </div>
-
-@stop
-
-@section('script')
-
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-
-            $('.DropDownFilterForm').change(function() {
-
-                $('#FilterForm').submit();
-
-            });
-
-        });
-
-    </script>
 
 @stop

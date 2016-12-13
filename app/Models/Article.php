@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Validator;
 use Illuminate\Database\Eloquent\Model;
+use App\Libraries\Util;
 
 class Article extends Model
 {
@@ -31,5 +32,13 @@ class Article extends Model
             $errors = $validator->errors()->all();
 
         return $errors;
+    }
+
+    public function validateDelete()
+    {
+        if($this->status == Util::STATUS_ARTICLE_DRAFT_VALUE)
+            return true;
+
+        return false;
     }
 }

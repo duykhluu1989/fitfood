@@ -377,35 +377,53 @@ class BlogController extends Controller
 
     public function deleteArticle($id)
     {
-        $article = Article::where('status', Util::STATUS_ARTICLE_DRAFT_VALUE)->find($id);
+        $article = Article::find($id);
 
-        if(!empty($article->image_src))
+        if($article->validateDelete())
         {
-            $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/article';
+            if(!empty($article->image_src))
+            {
+                $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/article';
 
-            $imageSrcParts = explode('/', $article->image_src);
+                $imageSrcParts = explode('/', $article->image_src);
 
-            $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
+                $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
 
-            if(file_exists($oldFilePath) && is_file($oldFilePath))
-                unlink($oldFilePath);
+                if(file_exists($oldFilePath) && is_file($oldFilePath))
+                    unlink($oldFilePath);
+            }
+
+            if(!empty($article->thumbnail_src))
+            {
+                $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/article_thumbnail';
+
+                $imageSrcParts = explode('/', $article->thumbnail_src);
+
+                $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
+
+                if(file_exists($oldFilePath) && is_file($oldFilePath))
+                    unlink($oldFilePath);
+            }
+
+            $article->delete();
+
+            if(!empty($article->tags))
+            {
+                $tags = explode(';', $article->tags);
+
+                $tagModels = Tag::whereIn('name', $tags)->get();
+
+                foreach($tagModels as $tagModel)
+                {
+                    $tagModel->article -= 1;
+                    $tagModel->save();
+                }
+            }
+
+            return redirect('admin/article');
         }
 
-        if(!empty($article->thumbnail_src))
-        {
-            $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/article_thumbnail';
-
-            $imageSrcParts = explode('/', $article->thumbnail_src);
-
-            $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
-
-            if(file_exists($oldFilePath) && is_file($oldFilePath))
-                unlink($oldFilePath);
-        }
-
-        $article->delete();
-
-        return redirect('admin/article');
+        return redirect('admin/article/edit/' . $id);
     }
 
     public function listTag(Request $request)

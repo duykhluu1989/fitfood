@@ -26,6 +26,16 @@ class Category extends Model
         return $errors;
     }
 
+    public function validateDelete()
+    {
+        $resource = Resource::where('category_id', $this->id)->first();
+
+        if(empty($resource))
+            return true;
+
+        return false;
+    }
+
     public static function getModelActiveCategory()
     {
         $categories = Category::where('status', Util::STATUS_ACTIVE_VALUE)->get();

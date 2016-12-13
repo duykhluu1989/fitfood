@@ -208,6 +208,46 @@ class MenuController extends Controller
         return view($view, ['category' => $category]);
     }
 
+    public function deleteCategory($id)
+    {
+        $category = Category::find($id);
+
+        if($category->validateDelete())
+        {
+            $category->delete();
+
+            return redirect('admin/category');
+        }
+
+        return redirect('admin/category/edit/' . $id);
+    }
+
+    public function controlCategory(Request $request)
+    {
+        $input = $request->all();
+
+        switch($input['control'])
+        {
+            case 'delete':
+
+                $categories = Category::whereIn('id', $input['id'])->get();
+
+                foreach($categories as $category)
+                {
+                    if($category->validateDelete())
+                        $category->delete();
+                }
+
+                break;
+        }
+
+        $referer = $request->server('HTTP_REFERER');
+        if(!empty($referer))
+            return redirect($referer);
+
+        return redirect('admin/category');
+    }
+
     public function listUnit(Request $request)
     {
         $input = $request->all();
@@ -278,6 +318,46 @@ class MenuController extends Controller
         }
 
         return view($view, ['unit' => $unit]);
+    }
+
+    public function deleteUnit($id)
+    {
+        $unit = Unit::find($id);
+
+        if($unit->validateDelete())
+        {
+            $unit->delete();
+
+            return redirect('admin/unit');
+        }
+
+        return redirect('admin/unit/edit/' . $id);
+    }
+
+    public function controlUnit(Request $request)
+    {
+        $input = $request->all();
+
+        switch($input['control'])
+        {
+            case 'delete':
+
+                $units = Unit::whereIn('id', $input['id'])->get();
+
+                foreach($units as $unit)
+                {
+                    if($unit->validateDelete())
+                        $unit->delete();
+                }
+
+                break;
+        }
+
+        $referer = $request->server('HTTP_REFERER');
+        if(!empty($referer))
+            return redirect($referer);
+
+        return redirect('admin/unit');
     }
 
     public function listResource(Request $request)
@@ -352,6 +432,10 @@ class MenuController extends Controller
             $resource->price = isset($input['price']) ? trim(str_replace('.', '', $input['price'])) : '';
             $resource->quantity = isset($input['quantity']) ? trim(str_replace('.', '', $input['quantity'])) : '';
             $resource->status = isset($input['status']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
+            $resource->calories = isset($input['calories']) ? trim(str_replace('.', '', $input['calories'])) : '';
+            $resource->carb = isset($input['carb']) ? trim(str_replace('.', '', $input['carb'])) : '';
+            $resource->fat = isset($input['fat']) ? trim(str_replace('.', '', $input['fat'])) : '';
+            $resource->protein = isset($input['protein']) ? trim(str_replace('.', '', $input['protein'])) : '';
 
             $errors = $resource->validate();
 
@@ -365,6 +449,46 @@ class MenuController extends Controller
         }
 
         return view($view, ['resource' => $resource]);
+    }
+
+    public function deleteResource($id)
+    {
+        $resource = Resource::find($id);
+
+        if($resource->validateDelete())
+        {
+            $resource->delete();
+
+            return redirect('admin/resource');
+        }
+
+        return redirect('admin/resource/edit/' . $id);
+    }
+
+    public function controlResource(Request $request)
+    {
+        $input = $request->all();
+
+        switch($input['control'])
+        {
+            case 'delete':
+
+                $resources = Resource::whereIn('id', $input['id'])->get();
+
+                foreach($resources as $resource)
+                {
+                    if($resource->validateDelete())
+                        $resource->delete();
+                }
+
+                break;
+        }
+
+        $referer = $request->server('HTTP_REFERER');
+        if(!empty($referer))
+            return redirect($referer);
+
+        return redirect('admin/resource');
     }
 
     public function listRecipe(Request $request)
@@ -399,10 +523,16 @@ class MenuController extends Controller
         {
             $input = $request->input('recipe');
 
+            $file = $request->file('image');
+
             $recipe->name = isset($input['name']) ? trim($input['name']) : '';
             $recipe->name_en = isset($input['name_en']) ? trim($input['name_en']) : '';
             $recipe->status = isset($input['status']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
             $recipe->price = 0;
+            $recipe->calories = 0;
+            $recipe->carb = 0;
+            $recipe->fat = 0;
+            $recipe->protein = 0;
 
             $tempRecipeResourceModels = array();
 
@@ -431,6 +561,10 @@ class MenuController extends Controller
                         $tempRecipeResourceModel->resource_id = $tempResourceModel->id;
                         $tempRecipeResourceModel->quantity = $tempResources['quantity'][$key];
                         $tempRecipeResourceModel->price = round($tempResourceModel->price * $tempRecipeResourceModel->quantity / $tempResourceModel->quantity);
+                        $tempRecipeResourceModel->calories = round($tempResourceModel->calories * $tempRecipeResourceModel->quantity / $tempResourceModel->quantity);
+                        $tempRecipeResourceModel->carb = round($tempResourceModel->carb * $tempRecipeResourceModel->quantity / $tempResourceModel->quantity);
+                        $tempRecipeResourceModel->fat = round($tempResourceModel->fat * $tempRecipeResourceModel->quantity / $tempResourceModel->quantity);
+                        $tempRecipeResourceModel->protein = round($tempResourceModel->protein * $tempRecipeResourceModel->quantity / $tempResourceModel->quantity);
 
                         $tempRecipeResourceModels[] = $tempRecipeResourceModel;
                     }
@@ -449,6 +583,10 @@ class MenuController extends Controller
                     {
                         $recipe->recipeResources[$key]->quantity = $tempRecipeResourceModel->quantity;
                         $recipe->recipeResources[$key]->price = $tempRecipeResourceModel->price;
+                        $recipe->recipeResources[$key]->calories = $tempRecipeResourceModel->calories;
+                        $recipe->recipeResources[$key]->carb = $tempRecipeResourceModel->carb;
+                        $recipe->recipeResources[$key]->fat = $tempRecipeResourceModel->fat;
+                        $recipe->recipeResources[$key]->protein = $tempRecipeResourceModel->protein;
 
                         $updateRecipeResourceIds[] = $recipeResource->id;
                         $update = true;
@@ -474,7 +612,13 @@ class MenuController extends Controller
             }
 
             foreach($recipe->recipeResources as $recipeResource)
+            {
                 $recipe->price += $recipeResource->price;
+                $recipe->calories += $recipeResource->calories;
+                $recipe->carb += $recipeResource->carb;
+                $recipe->fat += $recipeResource->fat;
+                $recipe->protein += $recipeResource->protein;
+            }
 
             $errors = $recipe->validate();
 
@@ -494,6 +638,36 @@ class MenuController extends Controller
 
                     foreach($deleteRecipeResourceModels as $recipeResource)
                         $recipeResource->delete();
+
+                    if(!empty($file))
+                    {
+                        if(in_array($file->getClientOriginalExtension(), Util::getValidImageExt()))
+                        {
+                            $path = base_path() . Util::UPLOAD_IMAGE_DIR . '/recipe';
+
+                            if(!file_exists($path))
+                                mkdir($path, 0755, true);
+
+                            $fileName = 'recipe_' . str_replace('.', '', microtime(true)) . '.' . strtolower($file->getClientOriginalExtension());
+
+                            $file->move($path, $fileName);
+
+                            Util::cropImage($path . '/' . $fileName, 800, 800);
+
+                            if(!empty($recipe->image_src))
+                            {
+                                $imageSrcParts = explode('/', $recipe->image_src);
+
+                                $oldFilePath = $path . '/' . $imageSrcParts[count($imageSrcParts) - 1];
+
+                                if(file_exists($oldFilePath) && is_file($oldFilePath))
+                                    unlink($oldFilePath);
+                            }
+
+                            $recipe->image_src = 'http://' . $request->getHttpHost() . Util::UPLOAD_IMAGE_DIR . '/recipe/' . $fileName;
+                            $recipe->save();
+                        }
+                    }
 
                     Db::commit();
 
@@ -522,12 +696,10 @@ class MenuController extends Controller
                 $input = $request->all();
 
                 $term = trim($input['term']);
-                $lang = trim($input['lang']);
 
-                if($lang == 'en')
-                    $resources = Resource::with('unit')->where('status', Util::STATUS_ACTIVE_VALUE)->where('name_en', 'like', '%' . $term . '%')->get();
-                else
-                    $resources = Resource::with('unit')->where('status', Util::STATUS_ACTIVE_VALUE)->where('name', 'like', '%' . $term . '%')->get();
+                $resources = Resource::with('unit')->where('status', Util::STATUS_ACTIVE_VALUE)->where(function($query) use($term) {
+                    $query->where('name', 'like', '%' . $term . '%')->orWhere('name_en', 'like', '%' . $term . '%');
+                })->limit(10)->get();
 
                 $data = array();
 
@@ -539,6 +711,10 @@ class MenuController extends Controller
                         'price' => Util::formatMoney($resource->price),
                         'quantity' => Util::formatMoney($resource->quantity),
                         'unit' => $resource->unit->name,
+                        'calories' => Util::formatMoney($resource->calories),
+                        'carb' => Util::formatMoney($resource->carb),
+                        'fat' => Util::formatMoney($resource->fat),
+                        'protein' => Util::formatMoney($resource->protein),
                     ];
                 }
 
@@ -690,6 +866,54 @@ class MenuController extends Controller
             $recipes = $builder->get();
 
         return [$recipes, $filter, $queryString];
+    }
+
+    public function deleteRecipe($id)
+    {
+        $recipe = Recipe::with('recipeResources')->find($id);
+
+        if($recipe->validateDelete())
+        {
+            $recipe->delete();
+
+            foreach($recipe->recipeResources as $recipeResource)
+                $recipeResource->delete();
+
+            return redirect('admin/recipe');
+        }
+
+        return redirect('admin/recipe/edit/' . $id);
+    }
+
+    public function controlRecipe(Request $request)
+    {
+        $input = $request->all();
+
+        switch($input['control'])
+        {
+            case 'delete':
+
+                $recipes = Recipe::with('recipeResources')->whereIn('id', $input['id'])->get();
+
+                foreach($recipes as $recipe)
+                {
+                    if($recipe->validateDelete())
+                    {
+                        $recipe->delete();
+
+                        foreach($recipe->recipeResources as $recipeResource)
+                            $recipeResource->delete();
+                    }
+                }
+
+                break;
+        }
+
+        $referer = $request->server('HTTP_REFERER');
+        if(!empty($referer))
+            return redirect($referer);
+
+        return redirect('admin/recipe');
     }
 
     public function listMenu(Request $request)
@@ -898,7 +1122,7 @@ class MenuController extends Controller
 
                 $recipes = Recipe::where('status', Util::STATUS_ACTIVE_VALUE)->where(function($query) use($term) {
                     $query->where('name', 'like', '%' . $term . '%')->orWhere('name_en', 'like', '%' . $term . '%');
-                })->get();
+                })->limit(10)->get();
 
                 $data = array();
 
@@ -917,5 +1141,53 @@ class MenuController extends Controller
         {
             echo false;
         }
+    }
+
+    public function deleteMenu($id)
+    {
+        $menu = Menu::with('menuRecipes')->find($id);
+
+        if($menu->validateDelete())
+        {
+            $menu->delete();
+
+            foreach($menu->menuRecipes as $menuRecipe)
+                $menuRecipe->delete();
+
+            return redirect('admin/menu');
+        }
+
+        return redirect('admin/menu/edit/' . $id);
+    }
+
+    public function controlMenu(Request $request)
+    {
+        $input = $request->all();
+
+        switch($input['control'])
+        {
+            case 'delete':
+
+                $menus = Menu::with('menuRecipes')->whereIn('id', $input['id'])->get();
+
+                foreach($menus as $menu)
+                {
+                    if($menu->validateDelete())
+                    {
+                        $menu->delete();
+
+                        foreach($menu->menuRecipes as $menuRecipe)
+                            $menuRecipe->delete();
+                    }
+                }
+
+                break;
+        }
+
+        $referer = $request->server('HTTP_REFERER');
+        if(!empty($referer))
+            return redirect($referer);
+
+        return redirect('admin/menu');
     }
 }

@@ -183,6 +183,10 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::post('category/edit/{id}', 'MenuController@editCategory');
 
+        Route::get('category/delete/{id}', 'MenuController@deleteCategory');
+
+        Route::post('category/control', 'MenuController@controlCategory');
+
         Route::get('unit', 'MenuController@listUnit');
 
         Route::get('unit/create', 'MenuController@createUnit');
@@ -193,6 +197,10 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::post('unit/edit/{id}', 'MenuController@editUnit');
 
+        Route::get('unit/delete/{id}', 'MenuController@deleteUnit');
+
+        Route::post('unit/control', 'MenuController@controlUnit');
+
         Route::get('resource', 'MenuController@listResource');
 
         Route::get('resource/create', 'MenuController@createResource');
@@ -202,6 +210,10 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('resource/edit/{id}', 'MenuController@editResource');
 
         Route::post('resource/edit/{id}', 'MenuController@editResource');
+
+        Route::get('resource/delete/{id}', 'MenuController@deleteResource');
+
+        Route::post('resource/control', 'MenuController@controlResource');
 
         Route::get('recipe', 'MenuController@listRecipe');
 
@@ -217,6 +229,10 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::get('recipe/export', 'MenuController@exportRecipe');
 
+        Route::get('recipe/delete/{id}', 'MenuController@deleteRecipe');
+
+        Route::post('recipe/control', 'MenuController@controlRecipe');
+
         Route::get('menu', 'MenuController@listMenu');
 
         Route::get('menu/create', 'MenuController@createMenu');
@@ -228,6 +244,10 @@ Route::group(['prefix' => 'admin'], function() {
         Route::post('menu/edit/{id}', 'MenuController@editMenu');
 
         Route::post('menu/get/autoComplete/recipe', 'MenuController@getAutoCompleteRecipeData');
+
+        Route::get('menu/delete/{id}', 'MenuController@deleteMenu');
+
+        Route::post('menu/control', 'MenuController@controlMenu');
 
         Route::get('blogCategory', 'BlogController@listCategory');
 

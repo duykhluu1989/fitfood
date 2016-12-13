@@ -22,7 +22,11 @@ class Recipe extends Model
 
         $validator = Validator::make($this->getAttributes(), [
             'name' => 'required|string',
-            'price' => 'integer|min:0',
+            'price' => 'required|integer|min:1',
+            'calories' => 'required|integer|min:1',
+            'carb' => 'required|integer|min:1',
+            'fat' => 'required|integer|min:1',
+            'protein' => 'required|integer|min:1',
         ]);
 
         if($validator->fails())
@@ -32,5 +36,15 @@ class Recipe extends Model
             $errors[] = 'Recipe must have at least 1 Resource';
 
         return $errors;
+    }
+
+    public function validateDelete()
+    {
+        $menuRecipe = MenuRecipe::where('breakfast_id', $this->id)->orWhere('lunch_id', $this->id)->orWhere('dinner_id', $this->id)->first();
+
+        if(empty($menuRecipe))
+            return true;
+
+        return false;
     }
 }

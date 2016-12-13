@@ -17,15 +17,26 @@ class Resource extends Model
 
         self::updated(function(Resource $resource) {
 
-            if($resource->getOriginal('price') != $resource->getAttribute('price') || $resource->getOriginal('quantity') != $resource->getAttribute('quantity'))
+            if($resource->getOriginal('price') != $resource->getAttribute('price') || $resource->getOriginal('quantity') != $resource->getAttribute('quantity')
+                || $resource->getOriginal('calories') != $resource->getAttribute('calories') || $resource->getOriginal('carb') != $resource->getAttribute('carb')
+                || $resource->getOriginal('fat') != $resource->getAttribute('fat') || $resource->getOriginal('protein') != $resource->getAttribute('protein'))
             {
                 foreach($resource->recipeResources as $recipeResource)
                 {
-                    $oldRecipeResource = $recipeResource->price;
+                    $oldRecipeResource = $recipeResource;
+
                     $recipeResource->price = round($resource->price * $recipeResource->quantity / $resource->quantity);
+                    $recipeResource->calories = round($resource->calories * $recipeResource->quantity / $resource->quantity);
+                    $recipeResource->carb = round($resource->carb * $recipeResource->quantity / $resource->quantity);
+                    $recipeResource->fat = round($resource->fat * $recipeResource->quantity / $resource->quantity);
+                    $recipeResource->protein = round($resource->protein * $recipeResource->quantity / $resource->quantity);
                     $recipeResource->save();
 
-                    $recipeResource->recipe->price = $recipeResource->recipe->price - $oldRecipeResource + $recipeResource->price;
+                    $recipeResource->recipe->price = $recipeResource->recipe->price - $oldRecipeResource->price + $recipeResource->price;
+                    $recipeResource->recipe->calories = $recipeResource->recipe->calories - $oldRecipeResource->calories + $recipeResource->calories;
+                    $recipeResource->recipe->carb = $recipeResource->recipe->carb - $oldRecipeResource->carb + $recipeResource->carb;
+                    $recipeResource->recipe->fat = $recipeResource->recipe->fat - $oldRecipeResource->fat + $recipeResource->fat;
+                    $recipeResource->recipe->protein = $recipeResource->recipe->protein - $oldRecipeResource->protein + $recipeResource->protein;
                     $recipeResource->recipe->save();
                 }
             }
@@ -59,11 +70,25 @@ class Resource extends Model
             'unit_id' => 'required|integer|min:1',
             'price' => 'required|integer|min:1',
             'quantity' => 'required|integer|min:1',
+            'calories' => 'required|integer|min:1',
+            'carb' => 'required|integer|min:1',
+            'fat' => 'required|integer|min:1',
+            'protein' => 'required|integer|min:1',
         ]);
 
         if($validator->fails())
             $errors = $validator->errors()->all();
 
         return $errors;
+    }
+
+    public function validateDelete()
+    {
+        $recipeResource = RecipeResource::where('resource_id', $this->id)->first();
+
+        if(empty($recipeResource))
+            return true;
+
+        return false;
     }
 }

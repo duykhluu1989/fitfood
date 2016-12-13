@@ -2,6 +2,11 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($category->id) ? 'Create' : 'Update' }}</button>
+
+            @if(!empty($category->id) && $category->validateDelete())
+                <a href="{{ url('admin/category/delete', ['id' => $category->id]) }}" class="btn btn-primary btn-outline" onclick="return showConfirmMessage();">Delete</a>
+            @endif
+
             <a href="{{ url('admin/category') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>

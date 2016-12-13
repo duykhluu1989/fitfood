@@ -3,7 +3,7 @@
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($article->id) ? 'Create' : 'Update' }}</button>
 
-            @if(!empty($article->id) && $article->status == App\Libraries\Util::STATUS_ARTICLE_DRAFT_VALUE)
+            @if(!empty($article->id) && $article->validateDelete())
                 <a href="{{ url('admin/article/delete', ['id' => $article->id]) }}" class="btn btn-primary btn-outline" onclick="return showConfirmMessage();">Delete</a>
             @endif
 

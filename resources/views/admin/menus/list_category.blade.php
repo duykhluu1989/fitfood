@@ -17,6 +17,9 @@
                         <a href="{{ url('admin/category/create') }}" data-toggle="tooltip" title="New Category" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
+                        <button value="delete" data-toggle="tooltip" title="Delete" class="btn btn-primary btn-outline ControlButtonControlForm" disabled="disabled">
+                            <i class="fa fa-trash-o fa-fw"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -24,12 +27,18 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                        <th>
+                            @if($categories->total() > 0)
+                                <input class="CheckboxAllControlForm" type="checkbox" />
+                            @endif
+                        </th>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Active</th>
                     </tr>
                     <form id="FilterForm" action="{{ url('admin/category') }}" method="get">
                         <tr>
+                            <td></td>
                             <td></td>
                             <td>
                                 <input type="text" class="form-control" name="filter[name]" value="{{ (isset($filter['name']) ? $filter['name'] : '') }}" />
@@ -52,15 +61,22 @@
                     </form>
                     </thead>
                     <tbody>
-                    @foreach($categories as $category)
-                        <tr>
-                            <td>
-                                <a href="{{ url('admin/category/edit', ['id' => $category->id]) }}" class="btn btn-primary btn-outline">{{ $category->id }}</a>
-                            </td>
-                            <td>{{ $category->name }}</td>
-                            <td<?php echo ($category->status == App\Libraries\Util::STATUS_ACTIVE_VALUE ? ' class="info"' : ''); ?>></td>
-                        </tr>
-                    @endforeach
+                    <form id="ControlForm" action="{{ url('admin/category/control') }}" method="post">
+                        @foreach($categories as $category)
+                            <tr>
+                                <td>
+                                    <input class="CheckboxControlForm" name="id[]" type="checkbox" value="{{ $category->id }}" />
+                                </td>
+                                <td>
+                                    <a href="{{ url('admin/category/edit', ['id' => $category->id]) }}" class="btn btn-primary btn-outline">{{ $category->id }}</a>
+                                </td>
+                                <td>{{ $category->name }}</td>
+                                <td<?php echo ($category->status == App\Libraries\Util::STATUS_ACTIVE_VALUE ? ' class="info"' : ''); ?>></td>
+                            </tr>
+                        @endforeach
+
+                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                    </form>
                     </tbody>
                 </table>
             </div>
@@ -69,23 +85,5 @@
             </div>
         </div>
     </div>
-
-@stop
-
-@section('script')
-
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-
-            $('.DropDownFilterForm').change(function() {
-
-                $('#FilterForm').submit();
-
-            });
-
-        });
-
-    </script>
 
 @stop

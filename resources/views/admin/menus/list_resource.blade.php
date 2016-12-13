@@ -17,6 +17,9 @@
                         <a href="{{ url('admin/resource/create') }}" data-toggle="tooltip" title="New Resource" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
+                        <button value="delete" data-toggle="tooltip" title="Delete" class="btn btn-primary btn-outline ControlButtonControlForm" disabled="disabled">
+                            <i class="fa fa-trash-o fa-fw"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -24,6 +27,11 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                        <th>
+                            @if($resources->total() > 0)
+                                <input class="CheckboxAllControlForm" type="checkbox" />
+                            @endif
+                        </th>
                         <th>ID</th>
                         <th>Category</th>
                         <th>Name</th>
@@ -31,12 +39,17 @@
                         <th>Code</th>
                         <th>Price</th>
                         <th>Quantity</th>
+                        <th>Calories</th>
+                        <th>Carb</th>
+                        <th>Fat</th>
+                        <th>Protein</th>
                         <th>Active</th>
                     </tr>
                     </thead>
                     <tbody>
                     <form id="FilterForm" action="{{ url('admin/resource') }}" method="get">
                         <tr>
+                            <td></td>
                             <td></td>
                             <td>
                                 <select class="form-control DropDownFilterForm" name="filter[category]">
@@ -57,6 +70,10 @@
                             </td>
                             <td></td>
                             <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td>
                                 <select class="form-control DropDownFilterForm" name="filter[status]">
                                     <option value=""></option>
@@ -73,20 +90,31 @@
 
                         <input type="submit" style="display: none" />
                     </form>
-                    @foreach($resources as $resource)
-                        <tr>
-                            <td>
-                                <a href="{{ url('admin/resource/edit', ['id' => $resource->id]) }}" class="btn btn-primary btn-outline">{{ $resource->id }}</a>
-                            </td>
-                            <td>{{ $resource->category->name }}</td>
-                            <td>{{ $resource->name }}</td>
-                            <td>{{ $resource->name_en }}</td>
-                            <td>{{ $resource->code }}</td>
-                            <td>{{ App\Libraries\Util::formatMoney($resource->price) }}</td>
-                            <td>{{ App\Libraries\Util::formatMoney($resource->quantity) . ' ' . $resource->unit->name }}</td>
-                            <td<?php echo ($resource->status == App\Libraries\Util::STATUS_ACTIVE_VALUE ? ' class="info"' : ''); ?>></td>
-                        </tr>
-                    @endforeach
+                    <form id="ControlForm" action="{{ url('admin/resource/control') }}" method="post">
+                        @foreach($resources as $resource)
+                            <tr>
+                                <td>
+                                    <input class="CheckboxControlForm" name="id[]" type="checkbox" value="{{ $resource->id }}" />
+                                </td>
+                                <td>
+                                    <a href="{{ url('admin/resource/edit', ['id' => $resource->id]) }}" class="btn btn-primary btn-outline">{{ $resource->id }}</a>
+                                </td>
+                                <td>{{ $resource->category->name }}</td>
+                                <td>{{ $resource->name }}</td>
+                                <td>{{ $resource->name_en }}</td>
+                                <td>{{ $resource->code }}</td>
+                                <td>{{ App\Libraries\Util::formatMoney($resource->price) }}</td>
+                                <td>{{ App\Libraries\Util::formatMoney($resource->quantity) . ' ' . $resource->unit->name }}</td>
+                                <td>{{ App\Libraries\Util::formatMoney($resource->calories) }}</td>
+                                <td>{{ App\Libraries\Util::formatMoney($resource->carb) }}</td>
+                                <td>{{ App\Libraries\Util::formatMoney($resource->fat) }}</td>
+                                <td>{{ App\Libraries\Util::formatMoney($resource->protein) }}</td>
+                                <td<?php echo ($resource->status == App\Libraries\Util::STATUS_ACTIVE_VALUE ? ' class="info"' : ''); ?>></td>
+                            </tr>
+                        @endforeach
+
+                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                    </form>
                     </tbody>
                 </table>
             </div>
@@ -95,23 +123,5 @@
             </div>
         </div>
     </div>
-
-@stop
-
-@section('script')
-
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-
-            $('.DropDownFilterForm').change(function() {
-
-                $('#FilterForm').submit();
-
-            });
-
-        });
-
-    </script>
 
 @stop

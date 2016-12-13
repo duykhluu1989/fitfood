@@ -2,6 +2,11 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($resource->id) ? 'Create' : 'Update' }}</button>
+
+            @if(!empty($resource->id) && $resource->validateDelete())
+                <a href="{{ url('admin/resource/delete', ['id' => $resource->id]) }}" class="btn btn-primary btn-outline" onclick="return showConfirmMessage();">Delete</a>
+            @endif
+
             <a href="{{ url('admin/resource') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>
@@ -118,6 +123,51 @@
                             @endif
                         @endforeach
                     </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Calories</h3>
+                </div>
+                <div class="panel-body">
+                    <input type="text" class="form-control InputMoney" name="resource[calories]" value="{{ App\Libraries\Util::formatMoney($resource->calories) }}" required="required" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Carb</h3>
+                </div>
+                <div class="panel-body">
+                    <input type="text" class="form-control InputMoney" name="resource[carb]" value="{{ App\Libraries\Util::formatMoney($resource->carb) }}" required="required" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Fat</h3>
+                </div>
+                <div class="panel-body">
+                    <input type="text" class="form-control InputMoney" name="resource[fat]" value="{{ App\Libraries\Util::formatMoney($resource->fat) }}" required="required" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Protein</h3>
+                </div>
+                <div class="panel-body">
+                    <input type="text" class="form-control InputMoney" name="resource[protein]" value="{{ App\Libraries\Util::formatMoney($resource->protein) }}" required="required" />
                 </div>
             </div>
         </div>

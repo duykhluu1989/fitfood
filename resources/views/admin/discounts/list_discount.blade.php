@@ -115,12 +115,6 @@
 
         $(document).ready(function() {
 
-            $('.DropDownFilterForm').change(function() {
-
-                $('#FilterForm').submit();
-
-            });
-
             @if($exportData != null)
             window.location = '<?php echo url('admin/discount/export'); ?>';
             @endif

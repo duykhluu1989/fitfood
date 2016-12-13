@@ -152,12 +152,6 @@
 
             });
 
-            $('.DropDownFilterForm').change(function() {
-
-                $('#FilterForm').submit();
-
-            });
-
             $('#AssignShipperDropDownAll').change(function() {
 
                 var elem = $(this);

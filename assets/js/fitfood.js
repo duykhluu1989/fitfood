@@ -70,3 +70,74 @@ $('.InputMoney').keyup(function() {
 
 });
 
+$('.DropDownFilterForm').change(function() {
+
+    $('#FilterForm').submit();
+
+});
+
+$('.CheckboxAllControlForm').click(function() {
+
+    if($(this).prop('checked'))
+        $('.ControlButtonControlForm').removeAttr('disabled');
+    else
+        $('.ControlButtonControlForm').prop('disabled', 'disabled');
+
+    $('.CheckboxControlForm').prop('checked', $(this).prop('checked'));
+
+});
+
+$('.CheckboxControlForm').click(function() {
+
+    if($(this).prop('checked'))
+    {
+        var allChecked = true;
+
+        $('.CheckboxControlForm').each(function() {
+
+            if(!$(this).prop('checked'))
+            {
+                allChecked = false;
+                return false;
+            }
+
+        });
+
+        $('.ControlButtonControlForm').removeAttr('disabled');
+
+        if(allChecked)
+            $('.CheckboxAllControlForm').prop('checked', $(this).prop('checked'));
+    }
+    else
+    {
+        var noneChecked = true;
+
+        $('.CheckboxControlForm').each(function() {
+
+            if($(this).prop('checked'))
+            {
+                noneChecked = false;
+                return false;
+            }
+
+        });
+
+        if(noneChecked)
+            $('.ControlButtonControlForm').prop('disabled', 'disabled');
+
+        $('.CheckboxAllControlForm').prop('checked', $(this).prop('checked'));
+    }
+
+});
+
+$('.ControlButtonControlForm').click(function() {
+
+    if(showConfirmMessage())
+    {
+        var form = $('#ControlForm');
+
+        $('<input />').attr('type', 'hidden').attr('name', 'control').attr('value', $(this).val()).appendTo(form);
+        form.submit();
+    }
+
+});

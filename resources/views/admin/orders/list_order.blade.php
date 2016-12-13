@@ -232,12 +232,6 @@
 
             });
 
-            $('.DropDownFilterForm').change(function() {
-
-                $('#FilterForm').submit();
-
-            });
-
         });
 
     </script>

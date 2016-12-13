@@ -20,6 +20,9 @@
                         <a href="{{ url('admin/recipe/export?' . $queryString) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
                             <i class="fa fa-download fa-fw"></i>
                         </a>
+                        <button value="delete" data-toggle="tooltip" title="Delete" class="btn btn-primary btn-outline ControlButtonControlForm" disabled="disabled">
+                            <i class="fa fa-trash-o fa-fw"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -27,6 +30,11 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
+                        <th>
+                            @if($recipes->total() > 0)
+                                <input class="CheckboxAllControlForm" type="checkbox" />
+                            @endif
+                        </th>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Name EN</th>
@@ -41,6 +49,7 @@
                     <tbody>
                     <form id="FilterForm" action="{{ url('admin/recipe') }}" method="get">
                         <tr>
+                            <td></td>
                             <td></td>
                             <td>
                                 <input class="form-control" name="filter[name]" value="{{ (isset($filter['name']) ? $filter['name'] : '') }}" />
@@ -73,35 +82,42 @@
 
                         <input type="submit" style="display: none" />
                     </form>
-                    @foreach($recipes as $recipe)
-                        <?php
-                        $countResource = count($recipe->recipeResources);
-                        ?>
-                        @for($i = 0;$i < $countResource;$i ++)
-                            @if($i == 0)
-                                <tr>
-                                    <td rowspan="{{ $countResource }}">
-                                        <a href="{{ url('admin/recipe/edit', ['id' => $recipe->id]) }}" class="btn btn-primary btn-outline">{{ $recipe->id }}</a>
-                                    </td>
-                                    <td rowspan="{{ $countResource }}">{{ $recipe->name }}</td>
-                                    <td rowspan="{{ $countResource }}">{{ $recipe->name_en }}</td>
-                                    <td>{{ $recipe->recipeResources[$i]->resource->name }}</td>
-                                    <td>{{ $recipe->recipeResources[$i]->resource->name_en }}</td>
-                                    <td>{{ App\Libraries\Util::formatMoney($recipe->recipeResources[$i]->quantity) . ' ' . $recipe->recipeResources[$i]->resource->unit->name }}</td>
-                                    <td>{{ App\Libraries\Util::formatMoney($recipe->recipeResources[$i]->price) }}</td>
-                                    <td rowspan="{{ $countResource }}">{{ App\Libraries\Util::formatMoney($recipe->price) }}</td>
-                                    <td<?php echo ($recipe->status == App\Libraries\Util::STATUS_ACTIVE_VALUE ? ' class="info"' : ''); ?> rowspan="{{ $countResource }}"></td>
-                                </tr>
-                            @else
-                                <tr>
-                                    <td>{{ $recipe->recipeResources[$i]->resource->name }}</td>
-                                    <td>{{ $recipe->recipeResources[$i]->resource->name_en }}</td>
-                                    <td>{{ $recipe->recipeResources[$i]->quantity . ' ' . $recipe->recipeResources[$i]->resource->unit->name }}</td>
-                                    <td>{{ App\Libraries\Util::formatMoney($recipe->recipeResources[$i]->price) }}</td>
-                                </tr>
-                            @endif
-                        @endfor
-                    @endforeach
+                    <form id="ControlForm" action="{{ url('admin/recipe/control') }}" method="post">
+                        @foreach($recipes as $recipe)
+                            <?php
+                            $countResource = count($recipe->recipeResources);
+                            ?>
+                            @for($i = 0;$i < $countResource;$i ++)
+                                @if($i == 0)
+                                    <tr>
+                                        <td rowspan="{{ $countResource }}">
+                                            <input class="CheckboxControlForm" name="id[]" type="checkbox" value="{{ $recipe->id }}" />
+                                        </td>
+                                        <td rowspan="{{ $countResource }}">
+                                            <a href="{{ url('admin/recipe/edit', ['id' => $recipe->id]) }}" class="btn btn-primary btn-outline">{{ $recipe->id }}</a>
+                                        </td>
+                                        <td rowspan="{{ $countResource }}">{{ $recipe->name }}</td>
+                                        <td rowspan="{{ $countResource }}">{{ $recipe->name_en }}</td>
+                                        <td>{{ $recipe->recipeResources[$i]->resource->name }}</td>
+                                        <td>{{ $recipe->recipeResources[$i]->resource->name_en }}</td>
+                                        <td>{{ App\Libraries\Util::formatMoney($recipe->recipeResources[$i]->quantity) . ' ' . $recipe->recipeResources[$i]->resource->unit->name }}</td>
+                                        <td>{{ App\Libraries\Util::formatMoney($recipe->recipeResources[$i]->price) }}</td>
+                                        <td rowspan="{{ $countResource }}">{{ App\Libraries\Util::formatMoney($recipe->price) }}</td>
+                                        <td<?php echo ($recipe->status == App\Libraries\Util::STATUS_ACTIVE_VALUE ? ' class="info"' : ''); ?> rowspan="{{ $countResource }}"></td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td>{{ $recipe->recipeResources[$i]->resource->name }}</td>
+                                        <td>{{ $recipe->recipeResources[$i]->resource->name_en }}</td>
+                                        <td>{{ $recipe->recipeResources[$i]->quantity . ' ' . $recipe->recipeResources[$i]->resource->unit->name }}</td>
+                                        <td>{{ App\Libraries\Util::formatMoney($recipe->recipeResources[$i]->price) }}</td>
+                                    </tr>
+                                @endif
+                            @endfor
+                        @endforeach
+
+                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                    </form>
                     </tbody>
                 </table>
             </div>
@@ -110,23 +126,5 @@
             </div>
         </div>
     </div>
-
-@stop
-
-@section('script')
-
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-
-            $('.DropDownFilterForm').change(function() {
-
-                $('#FilterForm').submit();
-
-            });
-
-        });
-
-    </script>
 
 @stop

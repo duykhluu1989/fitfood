@@ -26,6 +26,16 @@ class Unit extends Model
         return $errors;
     }
 
+    public function validateDelete()
+    {
+        $resource = Resource::where('unit_id', $this->id)->first();
+
+        if(empty($resource))
+            return true;
+
+        return false;
+    }
+
     public static function getModelActiveUnit()
     {
         $units = Unit::where('status', Util::STATUS_ACTIVE_VALUE)->get();

@@ -88,21 +88,3 @@
     </div>
 
 @stop
-
-@section('script')
-
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-
-            $('.DropDownFilterForm').change(function() {
-
-                $('#FilterForm').submit();
-
-            });
-
-        });
-
-    </script>
-
-@stop

@@ -2,6 +2,11 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <button type="submit" class="btn btn-primary">{{ empty($menu->id) ? 'Create' : 'Update' }}</button>
+
+            @if(!empty($menu->id) && $menu->validateDelete())
+                <a href="{{ url('admin/menu/delete', ['id' => $menu->id]) }}" class="btn btn-primary btn-outline" onclick="return showConfirmMessage();">Delete</a>
+            @endif
+
             <a href="{{ url('admin/menu') }}" class="btn btn-primary btn-outline pull-right">Back</a>
         </div>
     </div>

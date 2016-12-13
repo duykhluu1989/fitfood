@@ -96,4 +96,12 @@ class Menu extends Model
 
         return $errors;
     }
+
+    public function validateDelete()
+    {
+        if($this->status == Util::STATUS_MENU_HIDE_VALUE)
+            return true;
+
+        return false;
+    }
 }
