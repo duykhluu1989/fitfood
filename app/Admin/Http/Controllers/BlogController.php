@@ -506,7 +506,7 @@ class BlogController extends Controller
 
                 $term = trim($input['term']);
 
-                $tags = Tag::where('name', 'like', '%' . $term . '%')->get();
+                $tags = Tag::where('name', 'like', '%' . $term . '%')->limit(10)->get();
 
                 $data = array();
 

@@ -1431,7 +1431,7 @@ class OrderController extends Controller
 
                 $recipes = Recipe::where('status', Util::STATUS_ACTIVE_VALUE)->where(function($query) use($term) {
                     $query->where('name', 'like', '%' . $term . '%')->orWhere('name_en', 'like', '%' . $term . '%');
-                })->get();
+                })->limit(10)->get();
 
                 $data = array();
 

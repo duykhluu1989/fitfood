@@ -17,6 +17,9 @@
                         <a href="{{ url('admin/resource/create') }}" data-toggle="tooltip" title="New Resource" class="btn btn-primary btn-outline">
                             <i class="fa fa-plus fa-fw"></i>
                         </a>
+                        <button id="ImportResourceButton" data-toggle="tooltip" title="Import Resource" class="btn btn-primary btn-outline">
+                            <i class="fa fa-upload fa-fw"></i>
+                        </button>
                         <button value="delete" data-toggle="tooltip" title="Delete" class="btn btn-primary btn-outline ControlButtonControlForm" disabled="disabled">
                             <i class="fa fa-trash-o fa-fw"></i>
                         </button>
@@ -123,5 +126,48 @@
             </div>
         </div>
     </div>
+
+    <div id="ImportResourceModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Import Resource</h4>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{{ url('admin/resource/import') }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="file" class="form-control" name="excel" accept=".xls, .xlsx, .csv, .XLS, .XLSX, .CSV" required="required" />
+                        </div>
+                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                        <input type="submit" value="Import" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@stop
+
+@section('script')
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            $('#ImportResourceButton').click(function() {
+
+                $('#ImportResourceModal').modal('show');
+
+            });
+
+            @if(session('importResource'))
+            alert('{{ session('importResource') }}');
+            @endif
+
+        });
+
+    </script>
 
 @stop

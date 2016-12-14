@@ -455,6 +455,11 @@ class Util
         return ['jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF'];
     }
 
+    public static function getValidExcelExt()
+    {
+        return ['xls', 'xlsx', 'csv', 'XLS', 'XLSX', 'CSV'];
+    }
+
     public static function cropImage($imagePath, $width, $height)
     {
         $image = Image::make($imagePath);

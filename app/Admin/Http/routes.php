@@ -215,6 +215,8 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::post('resource/control', 'MenuController@controlResource');
 
+        Route::post('resource/import', 'MenuController@importResource');
+
         Route::get('recipe', 'MenuController@listRecipe');
 
         Route::get('recipe/create', 'MenuController@createRecipe');

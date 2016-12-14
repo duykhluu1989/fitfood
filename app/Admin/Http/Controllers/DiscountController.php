@@ -139,7 +139,7 @@ class DiscountController extends Controller
 
                 $term = trim($input['term']);
 
-                $customers = Customer::where('customer_id', 'like', '%' . $term . '%')->get();
+                $customers = Customer::where('customer_id', 'like', '%' . $term . '%')->limit(10)->get();
 
                 $data = array();
 

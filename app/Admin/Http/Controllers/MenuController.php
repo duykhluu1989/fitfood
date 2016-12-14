@@ -491,6 +491,159 @@ class MenuController extends Controller
         return redirect('admin/resource');
     }
 
+    public function importResource(Request $request)
+    {
+        $file = $request->file('excel');
+
+        if(!empty($file))
+        {
+            if(in_array($file->getClientOriginalExtension(), Util::getValidExcelExt()))
+            {
+                $excelData = Excel::load($file->getPathname())->noHeading()->toArray();
+
+                if(count($excelData) > 0 && isset($excelData[0]) && is_array($excelData[0]) && isset($excelData[0][0]))
+                {
+                    $importData = null;
+
+                    if(is_array($excelData[0][0]))
+                    {
+                        if(count($excelData[0]) > 1)
+                            $importData = $excelData[0];
+                    }
+                    else
+                    {
+                        if(count($excelData) > 1)
+                            $importData = $excelData;
+                    }
+
+                    if($importData != null)
+                    {
+                        $label = [
+                            'code' => '',
+                            'category' => '',
+                            'name' => '',
+                            'name_en' => '',
+                            'unit' => '',
+                            'quantity' => '',
+                            'price' => '',
+                            'calories' => '',
+                            'carb' => '',
+                            'fat' => '',
+                            'protein' => '',
+                        ];
+
+                        foreach($importData[0] as $keyCell => $cell)
+                        {
+                            foreach($label as $k => $v)
+                            {
+                                if(strpos($cell, $k) !== false && $label[$k] !== '')
+                                    $label[$k] = $keyCell;
+                            }
+                        }
+
+                        $importDataValid = true;
+                        foreach($label as $k => $v)
+                        {
+                            if($v === '')
+                            {
+                                $importDataValid = false;
+                                break;
+                            }
+                        }
+
+                        if($importDataValid)
+                        {
+                            unset($importData[0]);
+
+                            $function = 'importResourceHandle';
+                            register_shutdown_function([get_class(new self), $function], $importData, $label);
+
+                            return redirect('admin/resource')->with('importResource', 'File is being imported');
+                        }
+                    }
+                }
+            }
+        }
+
+        return redirect('admin/resource')->with('importResource', 'File is invalid');
+    }
+
+    public static function importResourceHandle($importData, $label)
+    {
+        $categoryIds = array();
+        $unitIds = array();
+
+        foreach($importData as $row)
+        {
+            if(!empty($row[$label['code']]))
+            {
+                $resource = Resource::where('code', $row[$label['code']])->first();
+
+                if(empty($resource))
+                {
+                    if(empty($row[$label['name']]) || empty($row[$label['category']]) || empty($row[$label['unit']]) || empty($row[$label['price']]) || empty($row[$label['quantity']])
+                        || empty($row[$label['calories']]) || empty($row[$label['carb']]) || empty($row[$label['fat']]) || empty($row[$label['protein']]))
+                        continue;
+
+                    $resource = new Resource();
+                    $resource->status = Util::STATUS_ACTIVE_VALUE;
+                    $resource->code = $row[$label['code']];
+                }
+
+                $resource->name = !empty($row[$label['name']]) ? trim($row[$label['name']]) : $resource->name;
+                $resource->name_en = !empty($row[$label['name_en']]) ? trim($row[$label['name_en']]) : $resource->name_en;
+                $resource->price = !empty($row[$label['price']]) ? trim($row[$label['price']]) : $resource->price;
+                $resource->quantity = !empty($row[$label['quantity']]) ? trim($row[$label['quantity']]) : $resource->quantity;
+                $resource->calories = !empty($row[$label['calories']]) ? trim($row[$label['calories']]) : $resource->calories;
+                $resource->carb = !empty($row[$label['carb']]) ? trim($row[$label['carb']]) : $resource->carb;
+                $resource->fat = !empty($row[$label['fat']]) ? trim($row[$label['fat']]) : $resource->fat;
+                $resource->protein = !empty($row[$label['protein']]) ? trim($row[$label['protein']]) : $resource->protein;
+
+                if(!empty($row[$label['category']]))
+                {
+                    if(isset($categoryIds[$row[$label['category']]]))
+                        $resource->category_id = $categoryIds[$row[$label['category']]];
+                    else
+                    {
+                        $category = Category::where('name', $row[$label['category']])->first();
+                        if(empty($category))
+                        {
+                            $category = new Category();
+                            $category->status = Util::STATUS_ACTIVE_VALUE;
+                            $category->name = $row[$label['category']];
+                            $category->save();
+                        }
+                        $categoryIds[$row[$label['category']]] = $category->id;
+
+                        $resource->category_id = $category->id;
+                    }
+                }
+
+                if(!empty($row[$label['unit']]))
+                {
+                    if(isset($unitIds[$row[$label['unit']]]))
+                        $resource->unit_id = $unitIds[$row[$label['unit']]];
+                    else
+                    {
+                        $unit = Unit::where('name', $row[$label['unit']])->first();
+                        if(empty($unit))
+                        {
+                            $unit = new Unit();
+                            $unit->status = Util::STATUS_ACTIVE_VALUE;
+                            $unit->name = $row[$label['unit']];
+                            $unit->save();
+                        }
+                        $unitIds[$row[$label['unit']]] = $unit->id;
+
+                        $resource->unit_id = $unit->id;
+                    }
+                }
+
+                $resource->save();
+            }
+        }
+    }
+
     public function listRecipe(Request $request)
     {
         list($recipes, $filter, $queryString) = $this->getListRecipe($request, 'list');
@@ -757,10 +910,10 @@ class MenuController extends Controller
                 $recipe->recipeResources[0]->resource->unit->name,
                 round($recipe->recipeResources[0]->resource->price / $recipe->recipeResources[0]->resource->quantity),
                 $recipe->recipeResources[0]->price,
-                '',
-                '',
-                '',
-                '',
+                $recipe->recipeResources[0]->calories,
+                $recipe->recipeResources[0]->carb,
+                $recipe->recipeResources[0]->fat,
+                $recipe->recipeResources[0]->protein,
             ];
 
             $countResource = count($recipe->recipeResources);
@@ -776,10 +929,10 @@ class MenuController extends Controller
                     $recipe->recipeResources[$i]->resource->unit->name,
                     round($recipe->recipeResources[$i]->resource->price / $recipe->recipeResources[0]->resource->quantity),
                     $recipe->recipeResources[$i]->price,
-                    '',
-                    '',
-                    '',
-                    '',
+                    $recipe->recipeResources[$i]->calories,
+                    $recipe->recipeResources[$i]->carb,
+                    $recipe->recipeResources[$i]->fat,
+                    $recipe->recipeResources[$i]->protein,
                 ];
             }
 
@@ -792,10 +945,10 @@ class MenuController extends Controller
                 '',
                 '',
                 $recipe->price,
-                '',
-                '',
-                '',
-                '',
+                $recipe->calories,
+                $recipe->carb,
+                $recipe->fat,
+                $recipe->protein,
             ];
         }
 
