@@ -20,6 +20,9 @@
                         <a href="{{ url('admin/recipe/export?' . $queryString) }}" data-toggle="tooltip" title="Export Excel" class="btn btn-primary btn-outline">
                             <i class="fa fa-download fa-fw"></i>
                         </a>
+                        <button id="ImportRecipeButton" data-toggle="tooltip" title="Import Recipe" class="btn btn-primary btn-outline">
+                            <i class="fa fa-upload fa-fw"></i>
+                        </button>
                         <button value="delete" data-toggle="tooltip" title="Delete" class="btn btn-primary btn-outline ControlButtonControlForm" disabled="disabled">
                             <i class="fa fa-trash-o fa-fw"></i>
                         </button>
@@ -126,5 +129,118 @@
             </div>
         </div>
     </div>
+
+    <div id="ImportRecipeModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Import Recipe</h4>
+                </div>
+                <div class="modal-body">
+                    <label>Template</label>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th>D</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>1</th>
+                            <td>name</td>
+                            <td>name_en</td>
+                            <td>resource_code</td>
+                            <td>resource_quantity</td>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <td>Trứng Hấp Chả Cua</td>
+                            <td>Steamed Egg Crab Rolls</td>
+                            <td>EGG</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <td></td>
+                            <td></td>
+                            <td>ONI</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <th>4</th>
+                            <td></td>
+                            <td></td>
+                            <td>CRAB</td>
+                            <td>300</td>
+                        </tr>
+                        <tr>
+                            <th>5</th>
+                            <td>Xà Lát Cá Hồi</td>
+                            <td>Salmon Salad</td>
+                            <td>SALD</td>
+                            <td>500</td>
+                        </tr>
+                        <tr>
+                            <th>6</th>
+                            <td></td>
+                            <td></td>
+                            <td>EGG</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <th>7</th>
+                            <td></td>
+                            <td></td>
+                            <td>ONI</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <th>8</th>
+                            <td></td>
+                            <td></td>
+                            <td>SALM</td>
+                            <td>300</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <form method="post" action="{{ url('admin/recipe/import') }}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="file" class="form-control" name="excel" accept=".xls, .xlsx, .csv, .XLS, .XLSX, .CSV" required="required" />
+                        </div>
+                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                        <input type="submit" value="Import" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@stop
+
+@section('script')
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            $('#ImportRecipeButton').click(function() {
+
+                $('#ImportRecipeModal').modal('show');
+
+            });
+
+            @if(session('importRecipe'))
+            alert('{{ session('importRecipe') }}');
+            @endif
+
+        });
+
+    </script>
 
 @stop

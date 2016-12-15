@@ -128,13 +128,76 @@
     </div>
 
     <div id="ImportResourceModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Import Resource</h4>
                 </div>
                 <div class="modal-body">
+                    <label>Template</label>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th>D</th>
+                            <th>E</th>
+                            <th>F</th>
+                            <th>G</th>
+                            <th>H</th>
+                            <th>I</th>
+                            <th>J</th>
+                            <th>K</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th>1</th>
+                            <td>code</td>
+                            <td>category</td>
+                            <td>name</td>
+                            <td>name_en</td>
+                            <td>unit</td>
+                            <td>quantity</td>
+                            <td>price</td>
+                            <td>calories</td>
+                            <td>carb</td>
+                            <td>fat</td>
+                            <td>protein</td>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <td>BR</td>
+                            <td>Meat</td>
+                            <td>Ba Rọi</td>
+                            <td>Bacon</td>
+                            <td>gr</td>
+                            <td>1000</td>
+                            <td>50000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                            <td>1000</td>
+                        </tr>
+                        <tr>
+                            <th>3</th>
+                            <td>SD</td>
+                            <td>Milk</td>
+                            <td>Sữa Dê</td>
+                            <td>Goat Milk</td>
+                            <td>ml</td>
+                            <td>1000</td>
+                            <td>70000</td>
+                            <td>10000</td>
+                            <td>10000</td>
+                            <td>10000</td>
+                            <td>10000</td>
+                        </tr>
+                        </tbody>
+                    </table>
                     <form method="post" action="{{ url('admin/resource/import') }}" enctype="multipart/form-data">
                         <div class="form-group">
                             <label>File</label>

@@ -1093,6 +1093,192 @@ class MenuController extends Controller
         return redirect('admin/recipe');
     }
 
+    public function importRecipe(Request $request)
+    {
+        $file = $request->file('excel');
+
+        if(!empty($file))
+        {
+            if(in_array($file->getClientOriginalExtension(), Util::getValidExcelExt()))
+            {
+                $excelData = Excel::load($file->getPathname())->noHeading()->toArray();
+
+                if(count($excelData) > 0 && isset($excelData[0]) && is_array($excelData[0]) && isset($excelData[0][0]))
+                {
+                    $importData = null;
+
+                    if(is_array($excelData[0][0]))
+                    {
+                        if(count($excelData[0]) > 1)
+                            $importData = $excelData[0];
+                    }
+                    else
+                    {
+                        if(count($excelData) > 1)
+                            $importData = $excelData;
+                    }
+
+                    if($importData != null)
+                    {
+                        $label = [
+                            'name' => '',
+                            'name_en' => '',
+                            'resource_code' => '',
+                            'resource_quantity' => '',
+                        ];
+
+                        foreach($importData[0] as $keyCell => $cell)
+                        {
+                            foreach($label as $k => $v)
+                            {
+                                if(strpos($cell, $k) !== false && $label[$k] !== '')
+                                    $label[$k] = $keyCell;
+                            }
+                        }
+
+                        $importDataValid = true;
+                        foreach($label as $k => $v)
+                        {
+                            if($v === '')
+                            {
+                                $importDataValid = false;
+                                break;
+                            }
+                        }
+
+                        if($importDataValid)
+                        {
+                            unset($importData[0]);
+
+                            $function = 'importRecipeHandle';
+                            register_shutdown_function([get_class(new self), $function], $importData, $label);
+
+                            return redirect('admin/recipe')->with('importRecipe', 'File is being imported');
+                        }
+                    }
+                }
+            }
+        }
+
+        return redirect('admin/recipe')->with('importRecipe', 'File is invalid');
+    }
+
+    public static function importRecipeHandle($importData, $label)
+    {
+        $resources = array();
+
+        $recipe = null;
+        $resourceUpdateIds = array();
+
+        foreach($importData as $keyRow => $row)
+        {
+            if(!empty($row[$label['name']]))
+            {
+                $recipe = Recipe::with('recipeResources')->where('name', $row[$label['name']])->first();
+
+                if(empty($recipe))
+                {
+                    $recipe = new Recipe();
+                    $recipe->status = Util::STATUS_ACTIVE_VALUE;
+                    $recipe->name = $row[$label['name']];
+                }
+
+                $recipe->name_en = !empty($row[$label['name_en']]) ? trim($row[$label['name_en']]) : $recipe->name_en;
+                $recipe->price = 0;
+                $recipe->calories = 0;
+                $recipe->carb = 0;
+                $recipe->fat = 0;
+                $recipe->protein = 0;
+            }
+
+            if(!empty($recipe))
+            {
+                if(!empty($row[$label['resource_code']]) && !empty($row[$label['resource_quantity']]))
+                {
+                    if(isset($resources[$row[$label['resource_code']]]))
+                        $resource = $resources[$row[$label['resource_code']]];
+                    else
+                    {
+                        $resource = Resource::where('code', $row[$label['resource_code']])->first();
+
+                        if(!empty($resource))
+                            $resources[$row[$label['resource_code']]] = $resource;
+                    }
+
+                    if(!empty($resource))
+                    {
+                        if(!in_array($resource->id, $resourceUpdateIds))
+                        {
+                            $resourceUpdateIds[] = $resource->id;
+
+                            $updateRecipeResource = null;
+
+                            foreach($recipe->recipeResources as $keyRecipeResource => $recipeResource)
+                            {
+                                if($recipeResource->resource_id == $resource->id)
+                                {
+                                    $recipe->recipeResources[$keyRecipeResource]->quantity = $row[$label['resource_quantity']];
+                                    $recipe->recipeResources[$keyRecipeResource]->price = $resource->price * $recipe->recipeResources[$keyRecipeResource]->quantity / $resource->quantity;
+                                    $recipe->recipeResources[$keyRecipeResource]->calories = $resource->calories * $recipe->recipeResources[$keyRecipeResource]->quantity / $resource->quantity;
+                                    $recipe->recipeResources[$keyRecipeResource]->carb = $resource->carb * $recipe->recipeResources[$keyRecipeResource]->quantity / $resource->quantity;
+                                    $recipe->recipeResources[$keyRecipeResource]->fat = $resource->fat * $recipe->recipeResources[$keyRecipeResource]->quantity / $resource->quantity;
+                                    $recipe->recipeResources[$keyRecipeResource]->protein = $resource->protein * $recipe->recipeResources[$keyRecipeResource]->quantity / $resource->quantity;
+
+                                    $updateRecipeResource = $recipe->recipeResources[$keyRecipeResource];
+                                    break;
+                                }
+                            }
+
+                            if(empty($updateRecipeResource))
+                            {
+                                $updateRecipeResource = new RecipeResource();
+                                $updateRecipeResource->resource_id = $resource->id;
+                                $updateRecipeResource->quantity = $row[$label['resource_quantity']];
+                                $updateRecipeResource->price = $resource->price * $updateRecipeResource->quantity / $resource->quantity;
+                                $updateRecipeResource->calories = $resource->calories * $updateRecipeResource->quantity / $resource->quantity;
+                                $updateRecipeResource->carb = $resource->carb * $updateRecipeResource->quantity / $resource->quantity;
+                                $updateRecipeResource->fat = $resource->fat * $updateRecipeResource->quantity / $resource->quantity;
+                                $updateRecipeResource->protein = $resource->protein * $updateRecipeResource->quantity / $resource->quantity;
+
+                                $recipe->recipeResources[] = $updateRecipeResource;
+                            }
+
+                            $recipe->price += $updateRecipeResource->price;
+                            $recipe->calories += $updateRecipeResource->calories;
+                            $recipe->carb += $updateRecipeResource->carb;
+                            $recipe->fat += $updateRecipeResource->fat;
+                            $recipe->protein += $updateRecipeResource->protein;
+                        }
+                    }
+                }
+
+                $nextKeyRow = $keyRow + 1;
+
+                if(!isset($importData[$nextKeyRow]) || !empty($importData[$nextKeyRow][$label['name']]))
+                {
+                    if(count($resourceUpdateIds) > 0)
+                    {
+                        $recipe->save();
+
+                        foreach($recipe->recipeResources as $recipeResource)
+                        {
+                            if(in_array($recipeResource->resource_id, $resourceUpdateIds))
+                            {
+                                $recipeResource->recipe_id = $recipe->id;
+                                $recipeResource->save();
+                            }
+                            else
+                                $recipeResource->delete();
+                        }
+                    }
+
+                    $recipe = null;
+                    $resourceUpdateIds = array();
+                }
+            }
+        }
+    }
+
     public function listMenu(Request $request)
     {
         $input = $request->all();
