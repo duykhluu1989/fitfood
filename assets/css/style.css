@@ -563,7 +563,8 @@ input#searchsubmit {
 	right:0;
 }
 .language a{
-	background:#b4b4b4;
+	/*background:#b4b4b4;*/
+    background: transparent;
 	color:#e1e1e1;
 	font-family: 'Lato-Light';
 	text-align:center;
@@ -576,6 +577,9 @@ input#searchsubmit {
 	background:#fff;
 	font-family: 'Lato-Semibold';
 	color:#000;
+    box-shadow:0 -4px 15px 0 rgba(0,0,0,.25);
+    -moz-box-shadow:0 -4px 15px 0 rgba(0,0,0,.25);
+    -webkit-box-shadow:0 -4px 15px 0 rgba(0,0,0,.25);
 }
 ul.page-numbers { 
 	list-style: none; 
