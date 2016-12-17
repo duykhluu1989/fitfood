@@ -536,7 +536,7 @@ class MenuController extends Controller
                         {
                             foreach($label as $k => $v)
                             {
-                                if(strpos($cell, $k) !== false && $label[$k] !== '')
+                                if(strpos($cell, $k) !== false && $label[$k] === '')
                                     $label[$k] = $keyCell;
                             }
                         }
@@ -577,7 +577,7 @@ class MenuController extends Controller
         {
             if(!empty($row[$label['code']]))
             {
-                $resource = Resource::where('code', $row[$label['code']])->first();
+                $resource = Resource::where('code', trim($row[$label['code']]))->first();
 
                 if(empty($resource))
                 {
@@ -587,7 +587,7 @@ class MenuController extends Controller
 
                     $resource = new Resource();
                     $resource->status = Util::STATUS_ACTIVE_VALUE;
-                    $resource->code = $row[$label['code']];
+                    $resource->code = trim($row[$label['code']]);
                 }
 
                 $resource->name = !empty($row[$label['name']]) ? trim($row[$label['name']]) : $resource->name;
@@ -601,19 +601,19 @@ class MenuController extends Controller
 
                 if(!empty($row[$label['category']]))
                 {
-                    if(isset($categoryIds[$row[$label['category']]]))
-                        $resource->category_id = $categoryIds[$row[$label['category']]];
+                    if(isset($categoryIds[trim($row[$label['category']])]))
+                        $resource->category_id = $categoryIds[trim($row[$label['category']])];
                     else
                     {
-                        $category = Category::where('name', $row[$label['category']])->first();
+                        $category = Category::where('name', trim($row[$label['category']]))->first();
                         if(empty($category))
                         {
                             $category = new Category();
                             $category->status = Util::STATUS_ACTIVE_VALUE;
-                            $category->name = $row[$label['category']];
+                            $category->name = trim($row[$label['category']]);
                             $category->save();
                         }
-                        $categoryIds[$row[$label['category']]] = $category->id;
+                        $categoryIds[trim($row[$label['category']])] = $category->id;
 
                         $resource->category_id = $category->id;
                     }
@@ -621,19 +621,19 @@ class MenuController extends Controller
 
                 if(!empty($row[$label['unit']]))
                 {
-                    if(isset($unitIds[$row[$label['unit']]]))
-                        $resource->unit_id = $unitIds[$row[$label['unit']]];
+                    if(isset($unitIds[trim($row[$label['unit']])]))
+                        $resource->unit_id = $unitIds[trim($row[$label['unit']])];
                     else
                     {
-                        $unit = Unit::where('name', $row[$label['unit']])->first();
+                        $unit = Unit::where('name', trim($row[$label['unit']]))->first();
                         if(empty($unit))
                         {
                             $unit = new Unit();
                             $unit->status = Util::STATUS_ACTIVE_VALUE;
-                            $unit->name = $row[$label['unit']];
+                            $unit->name = trim($row[$label['unit']]);
                             $unit->save();
                         }
-                        $unitIds[$row[$label['unit']]] = $unit->id;
+                        $unitIds[trim($row[$label['unit']])] = $unit->id;
 
                         $resource->unit_id = $unit->id;
                     }
@@ -1131,7 +1131,7 @@ class MenuController extends Controller
                         {
                             foreach($label as $k => $v)
                             {
-                                if(strpos($cell, $k) !== false && $label[$k] !== '')
+                                if(strpos($cell, $k) !== false && $label[$k] === '')
                                     $label[$k] = $keyCell;
                             }
                         }
@@ -1174,13 +1174,13 @@ class MenuController extends Controller
         {
             if(!empty($row[$label['name']]))
             {
-                $recipe = Recipe::with('recipeResources')->where('name', $row[$label['name']])->first();
+                $recipe = Recipe::with('recipeResources')->where('name', trim($row[$label['name']]))->first();
 
                 if(empty($recipe))
                 {
                     $recipe = new Recipe();
                     $recipe->status = Util::STATUS_ACTIVE_VALUE;
-                    $recipe->name = $row[$label['name']];
+                    $recipe->name = trim($row[$label['name']]);
                 }
 
                 $recipe->name_en = !empty($row[$label['name_en']]) ? trim($row[$label['name_en']]) : $recipe->name_en;
@@ -1195,14 +1195,14 @@ class MenuController extends Controller
             {
                 if(!empty($row[$label['resource_code']]) && !empty($row[$label['resource_quantity']]))
                 {
-                    if(isset($resources[$row[$label['resource_code']]]))
-                        $resource = $resources[$row[$label['resource_code']]];
+                    if(isset($resources[trim($row[$label['resource_code']])]))
+                        $resource = $resources[trim($row[$label['resource_code']])];
                     else
                     {
-                        $resource = Resource::where('code', $row[$label['resource_code']])->first();
+                        $resource = Resource::where('code', trim($row[$label['resource_code']]))->first();
 
                         if(!empty($resource))
-                            $resources[$row[$label['resource_code']]] = $resource;
+                            $resources[trim($row[$label['resource_code']])] = $resource;
                     }
 
                     if(!empty($resource))
@@ -1217,7 +1217,7 @@ class MenuController extends Controller
                             {
                                 if($recipeResource->resource_id == $resource->id)
                                 {
-                                    $recipe->recipeResources[$keyRecipeResource]->quantity = $row[$label['resource_quantity']];
+                                    $recipe->recipeResources[$keyRecipeResource]->quantity = trim($row[$label['resource_quantity']]);
                                     $recipe->recipeResources[$keyRecipeResource]->price = $resource->price * $recipe->recipeResources[$keyRecipeResource]->quantity / $resource->quantity;
                                     $recipe->recipeResources[$keyRecipeResource]->calories = $resource->calories * $recipe->recipeResources[$keyRecipeResource]->quantity / $resource->quantity;
                                     $recipe->recipeResources[$keyRecipeResource]->carb = $resource->carb * $recipe->recipeResources[$keyRecipeResource]->quantity / $resource->quantity;
@@ -1233,7 +1233,7 @@ class MenuController extends Controller
                             {
                                 $updateRecipeResource = new RecipeResource();
                                 $updateRecipeResource->resource_id = $resource->id;
-                                $updateRecipeResource->quantity = $row[$label['resource_quantity']];
+                                $updateRecipeResource->quantity = trim($row[$label['resource_quantity']]);
                                 $updateRecipeResource->price = $resource->price * $updateRecipeResource->quantity / $resource->quantity;
                                 $updateRecipeResource->calories = $resource->calories * $updateRecipeResource->quantity / $resource->quantity;
                                 $updateRecipeResource->carb = $resource->carb * $updateRecipeResource->quantity / $resource->quantity;
