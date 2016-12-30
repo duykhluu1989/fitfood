@@ -111,7 +111,7 @@
             @if(!empty($banner->image_src))
                 <input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png, .gif, .JPG, .JPEG, .PNG, .GIF" />
                 <img src="{{ $banner->image_src }}" width="50%" alt="Fitfood" />
-            @elseif
+            @else
                 <input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png, .gif, .JPG, .JPEG, .PNG, .GIF" required="required" />
             @endif
         </div>
