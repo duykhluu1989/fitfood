@@ -69,11 +69,11 @@ class Resource extends Model
             'category_id' => 'required|integer|min:1',
             'unit_id' => 'required|integer|min:1',
             'price' => 'required|integer|min:1',
-            'quantity' => 'required|integer|min:1',
-            'calories' => 'required|integer|min:1',
-            'carb' => 'required|integer|min:1',
-            'fat' => 'required|integer|min:1',
-            'protein' => 'required|integer|min:1',
+            'quantity' => 'required|numeric|min:0',
+            'calories' => 'required|numeric|min:0',
+            'carb' => 'required|numeric|min:0',
+            'fat' => 'required|numeric|min:0',
+            'protein' => 'required|numeric|min:0',
         ]);
 
         if($validator->fails())

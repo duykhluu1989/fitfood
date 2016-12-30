@@ -23,10 +23,10 @@ class Recipe extends Model
         $validator = Validator::make($this->getAttributes(), [
             'name' => 'required|string',
             'price' => 'required|integer|min:1',
-            'calories' => 'required|integer|min:1',
-            'carb' => 'required|integer|min:1',
-            'fat' => 'required|integer|min:1',
-            'protein' => 'required|integer|min:1',
+            'calories' => 'required|numeric|min:0',
+            'carb' => 'required|numeric|min:0',
+            'fat' => 'required|numeric|min:0',
+            'protein' => 'required|numeric|min:0',
         ]);
 
         if($validator->fails())

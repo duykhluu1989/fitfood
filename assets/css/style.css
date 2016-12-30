@@ -305,7 +305,7 @@ table{
 .nav-home{
 	position:absolute;
 	top:0;
-	z-index:9999;
+	z-index:1009;
 	width:100%;
 }
 .nav-home .navbar{
@@ -1807,7 +1807,7 @@ textarea.form-control{
 	.nav-page{
 		position:absolute;
 		top:0;
-		z-index:9999;
+		z-index:1009;
 		width:100%;
 	}
 	.nav-page .navbar{
