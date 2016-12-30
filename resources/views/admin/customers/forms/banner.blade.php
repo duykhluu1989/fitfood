@@ -108,9 +108,11 @@
             <h3 class="panel-title">Image</h3>
         </div>
         <div class="panel-body">
-            <input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png, .gif, .JPG, .JPEG, .PNG, .GIF" required="required" />
             @if(!empty($banner->image_src))
+                <input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png, .gif, .JPG, .JPEG, .PNG, .GIF" />
                 <img src="{{ $banner->image_src }}" width="50%" alt="Fitfood" />
+            @elseif
+                <input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png, .gif, .JPG, .JPEG, .PNG, .GIF" required="required" />
             @endif
         </div>
     </div>
