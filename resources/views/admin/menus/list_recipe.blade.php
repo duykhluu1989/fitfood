@@ -131,7 +131,7 @@
     </div>
 
     <div id="ImportRecipeModal" class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -147,6 +147,7 @@
                             <th>B</th>
                             <th>C</th>
                             <th>D</th>
+                            <th>E</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -156,6 +157,7 @@
                             <td>name_en</td>
                             <td>resource_code</td>
                             <td>resource_quantity</td>
+                            <td>cooking_note</td>
                         </tr>
                         <tr>
                             <th>2</th>
@@ -163,6 +165,7 @@
                             <td>Steamed Egg Crab Rolls</td>
                             <td>EGG</td>
                             <td>1</td>
+                            <td>Lòng đào</td>
                         </tr>
                         <tr>
                             <th>3</th>
@@ -170,6 +173,7 @@
                             <td></td>
                             <td>ONI</td>
                             <td>1</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <th>4</th>
@@ -177,6 +181,7 @@
                             <td></td>
                             <td>CRAB</td>
                             <td>300</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <th>5</th>
@@ -184,6 +189,7 @@
                             <td>Salmon Salad</td>
                             <td>SALD</td>
                             <td>500</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <th>6</th>
@@ -191,6 +197,7 @@
                             <td></td>
                             <td>EGG</td>
                             <td>2</td>
+                            <td></td>
                         </tr>
                         <tr>
                             <th>7</th>
@@ -198,6 +205,7 @@
                             <td></td>
                             <td>ONI</td>
                             <td>1</td>
+                            <td>Xắt hạt lựu</td>
                         </tr>
                         <tr>
                             <th>8</th>
@@ -205,6 +213,7 @@
                             <td></td>
                             <td>SALM</td>
                             <td>300</td>
+                            <td></td>
                         </tr>
                         </tbody>
                     </table>

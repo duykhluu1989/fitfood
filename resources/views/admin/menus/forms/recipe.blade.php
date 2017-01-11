@@ -57,12 +57,16 @@
         </div>
         <div class="panel-body" id="ListResourceDiv">
             @foreach($recipe->recipeResources as $recipeResource)
-                <div class="row">
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control ResourceNameInput" placeholder="Name" name="recipe[resource][name][]" value="{{ $recipeResource->resource->name }}" />
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">Name</span>
+                            <input type="text" class="form-control ResourceNameInput" placeholder="Name" name="recipe[resource][name][]" value="{{ $recipeResource->resource->name }}" />
+                        </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="input-group">
+                            <span class="input-group-addon">Quantity</span>
                             <input type="text" class="form-control ResourceQuantityInput" placeholder="Quantity" name="recipe[resource][quantity][]" value="{{ App\Libraries\Util::formatMoney($recipeResource->quantity) }}" />
                             <span class="input-group-addon" data-addon="Unit">{{ $recipeResource->resource->unit->name }}</span>
                         </div>
@@ -79,7 +83,7 @@
                             <input type="text" class="form-control" placeholder="Calories" readonly="readonly" value="{{ App\Libraries\Util::formatMoney($recipeResource->calories) }}" />
                         </div>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <div class="input-group">
                             <span class="input-group-addon">Carb</span>
                             <input type="text" class="form-control" placeholder="Carb" readonly="readonly" value="{{ App\Libraries\Util::formatMoney($recipeResource->carb) }}" />
@@ -95,6 +99,12 @@
                         <div class="input-group">
                             <span class="input-group-addon">Protein</span>
                             <input type="text" class="form-control" placeholder="Protein" readonly="readonly" value="{{ App\Libraries\Util::formatMoney($recipeResource->protein) }}" />
+                        </div>
+                    </div>
+                    <div class="col-sm-11">
+                        <div class="input-group">
+                            <span class="input-group-addon">Note</span>
+                            <input type="text" class="form-control" placeholder="Note" name="recipe[resource][note][]" value="{{ $recipeResource->note }}" />
                         </div>
                     </div>
                     <div class="col-sm-1">
@@ -209,12 +219,16 @@
             $('#AddResourceButton').click(function() {
 
                 $('#ListResourceDiv').append(
-                    '<div class="row">' +
-                    '<div class="col-sm-5">' +
+                    '<div class="row" style="margin-bottom: 20px">' +
+                    '<div class="col-sm-6">' +
+                    '<div class="input-group">' +
+                    '<span class="input-group-addon">Name</span>' +
                     '<input type="text" class="form-control ResourceNameInput" placeholder="Name" name="recipe[resource][name][]" />' +
+                    '</div>' +
                     '</div>' +
                     '<div class="col-sm-3">' +
                     '<div class="input-group">' +
+                    '<span class="input-group-addon">Quantity</span>' +
                     '<input type="text" class="form-control ResourceQuantityInput" placeholder="Quantity" name="recipe[resource][quantity][]" readonly="readonly" />' +
                     '<span class="input-group-addon" data-addon="Unit"></span>' +
                     '</div>' +
@@ -231,7 +245,7 @@
                     '<input type="text" class="form-control" placeholder="Calories" readonly="readonly" />' +
                     '</div>' +
                     '</div>' +
-                    '<div class="col-sm-2">' +
+                    '<div class="col-sm-3">' +
                     '<div class="input-group">' +
                     '<span class="input-group-addon">Carb</span>' +
                     '<input type="text" class="form-control" placeholder="Carb" readonly="readonly" />' +
@@ -247,6 +261,12 @@
                     '<div class="input-group">' +
                     '<span class="input-group-addon">Protein</span>' +
                     '<input type="text" class="form-control" placeholder="Protein" readonly="readonly" />' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="col-sm-11">' +
+                    '<div class="input-group">' +
+                    '<span class="input-group-addon">Note</span>' +
+                    '<input type="text" class="form-control" placeholder="Note" name="recipe[resource][note][]" />' +
                     '</div>' +
                     '</div>' +
                     '<div class="col-sm-1">' +
@@ -308,7 +328,7 @@
                         },
                         select: function(event, ui) {
 
-                            var groupDiv = $(this).parent().parent();
+                            var groupDiv = $(this).parent().parent().parent();
                             groupDiv.find('input[placeholder="Name"]').val(ui.item.name);
                             groupDiv.find('input[placeholder="Quantity"]').val(ui.item.quantity).removeAttr('readonly');
                             groupDiv.find('span[data-addon="Unit"]').html(ui.item.unit);

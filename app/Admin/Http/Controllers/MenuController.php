@@ -701,6 +701,7 @@ class MenuController extends Controller
                     {
                         $tempResources['name'][$key] = trim($name);
                         $tempResources['quantity'][$key] = trim(str_replace('.', '', $input['resource']['quantity'][$key]));
+                        $tempResources['note'][$key] = trim($input['resource']['note'][$key]);
                     }
                 }
 
@@ -718,6 +719,7 @@ class MenuController extends Controller
                         $tempRecipeResourceModel->carb = round($tempResourceModel->carb * $tempRecipeResourceModel->quantity / $tempResourceModel->quantity);
                         $tempRecipeResourceModel->fat = round($tempResourceModel->fat * $tempRecipeResourceModel->quantity / $tempResourceModel->quantity);
                         $tempRecipeResourceModel->protein = round($tempResourceModel->protein * $tempRecipeResourceModel->quantity / $tempResourceModel->quantity);
+                        $tempRecipeResourceModel->note = $tempResources['note'][$key];
 
                         $tempRecipeResourceModels[] = $tempRecipeResourceModel;
                     }
@@ -740,6 +742,7 @@ class MenuController extends Controller
                         $recipe->recipeResources[$key]->carb = $tempRecipeResourceModel->carb;
                         $recipe->recipeResources[$key]->fat = $tempRecipeResourceModel->fat;
                         $recipe->recipeResources[$key]->protein = $tempRecipeResourceModel->protein;
+                        $recipe->recipeResources[$key]->note = $tempRecipeResourceModel->note;
 
                         $updateRecipeResourceIds[] = $recipeResource->id;
                         $update = true;
@@ -897,6 +900,7 @@ class MenuController extends Controller
             'Carb',
             'Fat',
             'Protein',
+            'Cooking Note',
         ];
 
         foreach($recipes as $recipe)
@@ -914,6 +918,7 @@ class MenuController extends Controller
                 $recipe->recipeResources[0]->carb,
                 $recipe->recipeResources[0]->fat,
                 $recipe->recipeResources[0]->protein,
+                $recipe->recipeResources[0]->note,
             ];
 
             $countResource = count($recipe->recipeResources);
@@ -933,6 +938,7 @@ class MenuController extends Controller
                     $recipe->recipeResources[$i]->carb,
                     $recipe->recipeResources[$i]->fat,
                     $recipe->recipeResources[$i]->protein,
+                    $recipe->recipeResources[$i]->note,
                 ];
             }
 
@@ -949,6 +955,7 @@ class MenuController extends Controller
                 $recipe->carb,
                 $recipe->fat,
                 $recipe->protein,
+                '',
             ];
         }
 
@@ -1125,6 +1132,7 @@ class MenuController extends Controller
                             'name_en' => '',
                             'resource_code' => '',
                             'resource_quantity' => '',
+                            'cooking_note' => '',
                         ];
 
                         foreach($importData[0] as $keyCell => $cell)
@@ -1223,6 +1231,7 @@ class MenuController extends Controller
                                     $recipe->recipeResources[$keyRecipeResource]->carb = $resource->carb * $recipe->recipeResources[$keyRecipeResource]->quantity / $resource->quantity;
                                     $recipe->recipeResources[$keyRecipeResource]->fat = $resource->fat * $recipe->recipeResources[$keyRecipeResource]->quantity / $resource->quantity;
                                     $recipe->recipeResources[$keyRecipeResource]->protein = $resource->protein * $recipe->recipeResources[$keyRecipeResource]->quantity / $resource->quantity;
+                                    $recipe->recipeResources[$keyRecipeResource]->note = trim($row[$label['cooking_note']]);
 
                                     $updateRecipeResource = $recipe->recipeResources[$keyRecipeResource];
                                     break;
@@ -1239,6 +1248,7 @@ class MenuController extends Controller
                                 $updateRecipeResource->carb = $resource->carb * $updateRecipeResource->quantity / $resource->quantity;
                                 $updateRecipeResource->fat = $resource->fat * $updateRecipeResource->quantity / $resource->quantity;
                                 $updateRecipeResource->protein = $resource->protein * $updateRecipeResource->quantity / $resource->quantity;
+                                $updateRecipeResource->note = trim($row[$label['cooking_note']]);
 
                                 $recipe->recipeResources[] = $updateRecipeResource;
                             }
