@@ -28,6 +28,7 @@ use App\Models\Widget;
 use App\Models\BlogCategory;
 use App\Models\Article;
 use App\Models\Tag;
+use App\Models\Setting;
 
 class PageController extends Controller
 {
@@ -299,6 +300,30 @@ class PageController extends Controller
 
     public function order(Request $request)
     {
+        $offTimeWeeks = 0;
+
+        $offTimeSetting = Setting::where('name', Util::SETTING_NAME_OFF_TIME)->first();
+        if(!empty($offTimeSetting) && !empty($offTimeSetting->value))
+        {
+            $offTimeValue = json_decode($offTimeSetting->value, true);
+            if(!empty($offTimeValue['start_time']) && !empty($offTimeValue['end_time']))
+            {
+                $offTimeStartTimeStamp = strtotime($offTimeValue['start_time']);
+                $offTimeEndTimeStamp = strtotime($offTimeValue['end_time'] . ' 23:59:59');
+
+                if($offTimeStartTimeStamp <= $offTimeEndTimeStamp)
+                {
+                    $offTimeStartTimeStamp -= (Util::TIMESTAMP_ONE_DAY * (date('N', $offTimeStartTimeStamp) - 1));
+                    $offTimeEndTimeStamp += (Util::TIMESTAMP_ONE_DAY * (7 - date('N', $offTimeEndTimeStamp)));
+
+                    $time = strtotime('now');
+
+                    if($time >= $offTimeStartTimeStamp && $time <= $offTimeEndTimeStamp);
+                        $offTimeWeeks = (int)(($offTimeEndTimeStamp - $time) / (Util::TIMESTAMP_ONE_DAY * 7));
+                }
+            }
+        }
+
         $dayOfWeekForOrder = date('N');
 
         $currentNormalMenu = Menu::with('menuRecipes')->where('status', Util::STATUS_MENU_CURRENT_VALUE)->where('type', Util::TYPE_MENU_NORMAL_VALUE)->first();
@@ -322,7 +347,7 @@ class PageController extends Controller
             $normalMenuDayOfWeek = [1, 2, 3, 4, 5];
         }
 
-        if($dayOfWeekForOrder == 7)
+        if($dayOfWeekForOrder == 7 && $offTimeWeeks == 0)
         {
             $key = array_search(1, $normalMenuDayOfWeek);
             if($key !== false)
@@ -436,8 +461,8 @@ class PageController extends Controller
                 $order->total_price = $district->shipping_price * $normalMenuDays / 5;
                 $order->total_discounts = 0;
                 $order->total_extra_price = 0;
-                $order->start_week = date('Y-m-d', strtotime('+ ' . (8 - $dayOfWeekForOrder) . ' days'));
-                $order->end_week = date('Y-m-d', strtotime('+ ' . (12 - $dayOfWeekForOrder) . ' days'));
+                $order->start_week = date('Y-m-d', strtotime('+ ' . (8 - $dayOfWeekForOrder + ($offTimeWeeks * 7)) . ' days'));
+                $order->end_week = date('Y-m-d', strtotime('+ ' . (12 - $dayOfWeekForOrder + ($offTimeWeeks * 7)) . ' days'));
                 $order->payment_gateway = trim($input['payment_gateway']);
                 $order->shipping_time = trim($input['shipping_time']);
                 $order->shipping_priority = 1;
@@ -527,10 +552,10 @@ class PageController extends Controller
                                     $orderItemMeal->day_of_week = $dayOfWeek;
                                     $orderItemMeal->status = Util::ORDER_ITEM_MEAL_STATUS_PENDING_VALUE;
                                     $orderItemMeal->shipping_time = $order->shipping_time;
-                                    $orderItemMeal->meal_date = date('Y-m-d', strtotime('+ ' . (7 + $dayOfWeek - $dayOfWeekForOrder) . ' days'));
+                                    $orderItemMeal->meal_date = date('Y-m-d', strtotime('+ ' . (7 + $dayOfWeek - $dayOfWeekForOrder + ($offTimeWeeks * 7)) . ' days'));
 
                                     if($order->shipping_time == Util::SHIPPING_TIME_NIGHT_BEFORE_VALUE)
-                                        $orderItemMeal->cook_date = date('Y-m-d', strtotime('+ ' . (6 + $dayOfWeek - $dayOfWeekForOrder) . ' days'));
+                                        $orderItemMeal->cook_date = date('Y-m-d', strtotime('+ ' . (6 + $dayOfWeek - $dayOfWeekForOrder + ($offTimeWeeks * 7)) . ' days'));
                                     else
                                         $orderItemMeal->cook_date = $orderItemMeal->meal_date;
 
@@ -664,9 +689,9 @@ class PageController extends Controller
                             $orderItemProduct->shipping_time = $order->shipping_time;
 
                             if($order->shipping_time == Util::SHIPPING_TIME_NIGHT_BEFORE_VALUE)
-                                $orderItemProduct->cook_date = date('Y-m-d', strtotime('+ ' . (7 - $dayOfWeekForOrder) . ' days'));
+                                $orderItemProduct->cook_date = date('Y-m-d', strtotime('+ ' . (7 - $dayOfWeekForOrder + ($offTimeWeeks * 7)) . ' days'));
                             else
-                                $orderItemProduct->cook_date = date('Y-m-d', strtotime('+ ' . (8 - $dayOfWeekForOrder) . ' days'));
+                                $orderItemProduct->cook_date = date('Y-m-d', strtotime('+ ' . (8 - $dayOfWeekForOrder + ($offTimeWeeks * 7)) . ' days'));
 
                             $orderItemProduct->shipping_date = $orderItemProduct->cook_date;
                             $orderItemProduct->save();
@@ -859,7 +884,7 @@ class PageController extends Controller
 
         $autoAddMealPackId = $request->input('p');
 
-        if($dayOfWeekForOrder == 7 && $request->hasCookie(Util::COOKIE_READ_ORDER_POLICY_NAME) == false)
+        if($dayOfWeekForOrder == 7 && $offTimeWeeks == 0 && $request->hasCookie(Util::COOKIE_READ_ORDER_POLICY_NAME) == false)
         {
             Cookie::queue(Util::COOKIE_READ_ORDER_POLICY_NAME, true, Util::MINUTE_ONE_HOUR_EXPIRED);
             $showOrderPolicyPopup = true;

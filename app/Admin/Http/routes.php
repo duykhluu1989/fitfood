@@ -313,6 +313,16 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::post('banner/edit/{id}', 'CustomerController@editBanner');
 
+        Route::get('setting', 'SettingController@listSetting');
+
+        Route::get('setting/create', 'SettingController@createSetting');
+
+        Route::post('setting/create', 'SettingController@createSetting');
+
+        Route::get('setting/edit/{id}', 'SettingController@editSetting');
+
+        Route::post('setting/edit/{id}', 'SettingController@editSetting');
+
     });
 
     Route::group(['middleware' => 'guest'], function() {

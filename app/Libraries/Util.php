@@ -146,6 +146,11 @@ class Util
     const TYPE_WIDGET_SLIDER_VALUE = 0;
     const TYPE_WIDGET_SLIDER_LABEL = 'Slider';
 
+    const SETTING_NAME_OFF_TIME = 'OFF_TIME';
+
+    const TYPE_SETTING_JSON_VALUE = 0;
+    const TYPE_SETTING_JSON_LABEL = 'Json';
+
     const BANNER_HOME_PAGE = 'home';
     const BANNER_ORDER_PAGE = 'order';
     const BANNER_MENU_PAGE = 'menu';
@@ -497,6 +502,18 @@ class Util
         $types = [
             self::BANNER_CUSTOMER_TYPE_NEW => self::BANNER_CUSTOMER_TYPE_NEW,
             self::BANNER_CUSTOMER_TYPE_OLD => self::BANNER_CUSTOMER_TYPE_OLD,
+        ];
+
+        if($value !== null && isset($types[$value]))
+            return $types[$value];
+
+        return $types;
+    }
+
+    public static function getSettingType($value = null)
+    {
+        $types = [
+            self::TYPE_SETTING_JSON_VALUE => self::TYPE_SETTING_JSON_LABEL,
         ];
 
         if($value !== null && isset($types[$value]))

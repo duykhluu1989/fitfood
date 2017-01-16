@@ -65,6 +65,14 @@
                         </form>
                     </li>
                     <li>
+                        <a href="javascript:void(0)"><i class="fa fa-gear fa-fw"></i> Setting<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li {{ (Request::is('setting') ? 'class="active"' : '') }}>
+                                <a href="{{ url('admin/setting') }}">List Setting</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
                         <a href="javascript:void(0)"><i class="fa fa-user fa-fw"></i> User<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li {{ (Request::is('role') ? 'class="active"' : '') }}>
