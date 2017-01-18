@@ -20,7 +20,7 @@
                             <p>@lang('menu_page.menuDescription')</p>
                         </div>
                         <div class="page-title">
-                            <h5>@lang('menu_page.week') {{ date('d/m', strtotime('+ ' . (8 - date('N')) . ' days')) }} - {{ date('d/m', strtotime('+ ' . (12 - date('N')) . ' days')) }}</h5>
+                            <h5>@lang('menu_page.week') {{ date('d/m', strtotime('+ ' . (8 - date('N') + ($offTimeWeeks * 7)) . ' days')) }} - {{ date('d/m', strtotime('+ ' . (12 - date('N') + ($offTimeWeeks * 7)) . ' days')) }}</h5>
                         </div>
                         <?php
                         $dayOfWeek = [

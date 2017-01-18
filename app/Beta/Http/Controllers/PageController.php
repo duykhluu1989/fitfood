@@ -67,13 +67,37 @@ class PageController extends Controller
 
     public function menu()
     {
+        $offTimeWeeks = 0;
+
+        $offTimeSetting = Setting::where('name', Util::SETTING_NAME_OFF_TIME)->first();
+        if(!empty($offTimeSetting) && !empty($offTimeSetting->value))
+        {
+            $offTimeValue = json_decode($offTimeSetting->value, true);
+            if(!empty($offTimeValue['start_time']) && !empty($offTimeValue['end_time']))
+            {
+                $offTimeStartTimeStamp = strtotime($offTimeValue['start_time']);
+                $offTimeEndTimeStamp = strtotime($offTimeValue['end_time'] . ' 23:59:59');
+
+                if($offTimeStartTimeStamp <= $offTimeEndTimeStamp)
+                {
+                    $offTimeStartTimeStamp -= (Util::TIMESTAMP_ONE_DAY * (date('N', $offTimeStartTimeStamp) - 1));
+                    $offTimeEndTimeStamp += (Util::TIMESTAMP_ONE_DAY * (7 - date('N', $offTimeEndTimeStamp)));
+
+                    $time = strtotime('now');
+
+                    if($time >= $offTimeStartTimeStamp && $time <= $offTimeEndTimeStamp);
+                    $offTimeWeeks = (int)(($offTimeEndTimeStamp - $time) / (Util::TIMESTAMP_ONE_DAY * 7));
+                }
+            }
+        }
+
         $currentLastWeekNextWeekMenus = Menu::with('menuRecipes')
             ->where('status', Util::STATUS_MENU_CURRENT_VALUE)
             ->orWhere('status', Util::STATUS_MENU_LAST_WEEK_VALUE)
             ->orWhere('status', Util::STATUS_MENU_NEXT_WEEK_VALUE)
             ->get();
 
-        return view('beta.pages.menu', ['currentLastWeekNextWeekMenus' => $currentLastWeekNextWeekMenus]);
+        return view('beta.pages.menu', ['currentLastWeekNextWeekMenus' => $currentLastWeekNextWeekMenus, 'offTimeWeeks' => $offTimeWeeks]);
     }
 
     public function blog(Request $request, $categorySlug = null, $articleSlug = null)
