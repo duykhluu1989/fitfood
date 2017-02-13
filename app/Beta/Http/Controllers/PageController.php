@@ -342,7 +342,7 @@ class PageController extends Controller
 
                     $time = strtotime('now');
 
-                    if($time >= $offTimeStartTimeStamp && $time <= $offTimeEndTimeStamp);
+                    if($time >= $offTimeStartTimeStamp && $time <= $offTimeEndTimeStamp)
                         $offTimeWeeks = (int)(($offTimeEndTimeStamp - $time) / (Util::TIMESTAMP_ONE_DAY * 7));
                 }
             }
