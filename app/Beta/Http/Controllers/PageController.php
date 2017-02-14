@@ -85,8 +85,8 @@ class PageController extends Controller
 
                     $time = strtotime('now');
 
-                    if($time >= $offTimeStartTimeStamp && $time <= $offTimeEndTimeStamp);
-                    $offTimeWeeks = (int)(($offTimeEndTimeStamp - $time) / (Util::TIMESTAMP_ONE_DAY * 7));
+                    if($time >= $offTimeStartTimeStamp && $time <= $offTimeEndTimeStamp)
+                        $offTimeWeeks = (int)(($offTimeEndTimeStamp - $time) / (Util::TIMESTAMP_ONE_DAY * 7));
                 }
             }
         }
@@ -393,7 +393,7 @@ class PageController extends Controller
                 'address' => 'required|string',
                 'district' => 'required|integer|min:1',
                 'shipping_time' => 'required|string',
-                'payment_gateway' => 'required|in:' . Util::PAYMENT_GATEWAY_CASH_VALUE . ',' . Util::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE . ',' . Util::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_VALUE . ',' . Util::PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_VALUE,
+                'payment_gateway' => 'required|in:' . implode(',', array_keys(Util::getPaymentMethod())),
                 'mealPack' => 'required|array',
             ]);
 
@@ -845,52 +845,6 @@ class PageController extends Controller
                 $order->save();
 
                 DB::commit();
-
-                $mailMealPack = '';
-
-                foreach($mealPacks as $mealPack)
-                {
-                    if($mailMealPack == '')
-                        $mailMealPack .= $input['mealPack'][$mealPack->id] . ' x ' . $mealPack->name;
-                    else
-                        $mailMealPack .= ', ' . $input['mealPack'][$mealPack->id] . ' x ' . $mealPack->name;
-                }
-
-                $extraRequest = '';
-                if(isset($mailExtraRequests))
-                    $extraRequest = implode(', ', $mailExtraRequests);
-
-                if($order->shipping_time != Util::SHIPPING_TIME_NIGHT_BEFORE_VALUE)
-                    $deliveryTime = $order->shipping_time;
-                else
-                {
-                    if(App::getLocale() == 'en')
-                        $deliveryTime = Util::SHIPPING_TIME_NIGHT_BEFORE_LABEL_EN;
-                    else
-                        $deliveryTime = Util::SHIPPING_TIME_NIGHT_BEFORE_LABEL;
-                }
-
-                $bankNumber = '';
-                if($order->payment_gateway != Util::PAYMENT_GATEWAY_CASH_VALUE)
-                    $bankNumber = Util::getBankAccountNumber($order->payment_gateway);
-
-                register_shutdown_function([get_class(new self), 'sendConfirmEmail'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate);
-
-                return redirect('thankYou')->with('OrderThankYou', json_encode([
-                    'name' => $orderAddress->name,
-                    'phone' => $customer->phone,
-                    'address' => $orderAddress->address,
-                    'district' => $orderAddress->district,
-                    'mealPacks' => $mailMealPack,
-                    'paymentGateway' => Util::getPaymentMethod($order->payment_gateway, App::getLocale()),
-                    'deliveryTime' => $deliveryTime,
-                    'extraRequest' => $extraRequest,
-                    'totalPrice' => Util::formatMoney($order->total_price),
-                    'note' => $order->customer_note,
-                    'email' => $order->orderAddress->email,
-                    'bankNumber' => $bankNumber,
-                    'startShippingDate' => $startShippingDate,
-                ]));
             }
             catch(\Exception $e)
             {
@@ -901,6 +855,58 @@ class PageController extends Controller
                 return redirect('order')
                     ->with('OrderError', trans('order_form.error'));
             }
+
+            $mailMealPack = '';
+
+            foreach($mealPacks as $mealPack)
+            {
+                if($mailMealPack == '')
+                    $mailMealPack .= $input['mealPack'][$mealPack->id] . ' x ' . $mealPack->name;
+                else
+                    $mailMealPack .= ', ' . $input['mealPack'][$mealPack->id] . ' x ' . $mealPack->name;
+            }
+
+            $extraRequest = '';
+            if(isset($mailExtraRequests))
+                $extraRequest = implode(', ', $mailExtraRequests);
+
+            if($order->shipping_time != Util::SHIPPING_TIME_NIGHT_BEFORE_VALUE)
+                $deliveryTime = $order->shipping_time;
+            else
+            {
+                if(App::getLocale() == 'en')
+                    $deliveryTime = Util::SHIPPING_TIME_NIGHT_BEFORE_LABEL_EN;
+                else
+                    $deliveryTime = Util::SHIPPING_TIME_NIGHT_BEFORE_LABEL;
+            }
+
+            $bankTransferGatewayValues = [
+                Util::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE,
+                Util::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_VALUE,
+                Util::PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_VALUE,
+            ];
+
+            $bankNumber = '';
+            if(in_array($order->payment_gateway, $bankTransferGatewayValues))
+                $bankNumber = Util::getBankAccountNumber($order->payment_gateway);
+
+            register_shutdown_function([get_class(new self), 'sendConfirmEmail'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate);
+
+            return redirect('thankYou')->with('OrderThankYou', json_encode([
+                'name' => $orderAddress->name,
+                'phone' => $customer->phone,
+                'address' => $orderAddress->address,
+                'district' => $orderAddress->district,
+                'mealPacks' => $mailMealPack,
+                'paymentGateway' => Util::getPaymentMethod($order->payment_gateway, App::getLocale()),
+                'deliveryTime' => $deliveryTime,
+                'extraRequest' => $extraRequest,
+                'totalPrice' => Util::formatMoney($order->total_price),
+                'note' => $order->customer_note,
+                'email' => $order->orderAddress->email,
+                'bankNumber' => $bankNumber,
+                'startShippingDate' => $startShippingDate,
+            ]));
         }
 
         $areas = Area::getModelActiveArea();
