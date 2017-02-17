@@ -33,7 +33,7 @@ class UserController extends Controller
                     'status' => Util::STATUS_ACTIVE_VALUE,
                 ];
 
-                if(Auth::attempt($credential, true))
+                if(Auth::attempt($credential))
                 {
                     if(!empty($input['redirectUrl']))
                         return redirect($input['redirectUrl']);
