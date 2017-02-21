@@ -9,15 +9,41 @@ use App\Libraries\Util;
 
 class ShippingController extends Controller
 {
-    public function listShipper()
+    public function listShipper(Request $request)
     {
+        $input = $request->all();
+
         $builder = Shipper::select('*');
+
+        if(isset($input['filter']))
+        {
+            if(!empty($input['filter']['name']))
+                $builder->where('name', 'like', '%' . $input['filter']['name'] . '%');
+
+            if(!empty($input['filter']['phone']))
+                $builder->where('phone', 'like', '%' . $input['filter']['phone'] . '%');
+
+            if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
+                $builder->where('status', $input['filter']['status']);
+
+            $filter = $input['filter'];
+            $queryString = '&' . http_build_query(['filter' => $input['filter']]);
+        }
+        else
+        {
+            $filter = null;
+            $queryString = null;
+        }
 
         $builder->orderBy('id', 'DESC');
 
         $shippers = $builder->paginate(Util::GRID_PER_PAGE);
 
-        return view('admin.shippings.list_shipper', ['shippers' => $shippers]);
+        return view('admin.shippings.list_shipper', [
+            'shippers' => $shippers,
+            'filter' => $filter,
+            'queryString' => $queryString,
+        ]);
     }
 
     public function createShipper(Request $request)
@@ -59,15 +85,38 @@ class ShippingController extends Controller
         return view($view, ['shipper' => $shipper]);
     }
 
-    public function listArea()
+    public function listArea(Request $request)
     {
+        $input = $request->all();
+
         $builder = Area::select('*');
+
+        if(isset($input['filter']))
+        {
+            if(!empty($input['filter']['name']))
+                $builder->where('name', 'like', '%' . $input['filter']['name'] . '%');
+
+            if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
+                $builder->where('status', $input['filter']['status']);
+
+            $filter = $input['filter'];
+            $queryString = '&' . http_build_query(['filter' => $input['filter']]);
+        }
+        else
+        {
+            $filter = null;
+            $queryString = null;
+        }
 
         $builder->orderBy('id', 'DESC');
 
         $areas = $builder->paginate(Util::GRID_PER_PAGE);
 
-        return view('admin.shippings.list_area', ['areas' => $areas]);
+        return view('admin.shippings.list_area', [
+            'areas' => $areas,
+            'filter' => $filter,
+            'queryString' => $queryString,
+        ]);
     }
 
     public function createArea(Request $request)

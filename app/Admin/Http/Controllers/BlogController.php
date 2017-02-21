@@ -533,6 +533,9 @@ class BlogController extends Controller
             if(!empty($input['filter']['name']))
                 $builder->where('name', 'like', '%' . $input['filter']['name'] . '%');
 
+            if(isset($input['filter']['type']) && $input['filter']['type'] !== '')
+                $builder->where('type', $input['filter']['type']);
+
             if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
                 $builder->where('status', $input['filter']['status']);
 

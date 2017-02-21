@@ -8,7 +8,8 @@
         "devfactory/minify": "1.0.*",
         "predis/predis": "~1.0",
         "tinymce/tinymce": ">= 4",
-        "barryvdh/laravel-elfinder": "^0.3.8"
+        "barryvdh/laravel-elfinder": "^0.3.8",
+        "paypal/rest-api-sdk-php": "*"
     },
     "autoload": {
         "psr-4": {

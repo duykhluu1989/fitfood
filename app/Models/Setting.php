@@ -42,6 +42,12 @@ class Setting extends Model
                         $valueHtml .= '<b>' . strtoupper($key) . ':</b> ' . $value . '<br />';
 
                     break;
+
+                case Util::TYPE_SETTING_INT_VALUE:
+
+                    $valueHtml = $this->value;
+
+                    break;
             }
         }
 

@@ -37,6 +37,39 @@
                         <th>Vegetarian</th>
                         <th>Active</th>
                     </tr>
+                    <form id="FilterForm" action="{{ url('admin/mealPack') }}" method="get">
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="text" class="form-control" name="filter[name]" value="{{ (isset($filter['name']) ? $filter['name'] : '') }}" />
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" name="filter[name_en]" value="{{ (isset($filter['name_en']) ? $filter['name_en'] : '') }}" />
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <select class="form-control DropDownFilterForm" name="filter[status]">
+                                    <option value=""></option>
+                                    @foreach(App\Libraries\Util::getStatus() as $value => $label)
+                                        @if(isset($filter['status']) && $filter['status'] !== '' && $filter['status'] == $value)
+                                            <option selected="selected" value="{{ $value }}">{{ $label }}</option>
+                                        @else
+                                            <option value="{{ $value }}">{{ $label }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
+
+                        <input type="submit" style="display: none" />
+                    </form>
                     </thead>
                     <tbody>
                     @foreach($mealPacks as $mealPack)

@@ -17,15 +17,41 @@ use App\Models\MenuRecipe;
 
 class MenuController extends Controller
 {
-    public function listMealPack()
+    public function listMealPack(Request $request)
     {
+        $input = $request->all();
+
         $builder = MealPack::select('*');
+
+        if(isset($input['filter']))
+        {
+            if(!empty($input['filter']['name']))
+                $builder->where('name', 'like', '%' . $input['filter']['name'] . '%');
+
+            if(!empty($input['filter']['name_en']))
+                $builder->where('name_en', 'like', '%' . $input['filter']['name_en'] . '%');
+
+            if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
+                $builder->where('status', $input['filter']['status']);
+
+            $filter = $input['filter'];
+            $queryString = '&' . http_build_query(['filter' => $input['filter']]);
+        }
+        else
+        {
+            $filter = null;
+            $queryString = null;
+        }
 
         $builder->orderBy('id', 'DESC');
 
         $mealPacks = $builder->paginate(Util::GRID_PER_PAGE);
 
-        return view('admin.menus.list_meal_pack', ['mealPacks' => $mealPacks]);
+        return view('admin.menus.list_meal_pack', [
+            'mealPacks' => $mealPacks,
+            'filter' => $filter,
+            'queryString' => $queryString,
+        ]);
     }
 
     public function createMealPack(Request $request)

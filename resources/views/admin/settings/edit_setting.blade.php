@@ -50,6 +50,10 @@
 
             @include('admin.settings.forms.json_setting', ['setting' => $setting])
 
+        @elseif($setting->type == App\Libraries\Util::TYPE_SETTING_INT_VALUE)
+
+            @include('admin.settings.forms.int_setting', ['setting' => $setting])
+
         @endif
 
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">

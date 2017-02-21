@@ -20,6 +20,9 @@ class SettingController extends Controller
             if(!empty($input['filter']['name']))
                 $builder->where('name', 'like', '%' . $input['filter']['name'] . '%');
 
+            if(isset($input['filter']['type']) && $input['filter']['type'] !== '')
+                $builder->where('type', $input['filter']['type']);
+
             $filter = $input['filter'];
             $queryString = '&' . http_build_query(['filter' => $input['filter']]);
         }
@@ -84,6 +87,12 @@ class SettingController extends Controller
 
                                 if(isset($input['value']) && is_array($input['value']))
                                     $setting->value = json_encode($input['value']);
+
+                                break;
+
+                            case Util::TYPE_SETTING_INT_VALUE:
+
+                                $setting->value = $input['value'];
 
                                 break;
                         }

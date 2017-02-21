@@ -35,7 +35,18 @@
                             <td>
                                 <input type="text" class="form-control" name="filter[name]" value="{{ (isset($filter['name']) ? $filter['name'] : '') }}" />
                             </td>
-                            <td></td>
+                            <td>
+                                <select class="form-control DropDownFilterForm" name="filter[type]">
+                                    <option value=""></option>
+                                    @foreach(App\Libraries\Util::getWidgetType() as $value => $label)
+                                        @if(isset($filter['type']) && $filter['type'] !== '' && $filter['type'] == $value)
+                                            <option selected="selected" value="{{ $value }}">{{ $label }}</option>
+                                        @else
+                                            <option value="{{ $value }}">{{ $label }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </td>
                             <td>
                                 <select class="form-control DropDownFilterForm" name="filter[status]">
                                     <option value=""></option>

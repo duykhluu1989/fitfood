@@ -35,4 +35,15 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    /*
+	|--------------------------------------------------------------------------
+	| Paypal
+	|--------------------------------------------------------------------------
+	*/
+
+    'paypal' => [
+        'client' => env('PAYPAL_CLIENT', 'paypalclient'),
+        'secret' => env('PAYPAL_SECRET', 'paypalsecret'),
+    ],
+
 ];

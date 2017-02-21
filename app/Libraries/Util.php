@@ -44,14 +44,17 @@ class Util
     const FULFILLMENT_STATUS_FULFILLED_VALUE = 'FULFILLED';
     const FULFILLMENT_STATUS_PARTIALLY_FULFILLED_VALUE = 'PARTIALLY_FULFILLED';
 
+    const PAYMENT_GATEWAY_BANK_NET_PAYPAL_VALUE = 'PAYPAL';
     const PAYMENT_GATEWAY_CASH_VALUE = 'CASH';
     const PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE = 'BANK_VCB';
     const PAYMENT_GATEWAY_BANK_TRANSFER_ACB_VALUE = 'BANK_ACB';
     const PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_VALUE = 'BANK_HSBC';
+    const PAYMENT_GATEWAY_BANK_NET_PAYPAL_LABEL = 'Thanh toán trực tuyến bằng PAYPAL';
     const PAYMENT_GATEWAY_CASH_LABEL = 'Tiền mặt';
     const PAYMENT_GATEWAY_BANK_TRANSFER_VCB_LABEL = 'Chuyển khoản VCB';
     const PAYMENT_GATEWAY_BANK_TRANSFER_ACB_LABEL = 'Chuyển khoản ACB';
     const PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_LABEL = 'Chuyển khoản HSBC';
+    const PAYMENT_GATEWAY_BANK_NET_PAYPAL_LABEL_EN = 'Online payment by PAYPAL';
     const PAYMENT_GATEWAY_CASH_LABEL_EN = 'Cash (COD)';
     const PAYMENT_GATEWAY_BANK_TRANSFER_VCB_LABEL_EN = 'Bank transfer VCB';
     const PAYMENT_GATEWAY_BANK_TRANSFER_ACB_LABEL_EN = 'Bank transfer ACB';
@@ -147,9 +150,12 @@ class Util
     const TYPE_WIDGET_SLIDER_LABEL = 'Slider';
 
     const SETTING_NAME_OFF_TIME = 'OFF_TIME';
+    const SETTING_NAME_USD_EXCHANGE_RATE = 'USD_EXCHANGE_RATE';
 
     const TYPE_SETTING_JSON_VALUE = 0;
+    const TYPE_SETTING_INT_VALUE = 1;
     const TYPE_SETTING_JSON_LABEL = 'Json';
+    const TYPE_SETTING_INT_LABEL = 'Int';
 
     const BANNER_HOME_PAGE = 'home';
     const BANNER_ORDER_PAGE = 'order';
@@ -231,6 +237,7 @@ class Util
         if($lang == 'en')
         {
             $methods = [
+                //self::PAYMENT_GATEWAY_BANK_NET_PAYPAL_VALUE => self::PAYMENT_GATEWAY_BANK_NET_PAYPAL_LABEL_EN,
                 self::PAYMENT_GATEWAY_CASH_VALUE => self::PAYMENT_GATEWAY_CASH_LABEL_EN,
                 self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_LABEL_EN,
                 self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_LABEL_EN,
@@ -240,6 +247,7 @@ class Util
         else
         {
             $methods = [
+                //self::PAYMENT_GATEWAY_BANK_NET_PAYPAL_VALUE => self::PAYMENT_GATEWAY_BANK_NET_PAYPAL_LABEL,
                 self::PAYMENT_GATEWAY_CASH_VALUE => self::PAYMENT_GATEWAY_CASH_LABEL,
                 self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_LABEL,
                 self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_LABEL,
@@ -514,6 +522,7 @@ class Util
     {
         $types = [
             self::TYPE_SETTING_JSON_VALUE => self::TYPE_SETTING_JSON_LABEL,
+            self::TYPE_SETTING_INT_VALUE => self::TYPE_SETTING_INT_LABEL,
         ];
 
         if($value !== null && isset($types[$value]))
