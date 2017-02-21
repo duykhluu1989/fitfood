@@ -555,6 +555,23 @@ class PageController extends Controller
                             $orderItem->price = $mealPack->price;
 
                         $orderItem->type = $mealPack->type;
+
+                        if(!empty($mealPack->breakfast) || !empty($mealPack->lunch) || !empty($mealPack->dinner))
+                            $orderItem->main_dish = Util::STATUS_ACTIVE_VALUE;
+
+                        if($mealPack->type == Util::MEAL_PACK_TYPE_PACK_VALUE)
+                        {
+                            if(!empty($mealPack->juice))
+                                $orderItem->shipping_day_of_week = implode(';', $jusMenuDayOfWeek);
+                            else
+                                $orderItem->shipping_day_of_week = implode(';', $normalMenuDayOfWeek);
+                        }
+                        else
+                        {
+                            reset($normalMenuDayOfWeek);
+                            $orderItem->shipping_day_of_week = implode(';', [current($normalMenuDayOfWeek)]);
+                        }
+
                         $orderItem->save();
 
                         $order->total_line_items_price += $orderItem->price;
@@ -584,6 +601,12 @@ class PageController extends Controller
                                         $orderItemMeal->cook_date = $orderItemMeal->meal_date;
 
                                     $orderItemMeal->shipping_date = $orderItemMeal->cook_date;
+
+                                    if(!empty($mealPack->juice))
+                                        $orderItemMeal->price = $mealPack->price / 3;
+                                    else
+                                        $orderItemMeal->price = $mealPack->price / 5;
+
                                     $orderItemMeal->save();
 
                                     if(empty($startShippingDate))
