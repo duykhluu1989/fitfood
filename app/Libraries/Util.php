@@ -165,6 +165,11 @@ class Util
     const BANNER_CUSTOMER_TYPE_NEW = 'New';
     const BANNER_CUSTOMER_TYPE_OLD = 'Old';
 
+    const BANNER_TYPE_IMAGE_VALUE = 0;
+    const BANNER_TYPE_VIDEO_VALUE = 1;
+    const BANNER_TYPE_IMAGE_LABEL = 'Image';
+    const BANNER_TYPE_VIDEO_LABEL = 'Video';
+
     const COOKIE_READ_ARTICLE_NAME = 'read_article';
     const COOKIE_READ_ORDER_POLICY_NAME = 'read_order_policy';
     const COOKIE_PLACE_ORDER_CUSTOMER_NAME = 'place_order';
@@ -510,6 +515,19 @@ class Util
         $types = [
             self::BANNER_CUSTOMER_TYPE_NEW => self::BANNER_CUSTOMER_TYPE_NEW,
             self::BANNER_CUSTOMER_TYPE_OLD => self::BANNER_CUSTOMER_TYPE_OLD,
+        ];
+
+        if($value !== null && isset($types[$value]))
+            return $types[$value];
+
+        return $types;
+    }
+
+    public static function getBannerType($value = null)
+    {
+        $types = [
+            self::BANNER_TYPE_IMAGE_VALUE => self::BANNER_TYPE_IMAGE_LABEL,
+            self::BANNER_TYPE_VIDEO_VALUE => self::BANNER_TYPE_VIDEO_LABEL,
         ];
 
         if($value !== null && isset($types[$value]))

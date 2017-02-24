@@ -114,17 +114,43 @@
 </div>
 
 <div class="col-sm-12">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Image</h3>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title" id="BannerSrcTitle">{{ $banner->type == App\Libraries\Util::BANNER_TYPE_VIDEO_VALUE ? 'Video Url' : 'Image' }}</h3>
+                </div>
+                <div class="panel-body" id="BannerSrcDiv">
+                    @if($banner->type == App\Libraries\Util::BANNER_TYPE_VIDEO_VALUE)
+                        <input type="text" class="form-control" name="banner[image_src]" value="{{ $banner->image_src }}" required="required" />
+                    @else
+                        @if(!empty($banner->image_src))
+                            <input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png, .gif, .JPG, .JPEG, .PNG, .GIF" />
+                            <img src="{{ $banner->image_src }}" width="70%" alt="Fitfood" />
+                        @else
+                            <input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png, .gif, .JPG, .JPEG, .PNG, .GIF" required="required" />
+                        @endif
+                    @endif
+                </div>
+            </div>
         </div>
-        <div class="panel-body">
-            @if(!empty($banner->image_src))
-                <input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png, .gif, .JPG, .JPEG, .PNG, .GIF" />
-                <img src="{{ $banner->image_src }}" width="50%" alt="Fitfood" />
-            @else
-                <input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png, .gif, .JPG, .JPEG, .PNG, .GIF" required="required" />
-            @endif
+        <div class="col-sm-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type</h3>
+                </div>
+                <div class="panel-body">
+                    <select id="BannerTypeSelect" class="form-control" name="banner[type]">
+                        @foreach(App\Libraries\Util::getBannerType() as $value => $label)
+                            @if($value == $banner->type)
+                                <option selected="selected" value="<?php echo $value; ?>">{{ $label }}</option>
+                            @else
+                                <option value="<?php echo $value; ?>">{{ $label }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -140,6 +166,25 @@
             $('.DateTimePicker').datetimepicker({
 
                 format: 'Y-m-d H:i'
+
+            });
+
+            $('#BannerTypeSelect').change(function() {
+
+                if($(this).val() == '<?php echo App\Libraries\Util::BANNER_TYPE_VIDEO_VALUE; ?>')
+                {
+                    $("#BannerSrcDiv").html('' +
+                        '<input type="text" class="form-control" name="banner[image_src]" required="required" />' +
+                    '');
+                    $('#BannerSrcTitle').html('Video Url');
+                }
+                else
+                {
+                    $("#BannerSrcDiv").html('' +
+                        '<input type="file" class="form-control" name="image" accept=".jpg, .jpeg, .png, .gif, .JPG, .JPEG, .PNG, .GIF" required="required" />' +
+                    '');
+                    $('#BannerSrcTitle').html('Image');
+                }
 
             });
 

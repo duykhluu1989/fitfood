@@ -272,6 +272,10 @@ class CustomerController extends Controller
             $banner->customer_type = isset($input['customer_type']) ? trim($input['customer_type']) : '';
             $banner->status = isset($input['status']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
             $banner->url = isset($input['url']) ? trim($input['url']) : '';
+            $banner->type = isset($input['type']) ? trim($input['type']) : '';
+
+            if(isset($input['image_src']))
+                $banner->image_src = trim($input['image_src']);
 
             $errors = $banner->validate();
 
