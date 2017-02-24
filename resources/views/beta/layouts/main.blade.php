@@ -54,11 +54,30 @@
     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
     ga('create', 'UA-75679054-1', 'auto');
+    ga('require', 'displayfeatures');
     ga('send', 'pageview');
 
     fbq('track', 'ViewContent');
 </script>
 @yield('content')
+<!-- Google Code for Remarketing Tag -->
+<!--------------------------------------------------
+Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+--------------------------------------------------->
+<script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 940209987;
+    var google_custom_params = window.google_tag_params;
+    var google_remarketing_only = true;
+    /* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/940209987/?guid=ON&amp;script=0"/>
+    </div>
+</noscript>
 <div class="footer-widget">
     <div class="container">
         <div class="block hotline text-center">
@@ -112,23 +131,5 @@ if(request()->hasCookie(App\Libraries\Util::COOKIE_SEE_BANNER_NAME) == false)
     }
 }
 ?>
-<!-- Google Code for Remarketing Tag -->
-<!--------------------------------------------------
-Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories. See more information and instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
---------------------------------------------------->
-<script type="text/javascript">
-    /* <![CDATA[ */
-    var google_conversion_id = 940209987;
-    var google_custom_params = window.google_tag_params;
-    var google_remarketing_only = true;
-    /* ]]> */
-</script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-</script>
-<noscript>
-    <div style="display:inline;">
-        <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/940209987/?guid=ON&amp;script=0"/>
-    </div>
-</noscript>
 </body>
 </html>
