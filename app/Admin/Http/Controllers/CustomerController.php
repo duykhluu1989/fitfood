@@ -271,6 +271,7 @@ class CustomerController extends Controller
             $banner->page = isset($input['page']) ? trim($input['page']) : '';
             $banner->customer_type = isset($input['customer_type']) ? trim($input['customer_type']) : '';
             $banner->status = isset($input['status']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
+            $banner->url = isset($input['url']) ? trim($input['url']) : '';
 
             $errors = $banner->validate();
 

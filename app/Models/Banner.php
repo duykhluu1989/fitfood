@@ -20,6 +20,7 @@ class Banner extends Model
             'name' => 'required|string',
             'start_time' => 'date',
             'end_time' => 'date',
+            'url' => 'string',
         ]);
 
         if($validator->fails())
@@ -54,7 +55,7 @@ class Banner extends Model
             $query->where('end_time', '>=', $time)->orWhere('end_time', '')->orWhereNull('end_time');
         })->where(function($query) use($page) {
             $query->where('page', $page)->orWhere('page', '')->orWhereNull('page');
-        })->where('status', Util::STATUS_ACTIVE_VALUE)->pluck('image_src', 'id')->all();
+        })->where('status', Util::STATUS_ACTIVE_VALUE)->get()->toArray();
 
         if(count($banners) > 0)
         {

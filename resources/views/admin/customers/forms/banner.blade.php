@@ -105,6 +105,17 @@
 <div class="col-sm-12">
     <div class="panel panel-default">
         <div class="panel-heading">
+            <h3 class="panel-title">Url</h3>
+        </div>
+        <div class="panel-body">
+            <input type="text" class="form-control" name="banner[url]" value="{{ $banner->url }}" />
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
             <h3 class="panel-title">Image</h3>
         </div>
         <div class="panel-body">

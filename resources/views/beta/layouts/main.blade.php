@@ -99,15 +99,15 @@ echo Minify::javascript([
 if(request()->hasCookie(App\Libraries\Util::COOKIE_SEE_BANNER_NAME) == false)
 {
     if(request()->hasCookie(App\Libraries\Util::COOKIE_PLACE_ORDER_CUSTOMER_NAME))
-        $bannerSrc = App\Models\Banner::getCustomerBanner(request(), App\Libraries\Util::BANNER_CUSTOMER_TYPE_OLD);
+        $banner = App\Models\Banner::getCustomerBanner(request(), App\Libraries\Util::BANNER_CUSTOMER_TYPE_OLD);
     else
-        $bannerSrc = App\Models\Banner::getCustomerBanner(request(), App\Libraries\Util::BANNER_CUSTOMER_TYPE_NEW);
+        $banner = App\Models\Banner::getCustomerBanner(request(), App\Libraries\Util::BANNER_CUSTOMER_TYPE_NEW);
 
-    if(!empty($bannerSrc))
+    if(!empty($banner))
     {
         Cookie::queue(App\Libraries\Util::COOKIE_SEE_BANNER_NAME, true, App\Libraries\Util::MINUTE_ONE_HOUR_EXPIRED);
         ?>
-        @include('beta.layouts.partials.banner_popup', ['bannerSrc' => $bannerSrc])
+        @include('beta.layouts.partials.banner_popup', ['banner' => $banner])
         <?php
     }
 }
