@@ -408,7 +408,9 @@ class OrderController extends Controller
 
         $builder = Order::select('ff_order.*')->with(['orderAddress', 'customer', 'orderExtras', 'orderItems' => function($query) {
             $query->where('price', '>', 0);
-        }, 'orderDiscount'])
+        }, 'orderItems.orderItemMeals' => function($query) {
+            $query->orderBy('day_of_week');
+        }, 'orderItems.orderItemMeals.orderItemMealDetails', 'orderDiscount'])
             ->where('ff_order.start_week', '<=', $startWeek)
             ->where('ff_order.end_week', '>=', $date)
             ->orderBy('ff_order.id', 'DESC');
@@ -471,6 +473,7 @@ class OrderController extends Controller
                     $query->whereNull('ff_order.cancelled_at')->orWhere('ff_order.fulfillment_status', Util::FULFILLMENT_STATUS_FULFILLED_VALUE);
                 })
                 ->where('ff_order_item.price', '>', 0)
+                ->where('ff_order_item.main_dish', 1)
                 ->count('ff_order_item.id');
         }
         else
