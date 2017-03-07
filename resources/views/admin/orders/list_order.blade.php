@@ -60,11 +60,23 @@
                                 <input type="text" class="form-control" name="filter[order_id]" value="{{ (isset($filter['order_id']) ? $filter['order_id'] : '') }}" />
                             </td>
                             <td>
-                                <input type="text" class="form-control" name="filter[phone]" value="{{ (isset($filter['phone']) ? $filter['phone'] : '') }}" />
+                                <select class="form-control DropDownFilterForm" name="filter[cancelled]">
+                                    <option value=""></option>
+                                    <option{{ ((isset($filter['cancelled']) && $filter['cancelled'] == 1) ? ' selected="selected"' : '') }} value="1">Cancelled</option>
+                                </select>
                             </td>
                             <td>
                                 <input type="text" class="form-control" name="filter[name]" value="{{ (isset($filter['name']) ? $filter['name'] : '') }}" />
                             </td>
+                            <td>
+                                <input type="text" class="form-control" name="filter[phone]" value="{{ (isset($filter['phone']) ? $filter['phone'] : '') }}" />
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td>
                                 <input type="text" class="form-control" name="filter[email]" value="{{ (isset($filter['email']) ? $filter['email'] : '') }}" />
                             </td>
@@ -75,13 +87,9 @@
                                     <option{{ ((isset($filter['warning']) && $filter['warning'] !== '' && $filter['warning'] == 0) ? ' selected="selected"' : '') }} value="0">None</option>
                                 </select>
                             </td>
-                            <td>
-                                <select class="form-control DropDownFilterForm" name="filter[cancelled]">
-                                    <option value=""></option>
-                                    <option{{ ((isset($filter['cancelled']) && $filter['cancelled'] == 1) ? ' selected="selected"' : '') }} value="1">Cancelled</option>
-                                </select>
-                            </td>
-                            <td colspan="9"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <th>SA</th>
                             <th>TR</th>
                             <th>TO</th>
@@ -116,6 +124,24 @@
                         else
                             $rowClass = '';
                         $districtShippingPrice = $areasArr[$order->orderAddress->district]->shipping_price;
+                        $extras = array();
+                        foreach($order->orderExtras as $orderExtra)
+                        {
+                            if($orderExtra->code == App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_VALUE)
+                                $extras[] = App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL;
+                            else if($orderExtra->code == App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE)
+                                $extras[] = App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL;
+                            else
+                                $extras[] = App\Libraries\Util::getRequestChangeIngredient($orderExtra->code);
+                        }
+                        $extraRequest = '';
+                        foreach($extras as $extra)
+                        {
+                            if($extraRequest == '')
+                                $extraRequest = $extra;
+                            else
+                                $extraRequest .= ' - ' . $extra;
+                        }
                         ?>
                         @foreach($order->orderItems as $orderItem)
                             <tr {{ $rowClass }}>
@@ -130,7 +156,7 @@
                                 <td>{{ App\Libraries\Util::getGender($order->orderAddress->gender) }}</td>
                                 <td>{{ App\Libraries\Util::getPaymentMethod($order->payment_gateway) }}</td>
                                 <td>{{ $order->orderAddress->email }}</td>
-                                <td></td>
+                                <td>{{ $extraRequest }}</td>
                                 <td>{{ $order->customer_note }}</td>
                                 <td>{{ !empty($order->orderDiscount) ? $order->orderDiscount->code : '' }}</td>
                                 <td>{{ App\Libraries\Util::formatMoney($order->total_price) }}</td>
