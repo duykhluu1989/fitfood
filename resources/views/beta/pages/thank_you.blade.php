@@ -18,6 +18,16 @@
                                 Cám ơn bạn đã order tại Fitfood Vietnam. Một email tự động đã được gửi tới email bạn đăng ký | Thank you for ordering at Fitfood Vietnam. An automatic email has been sent to your email address.
                             </p>
                             <br />
+                            <p>
+                                Fitfood sẽ không gọi điện xác nhận. Nếu bạn nhận được email được gửi từ hệ thống của Fitfood (order@fitfood.vn), đơn hàng của bạn đã được ghi nhận và chúng tôi sẽ giao phần ăn theo như thông tin đã đăng ký. Xin cám ơn!
+                            </p>
+                            <p>
+                                -------------
+                            </p>
+                            <p>
+                                Please note that we will not call our customers for confirmation. If you receive an automated email sending from our system (order@fitfood.vn), it means we have received your order. We will deliver the package as your request. Thank You!
+                            </p>
+                            <br />
                             <ul>
                                 <li>Tên | Name: {{ $name }}</li>
                                 <li>Số điện thoại | Phone: <a href="tel:{{ $phone }}" value="{{ $phone}}" target="_blank">{{ $phone }}</a></li>
