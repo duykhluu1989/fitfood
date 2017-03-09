@@ -36,6 +36,10 @@
                        <i class="fa fa-copy fa-fw"></i>
                     </a>
                 @if(empty($order->cancelled_at) && $order->fulfillment_status != App\Libraries\Util::FULFILLMENT_STATUS_FULFILLED_VALUE)
+                    <button id="AddOrderExtraRequestButton" data-toggle="tooltip" title="Add Extra Request" class="btn btn-primary btn-outline">
+                        <i class="fa fa-asterisk fa-fw"></i>
+                    </button>
+
                     <button id="CancelOrderButton" data-toggle="tooltip" title="Cancel Order" class="btn btn-primary btn-outline pull-right">
                         <i class="fa fa-trash-o fa-fw"></i>
                     </button>
@@ -774,6 +778,34 @@
                 </div>
             </div>
         </div>
+
+        <div id="AddOrderExtraRequestModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Add Extra Request</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="{{ url('admin/order/extra/add', ['id' => $order->id]) }}">
+                            <div class="form-group">
+                                <label>Request</label>
+                                <select class="form-control" name="request" required="required">
+                                    <option value=""></option>
+                                    @foreach(App\Libraries\Util::getRequestChangeIngredient() as $value => $label)
+                                        <option value="{{ $value }}">{{ $label }}</option>
+                                    @endforeach
+                                    <option value="{{ App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_VALUE }}">{{ App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL }}</option>
+                                    <option value="{{ App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE }}">{{ App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL }}</option>
+                                </select>
+                            </div>
+                            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                            <input type="submit" value="Save" class="btn btn-primary">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     @endif
 
     @include('admin.layouts.partials.loading')
@@ -1090,6 +1122,12 @@
                     $('#ChangeOrderItemTitle').html('Change Pack - ' + $('#OrderItemPackName_' + idArr[1]).html());
                     $('#ChangeOrderItemModal').find('form').prop('action', '<?php echo url('admin/order/itemMeal/change'); ?>/' + idArr[1]);
                     $('#ChangeOrderItemModal').modal('show');
+
+                });
+
+                $('#AddOrderExtraRequestButton').click(function() {
+
+                    $('#AddOrderExtraRequestModal').modal('show');
 
                 });
             @endif

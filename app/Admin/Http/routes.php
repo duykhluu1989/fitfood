@@ -87,6 +87,8 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::post('order/itemMeal/change/{id}', 'OrderController@changeOrderItem');
 
+        Route::post('order/extra/add/{id}', 'OrderController@addOrderExtraRequest');
+
         Route::get('order/reorder/{id}', 'OrderController@reOrder');
 
         Route::post('order/reorder/{id}', 'OrderController@reOrder');

@@ -1648,6 +1648,119 @@ class OrderController extends Controller
         return redirect('admin/order/detail/' . $fromOrderItem->order_id);
     }
 
+    public function addOrderExtraRequest(Request $request, $id)
+    {
+        $input = $request->all();
+
+        $order = Order::with('orderItems.orderItemMeals.orderItemMealDetails')->find($id);
+
+        $extraChangeIngredients = Util::getRequestChangeIngredient();
+
+        if(isset($extraChangeIngredients[$input['request']]))
+            $extraPrice = Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE;
+        else if($input['request'] == Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_VALUE)
+            $extraPrice = Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE;
+        else if($input['request'] == Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE)
+        {
+            $extraPrice = Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE;
+
+            $orderItemIdCanAddBreakfast = null;
+
+            foreach($order->orderItems as $orderItem)
+            {
+                if($orderItem->main_dish == true)
+                {
+                    $hadDouble = false;
+                    $hadExtra = false;
+
+                    foreach($orderItem->orderItemMeals as $orderItemMeal)
+                    {
+                        foreach($orderItemMeal->orderItemMealDetails as $orderItemMealDetail)
+                        {
+                            if($orderItemMealDetail->double == true)
+                                $hadDouble = true;
+
+                            if($orderItemMealDetail->extra == true)
+                            {
+                                $hadExtra = true;
+                                break;
+                            }
+                        }
+
+                        if($hadExtra == true)
+                            break;
+                    }
+
+                    if($hadDouble == true && $hadExtra == false)
+                    {
+                        $orderItemIdCanAddBreakfast = $orderItem->id;
+
+                        break;
+                    }
+                }
+            }
+
+            if($orderItemIdCanAddBreakfast == null)
+                return redirect('admin/order/detail/' . $id)->with('orderError', 'There is no valid Meat Lover pack in order to add extra breakfast');
+        }
+        else
+            $extraPrice = 0;
+
+        try
+        {
+            DB::beginTransaction();
+
+            $orderExtra = new OrderExtra();
+
+            if($input['request'] == Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE && !empty($orderItemIdCanAddBreakfast))
+            {
+                $extraQuantity = 0;
+
+                foreach($order->orderItems as $orderItem)
+                {
+                    if($orderItem->id == $orderItemIdCanAddBreakfast)
+                    {
+                        foreach($orderItem->orderItemMeals as $orderItemMeal)
+                        {
+                            $orderItemMealDetail = new OrderItemMealDetail();
+                            $orderItemMealDetail->order_id = $order->id;
+                            $orderItemMealDetail->order_item_meal_id = $orderItemMeal->id;
+                            $orderItemMealDetail->name = Util::MEAL_BREAKFAST_LABEL;
+                            $orderItemMealDetail->quantity = 1;
+                            $orderItemMealDetail->extra = Util::STATUS_ACTIVE_VALUE;
+                            $orderItemMealDetail->save();
+
+                            $extraQuantity ++;
+                        }
+                    }
+                }
+
+                $extraPrice = $extraPrice * $extraQuantity / 5;
+
+                $orderExtra->order_item_id = $orderItemIdCanAddBreakfast;
+            }
+
+            $orderExtra->order_id = $id;
+            $orderExtra->price = $extraPrice;
+            $orderExtra->code = $input['request'];
+            $orderExtra->save();
+
+            $order->total_extra_price += $orderExtra->price;
+            $order->total_price += $orderExtra->price;
+            $order->save();
+
+            DB::commit();
+        }
+        catch(\Exception $e)
+        {
+            DB::rollBack();
+
+            return redirect('admin/order/detail/' . $id)->with('orderError', $e->getMessage());
+        }
+
+        return redirect('admin/order/detail/' . $id);
+    }
+
     public function reOrder(Request $request, $id)
     {
         App::setLocale('vi');
