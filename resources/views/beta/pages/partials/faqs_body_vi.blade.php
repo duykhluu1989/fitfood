@@ -31,9 +31,9 @@
         <div id="collapse2" class="panel-collapse collapse">
             <div class="panel-body">
                 <p>Hiện tại Fitfood cung cấp các gói sau:</p>
-                <p>1/ Gói FULL (3 bữa/ngày) - 700k</p>
-                <p>2/ Gói FIT (2 bữa/ngày, trưa & tối, sáng & trưa, hoặc sáng & tối) - 550k</p>
-                <p>3/ Gói MEAT LOVER (Gấp đôi lượng protein, 2 bữa trưa tối bao gồm tinh bột phức trong các buổi trưa) - 700k</p>
+                <p>1/ Gói FULL (3 bữa/ngày) - 700k/tuần</p>
+                <p>2/ Gói FIT (2 bữa/ngày, trưa & tối, sáng & trưa, hoặc sáng & tối) - 550k/tuần</p>
+                <p>3/ Gói MEAT LOVER (Gấp đôi lượng protein, 2 bữa trưa tối bao gồm tinh bột phức trong các buổi trưa) - 700k/tuần</p>
             </div>
         </div>
     </div>
