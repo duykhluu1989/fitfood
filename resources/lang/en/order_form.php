@@ -49,5 +49,6 @@ return [
     'noteChangeIngredient' => 'Please note that an alternative meal within that day will be replaced for FIT/MEAT Package. For FULL Package, it will be double of one of the remaining meal',
     'extraQuantity' => 'Extra Quantity',
     'sundayPolicy' => 'Note: All orders placed today will be delivered starting from Tuesday and you will be charged for 4 days. Please note that we close order taking on every Saturday. Thank you !',
+    'noCallNote' => '',
 
 ];

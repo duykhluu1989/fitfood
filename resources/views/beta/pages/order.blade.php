@@ -277,6 +277,7 @@
                                             </tr>
                                             </tbody>
                                         </table>
+                                        <label>@lang('order_form.noCallNote')</label>
                                         <button type="submit" id="FitfoodOrderFormSubmitButton" class="btn btn-default btn-large">@lang('order_form.placeOrder')</button>
                                     </div>
                                 </div>
