@@ -222,7 +222,7 @@
                     '<div class="row" style="margin-bottom: 20px">' +
                     '<div class="col-sm-6">' +
                     '<div class="input-group">' +
-                    '<span class="input-group-addon">Name</span>' +
+                    '<span class="input-group-addon"><b>Name</b></span>' +
                     '<input type="text" class="form-control ResourceNameInput" placeholder="Name" name="recipe[resource][name][]" />' +
                     '</div>' +
                     '</div>' +

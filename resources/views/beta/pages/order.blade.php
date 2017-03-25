@@ -286,7 +286,6 @@
                             <input type="hidden" id="FitfoodOrderInputAddressGoogle" name="address_google" />
                             <input type="hidden" id="FitfoodAddressLatitude" name="latitude" />
                             <input type="hidden" id="FitfoodAddressLongitude" name="longitude" />
-                            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                         </form>
                     </div>
                 </div>
