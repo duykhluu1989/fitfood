@@ -38,7 +38,7 @@
         fbq('init', '1665387320368867', {
             em: 'insert_email_variable,'
         });
-        <?php (Request::is('order') ? "fbq('track', 'PageView');" : "fbq('track', 'ClickOrder');") ?>
+        <?php echo (Request::is('order') ? "fbq('track', 'PageView');" : "fbq('track', 'ClickOrder');"); ?>
     </script>
     <noscript>
         <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1665387320368867&ev=PageView&noscript=1" />
