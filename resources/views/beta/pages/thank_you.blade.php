@@ -70,7 +70,7 @@
             </div>
         </div>
     </div>
-
+    <!-- Facebook Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
                 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
@@ -83,7 +83,8 @@
     <noscript>
         <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1665387320368867&ev=PageView&noscript=1" />
     </noscript>
-
+    <!-- DO NOT MODIFY -->
+    <!-- End Facebook Pixel Code -->
     <script type="text/javascript">
         /* <![CDATA[ */
         var google_conversion_id = 940209987;
