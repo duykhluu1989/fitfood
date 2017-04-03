@@ -89,7 +89,7 @@ Remarketing tags may not be associated with personally identifiable information 
             <i class="fa fa-comment" aria-hidden="true"></i>
             @lang('home_page.onlineSupport')
         </span>
-        <i id="online-support-hide" class="fa fa-times" aria-hidden="true"<?php echo (isset($_COOKIE[App\Libraries\Util::COOKIE_HIDE_ONLINE_SUPPORT_WINDOW_NAME]) ? ' style="display: none"' : ''); ?>></i>
+        <i id="online-support-hide" class="fa fa-times pull-right" aria-hidden="true"<?php echo (isset($_COOKIE[App\Libraries\Util::COOKIE_HIDE_ONLINE_SUPPORT_WINDOW_NAME]) ? ' style="display: none"' : ''); ?>></i>
     </div>
     <div id="online-support-body"<?php echo (isset($_COOKIE[App\Libraries\Util::COOKIE_HIDE_ONLINE_SUPPORT_WINDOW_NAME]) ? ' style="display: none"' : ''); ?>>
         <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffitfoodvietnam&tabs=messages&width=340&height=300&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=1499077570417040" width="340px" height="300px" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>

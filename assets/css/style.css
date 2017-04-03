@@ -2361,7 +2361,7 @@ textarea.form-control{
     bottom: 0;
     right: 100px;
     border: 1px solid #c53f27;
-    border-radius: 15px 15px 0 0;
+    border-radius: 16px 16px 0 0;
 }
 
 #online-support-header
@@ -2369,7 +2369,7 @@ textarea.form-control{
     background: #c53f27;
     color: #fff;
     height: 30px;
-    padding-left: 20px;
+    padding: 0 20px 0 20px;
     font-size: 19px;
     border-radius: 15px 15px 0 0;
     font-weight: bold;
@@ -2383,6 +2383,6 @@ textarea.form-control{
 
 #online-support-hide
 {
-    margin-left: 130px;
     cursor: pointer;
+    margin-top: 4px;
 }
