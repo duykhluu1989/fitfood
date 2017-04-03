@@ -2354,3 +2354,35 @@ textarea.form-control{
 		font-size: 12px;
 	}
 }
+
+#online-support
+{
+    position: fixed;
+    bottom: 0;
+    right: 100px;
+    border: 1px solid #c53f27;
+    border-radius: 15px 15px 0 0;
+}
+
+#online-support-header
+{
+    background: #c53f27;
+    color: #fff;
+    height: 30px;
+    padding-left: 20px;
+    font-size: 19px;
+    border-radius: 15px 15px 0 0;
+    font-weight: bold;
+    width: 340px;
+}
+
+#online-support-title
+{
+    cursor: pointer;
+}
+
+#online-support-hide
+{
+    margin-left: 130px;
+    cursor: pointer;
+}

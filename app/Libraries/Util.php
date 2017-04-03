@@ -174,6 +174,7 @@ class Util
     const COOKIE_READ_ORDER_POLICY_NAME = 'read_order_policy';
     const COOKIE_PLACE_ORDER_CUSTOMER_NAME = 'place_order';
     const COOKIE_SEE_BANNER_NAME = 'see_banner';
+    const COOKIE_HIDE_ONLINE_SUPPORT_WINDOW_NAME = 'hide_online_support_window';
 
     const UPLOAD_IMAGE_DIR = '/assets/upload';
 

@@ -19,5 +19,6 @@ return [
     'peopleText' => 'Những câu chuyện thành công từ các khách hàng đáng yêu của Fitfood',
     'model' => 'Người mẫu',
     'writer' => 'Nhà văn',
+    'onlineSupport' => 'Hỗ trợ trực tuyến',
 
 ];

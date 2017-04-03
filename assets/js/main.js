@@ -76,4 +76,17 @@ $(document).ready(function ($) {
 		return false;
 	});	
 	$('#back-to-top').tooltip('show');
+    $('#online-support-hide').click(function() {
+        var cookieName = 'hide_online_support_window';
+        setCookie(cookieName, true, 1);
+        $(this).hide();
+        $('#online-support-body').hide();
+    });
+    $('#online-support-title').click(function() {
+        var cookieName = 'hide_online_support_window';
+        if(getCookie(cookieName))
+            setCookie(cookieName, true, -1);
+        $('#online-support-hide').show();
+        $('#online-support-body').show();
+    });
 });

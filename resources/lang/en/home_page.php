@@ -19,5 +19,6 @@ return [
     'peopleText' => 'Success stories from our beloved customers',
     'model' => 'Model',
     'writer' => 'Writer',
+    'onlineSupport' => 'Online support',
 
 ];
