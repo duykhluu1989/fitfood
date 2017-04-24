@@ -880,7 +880,13 @@
                 }
             }
 
-            $('#FitfoodOrderInputAddress').keydown(function(e) {
+            $('.FitfoodPopupImage').magnificPopup({
+
+                type: 'image'
+
+            });
+
+            $('#FitfoodOrderForm').keydown(function(e) {
 
                 var keyCode = e.keyCode || e.which;
                 if(keyCode === 13)
@@ -888,12 +894,6 @@
                     e.preventDefault();
                     return false;
                 }
-
-            });
-
-            $('.FitfoodPopupImage').magnificPopup({
-
-                type: 'image'
 
             });
 
