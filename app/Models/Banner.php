@@ -44,7 +44,7 @@ class Banner extends Model
             $start = strpos($page, '/');
             $end = strpos($page, '/', $start + 1);
 
-            $page = substr($page, $start + 1, ($end !== false ? $end - $start - 1 : null));
+            $page = substr($page, $start + 1, ($end !== false ? $end - $start - 1 : strlen($page)));
         }
 
         $banners = Banner::where(function($query) use($customerType) {
