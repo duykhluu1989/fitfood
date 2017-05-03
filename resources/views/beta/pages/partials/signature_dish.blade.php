@@ -40,7 +40,7 @@
                     <div class="time">
                         <h6>Lunch - Dinner @lang('home_page.meatLoverDescription')</h6>
                     </div>
-                    <p class="price">700.000 <small>vnd</small>/@lang('home_page.week')</p>
+                    <p class="price">900.000 <small>vnd</small>/@lang('home_page.week')</p>
                 </div>
             </div>
         </a>
