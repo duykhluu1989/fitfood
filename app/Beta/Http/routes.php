@@ -31,8 +31,6 @@ Route::group(['middleware' => ['locale']], function() {
 
     Route::post('checkDiscountCode', 'PageController@checkDiscountCode');
 
-    //Route::get('order/confirmPayment/{gateway}', 'PageController@confirmPayment');
-
     Route::get('lang/{lan}', 'PageController@lang');
 
     Route::get('faqs', 'PageController@faqs');

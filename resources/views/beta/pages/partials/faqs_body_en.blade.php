@@ -33,7 +33,7 @@
                 <p>Currently we offer 4 flexible packages:</p>
                 <p>- FULL (3 meals per day - 700k for the whole week)</p>
                 <p>- FIT (2 meals per day - 550k for the whole week)</p>
-                <p>- MEAT LOVER (2 meals per day - 700k a week with complex carbs in all Lunch)</p>
+                <p>- MEAT LOVER (2 meals per day - 900k a week with complex carbs in all Lunch)</p>
                 <p>- VEGETARIAN (2 meals per day, meat free guarantee)</p>
                 <p>More packages to come...stay tuned !</p>
             </div>
