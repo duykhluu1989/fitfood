@@ -214,7 +214,7 @@
                                             <tr>
                                                 <th></th>
                                                 @foreach(App\Libraries\Util::getRequestChangeIngredient(null, App::getLocale()) as $label)
-                                                    <th>{{ $label }}</th>
+                                                    <th>{{ str_replace('Không', 'Ko', $label) }}</th>
                                                 @endforeach
                                             </tr>
                                             </thead>
