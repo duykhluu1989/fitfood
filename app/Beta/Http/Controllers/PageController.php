@@ -480,6 +480,7 @@ class PageController extends Controller
                 $order->financial_status = Util::FINANCIAL_STATUS_PENDING_VALUE;
                 $order->fulfillment_status = Util::FULFILLMENT_STATUS_PENDING_VALUE;
                 $order->customer_note = trim($input['note']);
+                $order->shipping_note = trim($input['ship_note']);
                 $order->shipping_price = $district->shipping_price * $normalMenuDays / 5;
                 $order->total_line_items_price = 0;
                 $order->total_price = $district->shipping_price * $normalMenuDays / 5;
@@ -536,6 +537,10 @@ class PageController extends Controller
                 $addedExtraBreakfastOrderItemIds = array();
                 $addedExtraBreakfast = false;
 
+                $mealPackOrderItemIds = $input['mealPack'];
+                foreach($mealPackOrderItemIds as $key => $mealPackOrderItemId)
+                    $mealPackOrderItemIds[$key] = array();
+
                 foreach($mealPacks as $mealPack)
                 {
                     $doubles = array();
@@ -573,6 +578,8 @@ class PageController extends Controller
                         }
 
                         $orderItem->save();
+
+                        $mealPackOrderItemIds[$mealPack->id][] = $orderItem->id;
 
                         $order->total_line_items_price += $orderItem->price;
                         $order->total_price += $orderItem->price;
@@ -746,37 +753,66 @@ class PageController extends Controller
                     }
                 }
 
-                if(!empty($input['change_ingredient']))
+                if(isset($input['change_ingredient']) && is_array($input['change_ingredient']) && count($input['change_ingredient']) > 0)
                 {
-                    $orderExtra = new OrderExtra();
-                    $orderExtra->order_id = $order->id;
-                    $orderExtra->price = Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE;
-                    $orderExtra->code = $input['change_ingredient'];
-                    $orderExtra->save();
+                    $i = 1;
 
-                    $order->total_extra_price += $orderExtra->price;
-                    $order->total_price += $orderExtra->price;
-                    $order->warning = Util::STATUS_ACTIVE_VALUE;
+                    foreach($mealPackOrderItemIds as $mealPackOrderItemId)
+                    {
+                        foreach($mealPackOrderItemId as $mpmoiId)
+                        {
+                            if(isset($input['change_ingredient'][$i]))
+                            {
+                                $orderExtra = new OrderExtra();
+                                $orderExtra->order_id = $order->id;
+                                $orderExtra->order_item_id = $mpmoiId;
+                                $orderExtra->price = Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE;
+                                $orderExtra->code = implode(';', $input['change_ingredient'][$i]);
+                                $orderExtra->save();
 
-                    $mailExtraRequests[] = Util::getRequestChangeIngredient($orderExtra->code, App::getLocale());
+                                $order->total_extra_price += $orderExtra->price;
+                                $order->total_price += $orderExtra->price;
+                                $order->warning = Util::STATUS_ACTIVE_VALUE;
+
+                                foreach($input['change_ingredient'][$i] as $code)
+                                    $mailExtraRequests[] = Util::getRequestChangeIngredient($code, App::getLocale());
+                            }
+
+                            $i ++;
+                        }
+                    }
                 }
 
-                if(!empty($input['change_meal_course']))
+                if(isset($input['change_meal_course']) && is_array($input['change_meal_course']) && count($input['change_meal_course']) > 0)
                 {
-                    $orderExtra = new OrderExtra();
-                    $orderExtra->order_id = $order->id;
-                    $orderExtra->price = Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE;
-                    $orderExtra->code = $input['change_meal_course'];
-                    $orderExtra->save();
+                    $i = 1;
 
-                    $order->total_extra_price += $orderExtra->price;
-                    $order->total_price += $orderExtra->price;
-                    $order->warning = Util::STATUS_ACTIVE_VALUE;
+                    foreach($mealPackOrderItemIds as $mealPackOrderItemId)
+                    {
+                        foreach($mealPackOrderItemId as $mpmoiId)
+                        {
+                            if(isset($input['change_meal_course'][$i]))
+                            {
+                                $orderExtra = new OrderExtra();
+                                $orderExtra->order_id = $order->id;
+                                $orderExtra->order_item_id = $mpmoiId;
+                                $orderExtra->price = Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE;
+                                $orderExtra->code = $input['change_meal_course'][$i];
+                                $orderExtra->save();
 
-                    if(App::getLocale() == 'en')
-                        $mailExtraRequests[] = Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL_EN;
-                    else
-                        $mailExtraRequests[] = Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL;
+                                $order->total_extra_price += $orderExtra->price;
+                                $order->total_price += $orderExtra->price;
+                                $order->warning = Util::STATUS_ACTIVE_VALUE;
+
+                                if(App::getLocale() == 'en')
+                                    $mailExtraRequests[] = Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL_EN;
+                                else
+                                    $mailExtraRequests[] = Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL;
+                            }
+
+                            $i ++;
+                        }
+                    }
                 }
 
                 if(!empty($input['extra_breakfast']) && $realExtraBreakfastQuantity > 0)
@@ -873,6 +909,11 @@ class PageController extends Controller
             {
                 DB::rollBack();
 
+                echo '<pre>';
+                print_r($e->getMessage());
+                echo '</pre>';
+                exit();
+
                 Log::info($e->getLine() . ' ' . $e->getMessage());
 
                 return redirect('order')
@@ -913,7 +954,7 @@ class PageController extends Controller
             if(in_array($order->payment_gateway, $bankTransferGatewayValues))
                 $bankNumber = Util::getBankAccountNumber($order->payment_gateway);
 
-            register_shutdown_function([get_class(new self), 'sendConfirmEmail'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate);
+            //register_shutdown_function([get_class(new self), 'sendConfirmEmail'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate);
 
             return redirect('thankYou')->with('OrderThankYou', json_encode([
                 'name' => $orderAddress->name,

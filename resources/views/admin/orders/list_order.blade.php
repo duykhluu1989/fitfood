@@ -127,12 +127,20 @@
                         $extras = array();
                         foreach($order->orderExtras as $orderExtra)
                         {
-                            if($orderExtra->code == App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_VALUE)
-                                $extras[] = App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL;
-                            else if($orderExtra->code == App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE)
-                                $extras[] = App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL;
-                            else
-                                $extras[] = App\Libraries\Util::getRequestChangeIngredient($orderExtra->code);
+                            if(empty($orderExtra->order_item_id))
+                            {
+                                if($orderExtra->code == App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_VALUE)
+                                    $extras[] = App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL;
+                                else if($orderExtra->code == App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE)
+                                    $extras[] = App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL;
+                                else
+                                {
+                                    $codes = explode(';', $orderExtra->code);
+
+                                    foreach($codes as $code)
+                                        $extras[] = App\Libraries\Util::getRequestChangeIngredient($code);
+                                }
+                            }
                         }
                         $extraRequest = '';
                         foreach($extras as $extra)
@@ -156,7 +164,34 @@
                                 <td>{{ App\Libraries\Util::getGender($order->orderAddress->gender) }}</td>
                                 <td>{{ App\Libraries\Util::getPaymentMethod($order->payment_gateway) }}</td>
                                 <td>{{ $order->orderAddress->email }}</td>
-                                <td>{{ $extraRequest }}</td>
+                                <td>
+                                    <?php
+                                    $oiExtras = array();
+                                    foreach($orderItem->orderExtras as $orderExtra)
+                                    {
+                                        if($orderExtra->code == App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_VALUE)
+                                            $oiExtras[] = App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL;
+                                        else if($orderExtra->code == App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE)
+                                            $oiExtras[] = App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL;
+                                        else
+                                        {
+                                            $codes = explode(';', $orderExtra->code);
+
+                                            foreach($codes as $code)
+                                                $oiExtras[] = App\Libraries\Util::getRequestChangeIngredient($code);
+                                        }
+                                    }
+                                    $oiExtraRequest = $extraRequest;
+                                    foreach($oiExtras as $oiExtra)
+                                    {
+                                        if($oiExtraRequest == '')
+                                            $oiExtraRequest = $oiExtra;
+                                        else
+                                            $oiExtraRequest .= ' - ' . $oiExtra;
+                                    }
+                                    ?>
+                                    {{ $oiExtraRequest }}
+                                </td>
                                 <td>{{ $order->customer_note }}</td>
                                 <td>{{ !empty($order->orderDiscount) ? $order->orderDiscount->code : '' }}</td>
                                 <td>{{ App\Libraries\Util::formatMoney($order->total_price) }}</td>

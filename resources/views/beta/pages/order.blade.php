@@ -95,12 +95,6 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-lg-12 col-md-12 col-xs-12">
-                                        <textarea class="form-control" name="note" placeholder="@lang('order_form.note')"></textarea>
-                                    </div>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="form-group">
                                     <div id="FitfoodGoogleMap"></div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -124,22 +118,22 @@
                                                 @if(!empty($mealPack->image_src))
                                                     <a class="FitfoodPopupImage" href="{{ $mealPack->image_src }}">
                                                 @endif
-                                                        <strong>
-                                                            <?php
-                                                            if(App::getLocale() == 'en' && !empty($mealPack->name_en))
-                                                                $mealPackName = $mealPack->name_en;
-                                                            else
-                                                                $mealPackName = $mealPack->name;
-                                                            echo $mealPackName;
-                                                            ?>
+                                                        <strong id="FitfoodOrderFormMealPackName_{{ $mealPack->id }}">
+                                                            @if(App::getLocale() == 'en' && !empty($mealPack->name_en))
+                                                                {{ $mealPack->name_en }}
+                                                            @else
+                                                                {{ $mealPack->name }}
+                                                            @endif
                                                         </strong>
                                                         <?php
                                                         $description = null;
                                                         $miniDescription = null;
+
                                                         if(App::getLocale() == 'en' && !empty($mealPack->description_en))
                                                             $description = $mealPack->description_en;
                                                         else if(!empty($mealPack->description))
                                                             $description = $mealPack->description;
+
                                                         if(App::getLocale() == 'en' && !empty($mealPack->mini_description_en))
                                                             $miniDescription = $mealPack->mini_description_en;
                                                         else if(!empty($mealPack->mini_description))
@@ -173,7 +167,8 @@
                                                             <i class="fa fa-angle-left" aria-hidden="true"></i>
                                                         </button>
                                                     </span>
-                                                    <input type="text" id="OrderFormMealPackQuantityInput_{{ $mealPack->id }}" name="mealPack[{{ $mealPack->id }}]" class="form-control input-number FitfoodOrderFormMealPackQuantityInput" value="0" min="0" max="5" />
+                                                    <input type="text" id="OrderFormMealPackQuantityInput_{{ $mealPack->id }}" name="mealPack[{{ $mealPack->id }}]" value="0" min="0" max="5"
+                                                        class="form-control input-number FitfoodOrderFormMealPackQuantityInput<?php echo ((!empty($mealPack->breakfast) || !empty($mealPack->lunch) || !empty($mealPack->dinner)) ? ' FitfoodMainMealPack' : ''); ?>" />
                                                     <span class="input-group-btn">
                                                         <button type="button" class="btn btn-number" data-type="plus" data-field="mealPack[{{ $mealPack->id }}]">
                                                             <i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -183,9 +178,6 @@
                                                         <input type="hidden" id="FitfoodOrderFormMealPackPrice_{{ $mealPack->id }}" value="{{ $mealPack->price * $normalMenuDays / 5 }}" />
                                                     @else
                                                         <input type="hidden" id="FitfoodOrderFormMealPackPrice_{{ $mealPack->id }}" value="{{ $mealPack->price }}" />
-                                                    @endif
-                                                    @if(!empty($mealPack->breakfast) || !empty($mealPack->lunch) || !empty($mealPack->dinner))
-                                                        <input type="hidden" id="FitfoodMainMealPack_{{ $mealPack->id }}" value="{{ $mealPack->id }}" />
                                                     @endif
                                                     <?php
                                                     $doubles = array();
@@ -207,30 +199,47 @@
                                 <div class="block">
                                     <div class="box">
                                         <h4>@lang('order_form.request')</h4>
-                                        <div class="row">
-                                            <div class="col-lg-10 col-md-10">
-                                                <select class="form-control" id="FitfoodOrderDropDownChangeIngredient" name="change_ingredient">
-                                                    <option value="">@lang('order_form.changeIngredient')</option>
-                                                    @foreach(App\Libraries\Util::getRequestChangeIngredient(null, App::getLocale()) as $value => $label)
-                                                        <option value="{{ $value }}">{{ $label . ' (' . App\Libraries\Util::formatMoney(App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE) . ')' }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-lg-2 col-md-2">
-                                                <h5>
-                                                    <i class="fa fa-info-circle fa-fw" data-toggle="tooltip" title="@lang('order_form.noteChangeIngredient')"></i>
-                                                </h5>
-                                            </div>
-                                        </div>
                                         <div class="checkbox">
-                                            <label><input type="checkbox" id="FitfoodOrderCheckChangeMeal" name="change_meal_course" value="<?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_VALUE; ?>" />
+                                            <label>
+                                                <input type="checkbox" id="FitfoodOrderCheckChangeIngredient" disabled="disabled" />
+                                                @lang('order_form.changeIngredient')
+                                                <span>
+                                                    <?php echo App\Libraries\Util::formatMoney(App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE); ?>/@lang('order_form.package')
+                                                </span>
+                                            </label>
+                                            <i class="fa fa-info-circle fa-fw" data-toggle="tooltip" title="@lang('order_form.noteChangeIngredient')"></i>
+                                        </div>
+                                        <table class="table-bordered table-striped table-condensed" id="FiffoodOrderChangeIngredientDetail" style="display: none">
+                                            <thead>
+                                            <tr>
+                                                <th></th>
+                                                @foreach(App\Libraries\Util::getRequestChangeIngredient(null, App::getLocale()) as $label)
+                                                    <th>{{ $label }}</th>
+                                                @endforeach
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" id="FitfoodOrderCheckChangeMeal" disabled="disabled" />
                                                 <?php echo (App::getLocale() == 'en' ? App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL_EN : App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL); ?>
-                                                <span><?php echo App\Libraries\Util::formatMoney(App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE); ?></span></label>
+                                                <span>
+                                                    <?php echo App\Libraries\Util::formatMoney(App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE); ?>/@lang('order_form.package')
+                                                </span>
+                                            </label>
                                         </div>
+                                        <table class="table-bordered table-striped table-condensed" id="FiffoodOrderChangeMealDetail" style="display: none">
+                                            <tbody></tbody>
+                                        </table>
                                         <div class="checkbox">
-                                            <label><input type="checkbox" id="FitfoodOrderCheckExtraBreakfast" name="extra_breakfast" value="<?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE; ?>" disabled="disabled" />
+                                            <label>
+                                                <input type="checkbox" id="FitfoodOrderCheckExtraBreakfast" name="extra_breakfast" value="<?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE; ?>" disabled="disabled" />
                                                 <?php echo (App::getLocale() == 'en' ? App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL_EN : App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL); ?>
-                                                <span><?php echo App\Libraries\Util::formatMoney(App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?></span></label>
+                                                <span>
+                                                    <?php echo App\Libraries\Util::formatMoney(App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>/@lang('order_form.package')
+                                                </span>
+                                            </label>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-6 col-md-6">
@@ -252,6 +261,18 @@
                                 </div>
                                 <div class="block">
                                     <div class="box">
+                                        <div class="form-group">
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <textarea class="form-control" name="note" placeholder="@lang('order_form.note')"></textarea>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                                <textarea class="form-control" name="ship_note" placeholder="@lang('order_form.shipNote')"></textarea>
+                                            </div>
+                                            <div class="clearfix"></div>
+                                        </div>
                                         <h4>@lang('order_form.cartTotal')</h4>
                                         <table class="table">
                                             <tbody>
@@ -526,9 +547,7 @@
 
                 $(this).data('oldVal', $(this).val());
 
-            });
-
-            $('.FitfoodOrderFormMealPackQuantityInput').change(function() {
+            }).change(function() {
 
                 var elem = $(this);
                 var elemOldVal = elem.data('oldVal');
@@ -542,24 +561,26 @@
                 var totalTempElem = $('#FitfoodTotalMealPackPrice');
                 var totalTempVal = parseInt(totalTempElem.html().split('.').join(''));
 
-                $('#FitfoodOrderFormTotalPricePerPack_' + idArr[1]).html(formatMoney((parseInt(elem.val()) * parseInt($('#FitfoodOrderFormMealPackPrice_' + idArr[1]).val())).toString()));
+                var mealPackPriceElem = $('#FitfoodOrderFormMealPackPrice_' + idArr[1]);
+
+                $('#FitfoodOrderFormTotalPricePerPack_' + idArr[1]).html(formatMoney((parseInt(elem.val()) * parseInt(mealPackPriceElem.val())).toString()));
 
                 if(elemOldVal == '')
                 {
-                    subtotalTempVal += parseInt(elem.val()) * parseInt($('#FitfoodOrderFormMealPackPrice_' + idArr[1]).val());
-                    totalTempVal += parseInt(elem.val()) * parseInt($('#FitfoodOrderFormMealPackPrice_' + idArr[1]).val());
+                    subtotalTempVal += parseInt(elem.val()) * parseInt(mealPackPriceElem.val());
+                    totalTempVal += parseInt(elem.val()) * parseInt(mealPackPriceElem.val());
                 }
                 else
                 {
                     if(elem.val() > elemOldVal)
                     {
-                        subtotalTempVal += (parseInt(elem.val()) - parseInt(elemOldVal)) * parseInt($('#FitfoodOrderFormMealPackPrice_' + idArr[1]).val());
-                        totalTempVal += (parseInt(elem.val()) - parseInt(elemOldVal)) * parseInt($('#FitfoodOrderFormMealPackPrice_' + idArr[1]).val());
+                        subtotalTempVal += (parseInt(elem.val()) - parseInt(elemOldVal)) * parseInt(mealPackPriceElem.val());
+                        totalTempVal += (parseInt(elem.val()) - parseInt(elemOldVal)) * parseInt(mealPackPriceElem.val());
                     }
                     else
                     {
-                        subtotalTempVal += (parseInt(elem.val()) - parseInt(elemOldVal)) * parseInt($('#FitfoodOrderFormMealPackPrice_' + idArr[1]).val());
-                        totalTempVal -= (parseInt(elemOldVal) - parseInt(elem.val())) * parseInt($('#FitfoodOrderFormMealPackPrice_' + idArr[1]).val());
+                        subtotalTempVal += (parseInt(elem.val()) - parseInt(elemOldVal)) * parseInt(mealPackPriceElem.val());
+                        totalTempVal -= (parseInt(elemOldVal) - parseInt(elem.val())) * parseInt(mealPackPriceElem.val());
                     }
                 }
 
@@ -569,6 +590,7 @@
                 removeDiscount();
 
                 var extraBreakfastElem = $('#FitfoodOrderCheckExtraBreakfast');
+                var extraBreakfastQuantityElem = $('#FitfoodOrderDropDownExtraBreakfastQuantity');
 
                 if($('#FitfoodNoBreakfastMainMealPack_' + idArr[1]).length > 0)
                 {
@@ -576,16 +598,16 @@
                     {
                         extraBreakfastElem.removeAttr('disabled');
 
-                        if($('#FitfoodOrderDropDownExtraBreakfastQuantity').prop('disabled') == false)
+                        if(extraBreakfastQuantityElem.prop('disabled') == false)
                         {
-                            orderDropDownExtraBreakfastQuantityOldVal = $('#FitfoodOrderDropDownExtraBreakfastQuantity').val();
+                            orderDropDownExtraBreakfastQuantityOldVal = extraBreakfastQuantityElem.val();
 
                             var optionElemsHtml = '';
                             for(var i = 1;i <= elem.val();i ++)
                                 optionElemsHtml += '<option value="' + i + '">' + i + '</option>';
 
-                            $('#FitfoodOrderDropDownExtraBreakfastQuantity').html(optionElemsHtml);
-                            $('#FitfoodOrderDropDownExtraBreakfastQuantity').trigger('change');
+                            extraBreakfastQuantityElem.html(optionElemsHtml);
+                            extraBreakfastQuantityElem.trigger('change');
                         }
                     }
                     else
@@ -600,36 +622,146 @@
                     }
                 }
 
+                var totalMainMealPack = 0;
+                var idArrTemp;
+
+                var extraChangeIngredientTableBodyHtml = '';
+                var extraChangeMealTableBodyHtml = '';
+
+                var rowNo = 1;
+
+                $('.FitfoodMainMealPack').each(function() {
+
+                    idArrTemp = $(this).prop('id').split('_');
+
+                    if($(this).val().trim() != '' && !isNaN($(this).val().trim()) && $(this).val().trim() > 0)
+                    {
+                        totalMainMealPack += parseInt($(this).val().trim());
+
+                        for(var i = 1;i <= $(this).val().trim();i ++)
+                        {
+                            var mealPackNameElem = $('#FitfoodOrderFormMealPackName_' + idArrTemp[1]);
+
+                            extraChangeIngredientTableBodyHtml += '' +
+                                '<tr>' +
+                                '<th>' + mealPackNameElem.html() + '</th>' +
+                                @foreach(App\Libraries\Util::getRequestChangeIngredient(null, App::getLocale()) as $value => $label)
+                                    '<td><input type="checkbox" name="change_ingredient[' + rowNo + '][{{ $value }}]" value="{{ $value }}" class="FiffoodOrderCheckChangeIngredientDetail" /></th>' +
+                                @endforeach
+                                '</tr>' +
+                            '';
+
+                            extraChangeMealTableBodyHtml += '' +
+                                '<tr>' +
+                                '<th>' + mealPackNameElem.html() + '</th>' +
+                                '<td><input type="checkbox" name="change_meal_course[' + rowNo + ']" value="{{ App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_VALUE }}" class="FiffoodOrderCheckChangeMealDetail" /></th>' +
+                                '</tr>' +
+                            '';
+
+                            rowNo ++;
+                        }
+                    }
+
+                });
+
+                var extraChangeIngredientElem = $('#FitfoodOrderCheckChangeIngredient');
+                var extraChangeMealElem = $('#FitfoodOrderCheckChangeMeal');
+
+                if(extraChangeIngredientElem.prop('checked') == true)
+                    removeChangeIngredientPrice();
+
+                if(extraChangeMealElem.prop('checked') == true)
+                    removeChangeMealPrice();
+
+                $('#FiffoodOrderChangeIngredientDetail').find('tbody').first().html(extraChangeIngredientTableBodyHtml);
+                $('#FiffoodOrderChangeMealDetail').find('tbody').first().html(extraChangeMealTableBodyHtml);
+
+                if(totalMainMealPack > 0)
+                {
+                    extraChangeIngredientElem.removeAttr('disabled');
+                    extraChangeMealElem.removeAttr('disabled');
+                }
+                else
+                {
+                    if(extraChangeIngredientElem.prop('checked') == true)
+                    {
+                        extraChangeIngredientElem.removeAttr('checked');
+                        extraChangeIngredientElem.trigger('change');
+                    }
+
+                    if(extraChangeMealElem.prop('checked') == true)
+                    {
+                        extraChangeMealElem.removeAttr('checked');
+                        extraChangeMealElem.trigger('change');
+                    }
+
+                    extraChangeIngredientElem.prop('disabled', 'disabled');
+                    extraChangeMealElem.prop('disabled', 'disabled');
+                }
+
             });
 
-            var orderDropDownChangeIngredientOldVal;
+            $('#FitfoodOrderCheckChangeIngredient').change(function() {
 
-            $('#FitfoodOrderDropDownChangeIngredient').click(function() {
+                var extraChangeIngredientTableDetailElem = $('#FiffoodOrderChangeIngredientDetail');
 
-                orderDropDownChangeIngredientOldVal = $(this).val();
-
-            }).change(function() {
-
-                var totalTempElem = $('#FitfoodTotalMealPackPrice');
-                var totalTempVal = parseInt(totalTempElem.html().split('.').join(''));
-
-                var extraPriceElem = $('#FitfoodExtraPrice');
-                var extraPriceVal = parseInt(extraPriceElem.html().split('.').join(''));
-
-                if($(this).val() != '' && orderDropDownChangeIngredientOldVal == '')
+                if($(this).prop('checked') == true)
+                    extraChangeIngredientTableDetailElem.show();
+                else
                 {
-                    extraPriceVal += <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE; ?>;
-                    totalTempVal += <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE; ?>;
+                    removeChangeIngredientPrice();
 
-                    extraPriceElem.html(formatMoney(extraPriceVal.toString()));
-                    totalTempElem.html(formatMoney(totalTempVal.toString()));
-
-                    removeDiscount();
+                    extraChangeIngredientTableDetailElem.hide();
                 }
-                else if($(this).val() == '' && orderDropDownChangeIngredientOldVal != '')
+
+            });
+
+            function removeChangeIngredientPrice()
+            {
+                $('#FiffoodOrderChangeIngredientDetail').each(function() {
+
+                    $(this).find('input:checked').each(function() {
+
+                        $(this).removeAttr('checked');
+                        $(this).trigger('change');
+
+                    });
+
+                });
+            }
+
+            $('#FiffoodOrderChangeIngredientDetail').on('change', 'input', function() {
+
+                if($(this).hasClass('FiffoodOrderCheckChangeIngredientDetail'))
                 {
-                    extraPriceVal -= <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE; ?>;
-                    totalTempVal -= <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE; ?>;
+                    var totalTempElem = $('#FitfoodTotalMealPackPrice');
+                    var totalTempVal = parseInt(totalTempElem.html().split('.').join(''));
+
+                    var extraPriceElem = $('#FitfoodExtraPrice');
+                    var extraPriceVal = parseInt(extraPriceElem.html().split('.').join(''));
+
+                    var checkedInRow = $(this).parent().parent().find('input:checked').length;
+
+                    if($(this).prop('checked') == true)
+                    {
+                        if(checkedInRow == 1)
+                        {
+                            extraPriceVal += <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE; ?>;
+                            totalTempVal += <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE; ?>;
+                        }
+                        else if(checkedInRow == 2)
+                            $(this).parent().parent().find('input:not(:checked)').prop('disabled', 'disabled');
+                    }
+                    else
+                    {
+                        if(checkedInRow == 1)
+                            $(this).parent().parent().find('input:not(:checked)').removeAttr('disabled');
+                        else if(checkedInRow == 0)
+                        {
+                            extraPriceVal -= <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE; ?>;
+                            totalTempVal -= <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_INGREDIENT_PRICE; ?>;
+                        }
+                    }
 
                     extraPriceElem.html(formatMoney(extraPriceVal.toString()));
                     totalTempElem.html(formatMoney(totalTempVal.toString()));
@@ -641,27 +773,64 @@
 
             $('#FitfoodOrderCheckChangeMeal').change(function() {
 
-                var totalTempElem = $('#FitfoodTotalMealPackPrice');
-                var totalTempVal = parseInt(totalTempElem.html().split('.').join(''));
-
-                var extraPriceElem = $('#FitfoodExtraPrice');
-                var extraPriceVal = parseInt(extraPriceElem.html().split('.').join(''));
+                var extraChangeMealTableDetailElem = $('#FiffoodOrderChangeMealDetail');
 
                 if($(this).prop('checked') == true)
                 {
-                    extraPriceVal += <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE; ?>;
-                    totalTempVal += <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE; ?>;
+                    if(extraChangeMealTableDetailElem.find('input').length == 1)
+                        extraChangeMealTableDetailElem.find('input').first().prop('checked', 'checked').trigger('change');
+
+                    extraChangeMealTableDetailElem.show();
                 }
                 else
                 {
-                    extraPriceVal -= <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE; ?>;
-                    totalTempVal -= <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE; ?>;
+                    removeChangeMealPrice();
+
+                    extraChangeMealTableDetailElem.hide();
                 }
 
-                extraPriceElem.html(formatMoney(extraPriceVal.toString()));
-                totalTempElem.html(formatMoney(totalTempVal.toString()));
+            });
 
-                removeDiscount();
+            function removeChangeMealPrice()
+            {
+                $('#FiffoodOrderChangeMealDetail').each(function() {
+
+                    $(this).find('input:checked').each(function() {
+
+                        $(this).removeAttr('checked');
+                        $(this).trigger('change');
+
+                    });
+
+                });
+            }
+
+            $('#FiffoodOrderChangeMealDetail').on('change', 'input', function() {
+
+                if($(this).hasClass('FiffoodOrderCheckChangeMealDetail'))
+                {
+                    var totalTempElem = $('#FitfoodTotalMealPackPrice');
+                    var totalTempVal = parseInt(totalTempElem.html().split('.').join(''));
+
+                    var extraPriceElem = $('#FitfoodExtraPrice');
+                    var extraPriceVal = parseInt(extraPriceElem.html().split('.').join(''));
+
+                    if($(this).prop('checked') == true)
+                    {
+                        extraPriceVal += <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE; ?>;
+                        totalTempVal += <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE; ?>;
+                    }
+                    else
+                    {
+                        extraPriceVal -= <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE; ?>;
+                        totalTempVal -= <?php echo App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_PRICE; ?>;
+                    }
+
+                    extraPriceElem.html(formatMoney(extraPriceVal.toString()));
+                    totalTempElem.html(formatMoney(totalTempVal.toString()));
+
+                    removeDiscount();
+                }
 
             });
 
@@ -672,6 +841,8 @@
 
                 var extraPriceElem = $('#FitfoodExtraPrice');
                 var extraPriceVal = parseInt(extraPriceElem.html().split('.').join(''));
+
+                var extraBreakfastQuantityElem = $('#FitfoodOrderDropDownExtraBreakfastQuantity');
 
                 if($(this).prop('checked') == true)
                 {
@@ -696,14 +867,14 @@
                     for(var i = 1;i <= maxExtraBreakfastQuantity;i ++)
                         optionElemsHtml += '<option value="' + i + '">' + i + '</option>';
 
-                    $('#FitfoodOrderDropDownExtraBreakfastQuantity').removeAttr('disabled').html(optionElemsHtml);
+                    extraBreakfastQuantityElem.removeAttr('disabled').html(optionElemsHtml);
                 }
                 else
                 {
-                    extraPriceVal -= ($('#FitfoodOrderDropDownExtraBreakfastQuantity').val() * <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>);
-                    totalTempVal -= ($('#FitfoodOrderDropDownExtraBreakfastQuantity').val() * <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>);
+                    extraPriceVal -= (extraBreakfastQuantityElem.val() * <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>);
+                    totalTempVal -= (extraBreakfastQuantityElem.val() * <?php echo (App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE * $normalMenuDays / 5); ?>);
 
-                    $('#FitfoodOrderDropDownExtraBreakfastQuantity').html('').prop('disabled', 'disabled');
+                    extraBreakfastQuantityElem.html('').prop('disabled', 'disabled');
                 }
 
                 extraPriceElem.html(formatMoney(extraPriceVal.toString()));
@@ -895,14 +1066,13 @@
                     return false;
                 }
 
-            });
+            }).submit(function() {
 
-            $('#FitfoodOrderForm').submit(function() {
+                var orderFormSubmitElem = $('#FitfoodOrderFormSubmitButton');
 
-                $('#FitfoodOrderFormSubmitButton').prop('disabled', 'disabled');
+                orderFormSubmitElem.prop('disabled', 'disabled');
                 showLoadingScreen();
 
-                var idArr;
                 var mealPackQuantityList = $('.FitfoodOrderFormMealPackQuantityInput');
 
                 var totalMealPack = 0;
@@ -910,11 +1080,9 @@
 
                 mealPackQuantityList.each(function() {
 
-                    idArr = $(this).prop('id').split('_');
-
                     if($(this).val().trim() != '' && !isNaN($(this).val().trim()) && $(this).val().trim() > 0)
                     {
-                        if($('#FitfoodMainMealPack_' + idArr[1]).length > 0)
+                        if($(this).hasClass('FitfoodMainMealPack'))
                             mealValid = true;
 
                         totalMealPack += parseInt($(this).val().trim());
@@ -936,7 +1104,7 @@
                     });
 
                     closeLoadingScreen();
-                    $('#FitfoodOrderFormSubmitButton').removeAttr('disabled', 'disabled');
+                    orderFormSubmitElem.removeAttr('disabled', 'disabled');
                     return false;
                 }
 
@@ -954,7 +1122,7 @@
                     });
 
                     closeLoadingScreen();
-                    $('#FitfoodOrderFormSubmitButton').removeAttr('disabled', 'disabled');
+                    orderFormSubmitElem.removeAttr('disabled', 'disabled');
                     return false;
                 }
 
@@ -976,7 +1144,7 @@
                     });
 
                     closeLoadingScreen();
-                    $('#FitfoodOrderFormSubmitButton').removeAttr('disabled', 'disabled');
+                    orderFormSubmitElem.removeAttr('disabled', 'disabled');
                     return false;
                 }
 

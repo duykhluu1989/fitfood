@@ -24,4 +24,9 @@ class OrderItem extends Model
     {
         return $this->hasOne('App\Models\OrderItemProduct', 'order_item_id');
     }
+
+    public function orderExtras()
+    {
+        return $this->hasMany('App\Models\OrderExtra', 'order_item_id');
+    }
 }

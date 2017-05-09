@@ -87,7 +87,12 @@
                                 else if($orderExtra->code == App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE)
                                     echo App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL;
                                 else
-                                    echo App\Libraries\Util::getRequestChangeIngredient($orderExtra->code);
+                                {
+                                    $codes = explode(';', $orderExtra->code);
+
+                                    foreach($codes as $code)
+                                        echo App\Libraries\Util::getRequestChangeIngredient($code) . ' ';
+                                }
                                 ?>
                             </td>
                             <td id="OrderExtraPrice_{{ $orderExtra->id }}">{{ App\Libraries\Util::formatMoney($orderExtra->price) }}</td>

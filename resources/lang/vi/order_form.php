@@ -47,8 +47,9 @@ return [
     'subTotalPrice' => 'Tổng phụ',
     'cartTotal' => 'Tổng đơn hàng',
     'noteChangeIngredient' => 'Đối với gói FIT/MEAT LOVER, Fitfood sẽ thay thế các bữa ăn có thành phần bạn không ăn được bằng các bữa ăn khác trong ngày. Đối với gói FULL, Fitfood sẽ thay thế bằng 2 bữa ăn giống nhau trong ngày',
-    'extraQuantity' => 'Số lượng thêm',
     'sundayPolicy' => 'Lưu ý: Các phần ăn order vào ngày hôm nay (Chủ Nhật) sẽ được giao từ ngày thứ 3 và bạn chỉ cần thanh toán 4 ngày. Xin cám ơn !',
+    'extraQuantity' => 'Số lượng thêm',
     'noCallNote' => 'Lưu ý: Bạn nhận được email từ order@fitfood.vn tức hệ thống đã ghi nhận. Fitfood sẽ không gọi điện xác nhận. Xin cám ơn!',
+    'shipNote' => 'Hướng dẫn giao hàng (VD: đổi giờ giao, SDT người liên hệ, gửi bảo vệ, tên tòa nhà VP)',
 
 ];

@@ -30,7 +30,7 @@
                             <br />
                             <ul>
                                 <li>Tên | Name: {{ $name }}</li>
-                                <li>Số điện thoại | Phone: <a href="tel:{{ $phone }}" value="{{ $phone}}" target="_blank">{{ $phone }}</a></li>
+                                <li>Số điện thoại | Phone: <a href="tel:{{ $phone }}" value="{{ $phone }}" target="_blank">{{ $phone }}</a></li>
                                 <li>Email: {{ $email }}</li>
                                 <li>Địa chỉ giao hàng | Delivery address: {{ $address }}</li>
                                 <li>Quận | District: {{ $district }}</li>

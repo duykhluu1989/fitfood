@@ -106,6 +106,7 @@ class OrderController extends Controller
             '',
             'Yêu cầu đặc biệt | Special Request',
             'Ghi chú của khách',
+            'Ghi chú giao hàng',
             'Số lượng order | Number of order',
             'Mã khuyến mãi | Promo Code',
             'Q.SIDE1',
@@ -156,6 +157,7 @@ class OrderController extends Controller
             '',
             '',
             '',
+            '',
             'SA',
             'TR',
             'TO',
@@ -181,12 +183,20 @@ class OrderController extends Controller
             $extras = array();
             foreach($order->orderExtras as $orderExtra)
             {
-                if($orderExtra->code == Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_VALUE)
-                    $extras[] = Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL;
-                else if($orderExtra->code == Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE)
-                    $extras[] = Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL;
-                else
-                    $extras[] = Util::getRequestChangeIngredient($orderExtra->code);
+                if(empty($orderExtra->order_item_id))
+                {
+                    if($orderExtra->code == Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_VALUE)
+                        $extras[] = Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL;
+                    else if($orderExtra->code == Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE)
+                        $extras[] = Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL;
+                    else
+                    {
+                        $codes = explode(';', $orderExtra->code);
+
+                        foreach($codes as $code)
+                            $extras[] = App\Libraries\Util::getRequestChangeIngredient($code);
+                    }
+                }
             }
             $extraRequest = '';
             foreach($extras as $extra)
@@ -277,6 +287,30 @@ class OrderController extends Controller
                         }
                     }
 
+                    $oiExtras = array();
+                    foreach($orderItem->orderExtras as $orderExtra)
+                    {
+                        if($orderExtra->code == App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_VALUE)
+                            $oiExtras[] = App\Libraries\Util::ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL;
+                        else if($orderExtra->code == App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE)
+                            $oiExtras[] = App\Libraries\Util::ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL;
+                        else
+                        {
+                            $codes = explode(';', $orderExtra->code);
+
+                            foreach($codes as $code)
+                                $oiExtras[] = App\Libraries\Util::getRequestChangeIngredient($code);
+                        }
+                    }
+                    $oiExtraRequest = $extraRequest;
+                    foreach($oiExtras as $oiExtra)
+                    {
+                        if($oiExtraRequest == '')
+                            $oiExtraRequest = $oiExtra;
+                        else
+                            $oiExtraRequest .= ' - ' . $oiExtra;
+                    }
+
                     $exportData[] = [
                         $order->created_at,
                         $order->orderAddress->name,
@@ -290,8 +324,9 @@ class OrderController extends Controller
                         Util::getPaymentMethod($order->payment_gateway),
                         $order->orderAddress->email,
                         '',
-                        $extraRequest,
+                        $oiExtraRequest,
                         $order->customer_note,
+                        $order->shipping_note,
                         1,
                         !empty($order->orderDiscount) ? $order->orderDiscount->code : '',
                         $exportSide ? ($sideItems['JUS SWEETIE'] > 0 ? $sideItems['JUS SWEETIE'] : '') : '',
