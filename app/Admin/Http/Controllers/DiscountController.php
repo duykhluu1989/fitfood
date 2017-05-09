@@ -11,8 +11,6 @@ use App\Models\Customer;
 
 class DiscountController extends Controller
 {
-    const CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE = 'CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE';
-
     public function listDiscount(Request $request)
     {
         $input = $request->all();
@@ -26,6 +24,12 @@ class DiscountController extends Controller
 
             if(!empty($input['filter']['type']))
                 $builder->where('type', $input['filter']['type']);
+
+            if(!empty($input['filter']['campaign']))
+                $builder->where('campaign', $input['filter']['campaign']);
+
+            if(!empty($input['filter']['description']))
+                $builder->where('description', 'like', '%' . $input['filter']['description'] . '%');
 
             if(isset($input['filter']['status']) && $input['filter']['status'] !== '')
                 $builder->where('status', $input['filter']['status']);
@@ -43,13 +47,10 @@ class DiscountController extends Controller
 
         $discounts = $builder->paginate(Util::GRID_PER_PAGE);
 
-        $exportData = Redis::command('get', [self::CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE]);
-
         return view('admin.discounts.list_discount', [
             'discounts' => $discounts,
             'filter' => $filter,
             'queryString' => $queryString,
-            'exportData' => $exportData,
         ]);
     }
 
@@ -182,15 +183,12 @@ class DiscountController extends Controller
             $discount->status = isset($input['status']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
             $discount->usage_unique = isset($input['usage_unique']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
             $discount->description = isset($input['description']) ? trim($input['description']) : '';
+            $discount->campaign = isset($input['campaign']) ? trim($input['campaign']) : '';
 
             $errors = $discount->validateMany();
 
             if(count($errors) == 0)
             {
-                $exportData[] = [
-                    'Code',
-                ];
-
                 for($i = 1;$i <= $discount->quantity;$i ++)
                 {
                     $newDiscount = new Discount();
@@ -205,15 +203,9 @@ class DiscountController extends Controller
                     $newDiscount->status = $discount->status;
                     $newDiscount->usage_unique = $discount->usage_unique;
                     $newDiscount->description = $discount->description;
+                    $newDiscount->campaign = $discount->campaign;
                     $newDiscount->save();
-
-                    $exportData[] = [
-                        $newDiscount->code,
-                    ];
                 }
-
-                if(count($exportData) > 1)
-                    Redis::command('setex', [self::CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE, Util::TIMESTAMP_ONE_DAY, json_encode($exportData)]);
 
                 return redirect('admin/discount');
             }
@@ -232,26 +224,56 @@ class DiscountController extends Controller
         return redirect('admin/discount');
     }
 
-    public function exportDiscount()
+    public function controlDiscount(Request $request)
     {
-        $exportData = Redis::command('get', [self::CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE]);
-        if($exportData != null)
+        $input = $request->all();
+
+        switch($input['control'])
         {
-            Redis::command('del', [self::CACHE_NEW_MANY_DISCOUNT_EXPORT_CODE]);
+            case 'export':
 
-            $exportData = json_decode($exportData, true);
+                $discounts = Discount::whereIn('id', $input['id'])->pluck('code')->all();
 
-            Excel::create('export-discount-' . date('Y-m-d'), function($excel) use($exportData) {
+                $exportData[] = [
+                    'Code',
+                ];
 
-                $excel->sheet('sheet1', function($sheet) use($exportData) {
+                foreach($discounts as $discount)
+                {
+                    $exportData[] = [
+                        $discount,
+                    ];
+                }
 
-                    $sheet->fromArray($exportData, null, 'A1', true, false);
+                if(count($exportData) > 1)
+                {
+                    Excel::create('export-discount-' . date('Y-m-d'), function($excel) use($exportData) {
 
-                });
+                        $excel->sheet('sheet1', function($sheet) use($exportData) {
 
-            })->export('xls');
+                            $sheet->fromArray($exportData, null, 'A1', true, false);
+
+                        });
+
+                    })->export('xls');
+                }
+
+                break;
+
+            case 'delete':
+
+                $discounts = Discount::where('times_used', 0)->whereIn('id', $input['id'])->get();
+
+                foreach($discounts as $discount)
+                    $discount->delete();
+
+                break;
         }
-        else
-            return redirect('admin/discount');
+
+        $referer = $request->server('HTTP_REFERER');
+        if(!empty($referer))
+            return redirect($referer);
+
+        return redirect('admin/discount');
     }
 }

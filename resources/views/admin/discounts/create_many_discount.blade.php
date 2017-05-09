@@ -46,23 +46,21 @@
                 <div class="col-sm-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Usage Unique</h3>
+                            <h3 class="panel-title">Campaign</h3>
                         </div>
                         <div class="panel-body">
-                            <label class="checkbox-inline">
-                                <input<?php echo ($discount->usage_unique ? ' checked="checked"' : ''); ?> type="checkbox" name="discount[usage_unique]" value="usage_unique" /><b>Active</b>
-                            </label>
+                            <input type="text" class="form-control" name="discount[campaign]" value="{{ $discount->campaign }}" />
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Export</h3>
+                            <h3 class="panel-title">Usage Unique</h3>
                         </div>
                         <div class="panel-body">
                             <label class="checkbox-inline">
-                                <input checked="checked" type="checkbox" name="discount[export]" value="Export" /><b>Active</b>
+                                <input<?php echo ($discount->usage_unique ? ' checked="checked"' : ''); ?> type="checkbox" name="discount[usage_unique]" value="usage_unique" /><b>Active</b>
                             </label>
                         </div>
                     </div>
