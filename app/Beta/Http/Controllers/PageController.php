@@ -909,11 +909,6 @@ class PageController extends Controller
             {
                 DB::rollBack();
 
-                echo '<pre>';
-                print_r($e->getMessage());
-                echo '</pre>';
-                exit();
-
                 Log::info($e->getLine() . ' ' . $e->getMessage());
 
                 return redirect('order')
@@ -954,7 +949,7 @@ class PageController extends Controller
             if(in_array($order->payment_gateway, $bankTransferGatewayValues))
                 $bankNumber = Util::getBankAccountNumber($order->payment_gateway);
 
-            //register_shutdown_function([get_class(new self), 'sendConfirmEmail'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate);
+            register_shutdown_function([get_class(new self), 'sendConfirmEmail'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate);
 
             return redirect('thankYou')->with('OrderThankYou', json_encode([
                 'name' => $orderAddress->name,
