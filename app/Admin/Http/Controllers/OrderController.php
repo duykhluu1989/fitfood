@@ -70,24 +70,24 @@ class OrderController extends Controller
 
         $mealCellLabels = [
             1 => [
-                'from' => 'X',
-                'to' => 'Z',
+                'from' => 'Y',
+                'to' => 'AA',
             ],
             2 => [
-                'from' => 'AA',
-                'to' => 'AC',
+                'from' => 'AB',
+                'to' => 'AD',
             ],
             3 => [
-                'from' => 'AD',
-                'to' => 'AF',
+                'from' => 'AE',
+                'to' => 'AG',
             ],
             4 => [
-                'from' => 'AG',
-                'to' => 'AI',
+                'from' => 'AH',
+                'to' => 'AJ',
             ],
             5 => [
-                'from' => 'AJ',
-                'to' => 'AL',
+                'from' => 'AK',
+                'to' => 'AM',
             ],
         ];
 
@@ -364,7 +364,7 @@ class OrderController extends Controller
                     if(isset($duplicateOrderCustomerIds[$order->customer_id]))
                     {
                         $formatDuplicateCells[] = [
-                            'cell' => 'A' . $i . ':' . 'W' . $i,
+                            'cell' => 'A' . $i . ':' . 'Y' . $i,
                             'color' => '#fcf8e3',
                         ];
                     }
