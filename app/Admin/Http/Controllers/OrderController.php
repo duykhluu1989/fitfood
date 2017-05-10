@@ -356,7 +356,7 @@ class OrderController extends Controller
                     if($order->warning)
                     {
                         $formatCells[] = [
-                            'cell' => 'A' . $i . ':' . 'W' . $i,
+                            'cell' => 'A' . $i . ':' . 'X' . $i,
                             'color' => '#f2dede',
                         ];
                     }
@@ -364,7 +364,7 @@ class OrderController extends Controller
                     if(isset($duplicateOrderCustomerIds[$order->customer_id]))
                     {
                         $formatDuplicateCells[] = [
-                            'cell' => 'A' . $i . ':' . 'Y' . $i,
+                            'cell' => 'A' . $i . ':' . 'X' . $i,
                             'color' => '#fcf8e3',
                         ];
                     }
