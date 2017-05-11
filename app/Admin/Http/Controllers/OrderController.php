@@ -308,7 +308,7 @@ class OrderController extends Controller
                         if($oiExtraRequest == '')
                             $oiExtraRequest = $oiExtra;
                         else
-                            $oiExtraRequest .= ' - ' . $oiExtra;
+                            $oiExtraRequest .= ' ' . $oiExtra;
                     }
 
                     $exportData[] = [
