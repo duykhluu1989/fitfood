@@ -63,7 +63,7 @@ Remarketing tags may not be associated with personally identifiable information 
     <div class="container">
         <div class="block hotline text-center">
             <i class="fa fa-mobile" aria-hidden="true"></i>
-            <p>(+84) 932 788 120 <br />	(+84) 938 074 120</p>
+            <p>(+84) 932 788 120 <br />(+84) 938 074 120</p>
         </div>
         <div class="block logo text-center">
             <img src="{{ asset('assets/images/logo-ver.png') }}" alt="Fitfood" border="0" />
