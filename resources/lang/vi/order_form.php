@@ -17,7 +17,7 @@ return [
     'district' => 'Vui lòng chọn quận',
     'time' => 'Thời gian giao hàng',
     'payment' => 'Hình thức thanh toán',
-    'note' => 'Ghi chú (các yêu cầu ko rau, ko ớt chuông, bạn vui lòng tự bỏ ra giúp Fitfood. Xin cám ơn)',
+    'note' => 'Ghi chú (bạn vui lòng TỰ BỎ RA giúp fitfood các yêu cầu không rau thơm, không ớt chuông)',
     'choosePack' => 'Chọn số lượng gói',
     'shippingPrice' => 'Phí giao hàng',
     'extraPrice' => 'Phí thay đổi',

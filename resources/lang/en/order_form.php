@@ -17,7 +17,7 @@ return [
     'district' => 'Please choose district',
     'time' => 'Shipping time',
     'payment' => 'Payment method',
-    'note' => 'Note',
+    'note' => 'NOTE (please specify what you are allergic to)',
     'choosePack' => 'Choose package quantity',
     'shippingPrice' => 'Shipping fee',
     'extraPrice' => 'Extra fee',
@@ -47,8 +47,9 @@ return [
     'subTotalPrice' => 'Subtotal',
     'cartTotal' => 'Cart total',
     'noteChangeIngredient' => 'Please note that an alternative meal within that day will be replaced for FIT/MEAT Package. For FULL Package, it will be double of one of the remaining meal',
-    'extraQuantity' => 'Extra Quantity',
     'sundayPolicy' => 'Note: All orders placed today will be delivered starting from Tuesday and you will be charged for 4 days. Please note that we close order taking on every Saturday. Thank you !',
+    'extraQuantity' => 'Extra Quantity',
+    'noCallNote' => '',
     'shipNote' => 'Delivery guidance (office building, name & contact of meal receiver)',
 
 ];
