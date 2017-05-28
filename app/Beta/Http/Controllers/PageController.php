@@ -1042,7 +1042,6 @@ class PageController extends Controller
 
                 $message->from('order@fitfood.vn', 'Fitfood');
                 $message->to('info@fitfood.vn', 'Fitfood');
-                $message->cc('huong.ueh35@gmail.com', 'Fitfood');
                 $message->subject('[FITFOOD.VN] Xác nhận order | Order Confirmation');
 
             });
