@@ -348,6 +348,35 @@
         </div>
     </div>
 
+    <div class="home-talk">
+        <div class="info">
+            <h3>@lang('home_page.partner')</h3>
+            <p>@lang('home_page.partnerDescription')</p>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="list-thinking">
+                    <div class="col-sm-2 col-sm-offset-1 text-center">
+                        <img src="{{ asset('assets/images/partner/curves.jpg') }}" alt="Fitfood" border="0" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <img src="{{ asset('assets/images/partner/jus.png') }}" alt="Fitfood" border="0" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <img src="{{ asset('assets/images/partner/megamarket.png') }}" alt="Fitfood" border="0" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <img src="{{ asset('assets/images/partner/nakayama.png') }}" alt="Fitfood" border="0" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <img src="{{ asset('assets/images/partner/vineco.png') }}" alt="Fitfood" border="0" />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Facebook Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
