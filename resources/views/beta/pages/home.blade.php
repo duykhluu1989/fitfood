@@ -357,16 +357,16 @@
             <div class="row">
                 <div class="list-thinking">
                     <div class="col-sm-2 col-sm-offset-1 text-center">
-                        <img src="{{ asset('assets/images/partner/curves.jpg') }}" alt="Fitfood" border="0" width="120px" style="opacity: 0.8;margin-top: 20px" />
+                        <img src="{{ asset('assets/images/partner/curves.jpg') }}" alt="Fitfood" border="0" width="120px" style="opacity: 0.8;margin-top: 35px" />
                     </div>
                     <div class="col-sm-2 text-center">
-                        <img src="{{ asset('assets/images/partner/jus.png') }}" alt="Fitfood" border="0" width="80px" style="opacity: 0.8;margin-top: 20px" />
+                        <img src="{{ asset('assets/images/partner/jus.png') }}" alt="Fitfood" border="0" width="80px" style="opacity: 0.8;margin-top: 35px" />
                     </div>
                     <div class="col-sm-2 text-center">
-                        <img src="{{ asset('assets/images/partner/megamarket.png') }}" alt="Fitfood" border="0" width="100px" style="opacity: 0.8;margin-top: 20px" />
+                        <img src="{{ asset('assets/images/partner/megamarket.png') }}" alt="Fitfood" border="0" width="100px" style="opacity: 0.8;margin-top: 30px" />
                     </div>
                     <div class="col-sm-2 text-center">
-                        <img src="{{ asset('assets/images/partner/nakayama.png') }}" alt="Fitfood" border="0" width="70px" style="opacity: 0.8;margin-top: 20px" />
+                        <img src="{{ asset('assets/images/partner/nakayama.png') }}" alt="Fitfood" border="0" width="70px" style="opacity: 0.8;margin-top: 25px" />
                     </div>
                     <div class="col-sm-2 text-center">
                         <img src="{{ asset('assets/images/partner/vineco.png') }}" alt="Fitfood" border="0" width="140px" style="opacity: 0.8;margin-top: 20px" />
