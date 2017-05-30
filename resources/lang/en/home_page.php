@@ -21,6 +21,6 @@ return [
     'writer' => 'Writer',
     'onlineSupport' => 'Online support',
     'partner' => 'PARTNERS',
-    'partnerDescription' => 'We work with our top suppliers and partners for the best quality ingredients',
+    'partnerDescription' => 'We work with our top suppliers and partners for the best quality products',
 
 ];
