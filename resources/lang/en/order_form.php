@@ -14,7 +14,7 @@ return [
     'name' => 'Full name',
     'gender' => 'Gender',
     'address' => 'Shipping address',
-    'district' => 'Please choose district',
+    'district' => 'Please choose district (charges per week)',
     'time' => 'Shipping time',
     'payment' => 'Payment method',
     'note' => 'NOTE (please specify what you are allergic to)',
@@ -51,5 +51,6 @@ return [
     'extraQuantity' => 'Extra Quantity',
     'noCallNote' => '',
     'shipNote' => 'Delivery guidance (office building, name & contact of meal receiver)',
+    'districtMessage' => 'Advance Notice: If you have a door to door delivery request, but the building or office security ask Fitfood delivery guy to pay parking fee, please kindly reimburse the delivery guy. We will not collect the fee from them as well as not include them in the shipping fee email sent to you. Thanks for your understanding!',
 
 ];

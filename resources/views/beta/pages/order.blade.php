@@ -530,6 +530,8 @@
 
                     shippingPriceElem.html(formatMoney(listDistricts[elemVal].shipping_price));
                     totalTempVal += parseInt(listDistricts[elemVal].shipping_price);
+
+                    sweetAlert('@lang('order_form.districtMessage')');
                 }
                 else
                 {
