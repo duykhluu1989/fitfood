@@ -14,7 +14,7 @@ return [
     'name' => 'Họ tên',
     'gender' => 'Giới tính',
     'address' => 'Địa chỉ giao hàng',
-    'district' => 'Vui lòng chọn quận',
+    'district' => 'Vui lòng chọn quận (phí ship 1 tuần)',
     'time' => 'Thời gian giao hàng',
     'payment' => 'Hình thức thanh toán',
     'note' => 'Ghi chú (bạn vui lòng TỰ BỎ RA giúp fitfood các yêu cầu không rau thơm, không ớt chuông)',
