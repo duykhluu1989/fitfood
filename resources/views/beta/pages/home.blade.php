@@ -356,7 +356,7 @@
         <div class="container">
             <div class="row">
                 <div class="list-thinking">
-                    <div class="col-sm-2 col-sm-offset-1 text-center">
+                    <div class="col-sm-2 text-center">
                         <img src="{{ asset('assets/images/partner/curves.jpg') }}" alt="Fitfood" border="0" width="120px" style="opacity: 0.8;margin-top: 35px" />
                     </div>
                     <div class="col-sm-2 text-center">
@@ -370,6 +370,9 @@
                     </div>
                     <div class="col-sm-2 text-center">
                         <img src="{{ asset('assets/images/partner/vineco.png') }}" alt="Fitfood" border="0" width="140px" style="opacity: 0.8;margin-top: 20px" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <img src="{{ asset('assets/images/partner/payoo.png') }}" alt="Fitfood" border="0" width="120px" style="opacity: 0.8;margin-top: 30px" />
                     </div>
                     <div class="clearfix"></div>
                 </div>

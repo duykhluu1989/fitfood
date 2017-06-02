@@ -3,7 +3,7 @@
         <h4>@lang('menu_page.signature')</h4>
     @endif
     <div class="block-3">
-        <a href="{{ url('order?p=1') }}">
+        <a class="FitfoodPopupImage" href="{{ App::getLocale() == 'en' ? asset('assets/images/package/Fit_Fullpackage_ENG_PNG.png') : asset('assets/images/package/Fit_Fullpackage_VIE_PNG.png') }}">
             <div class="hovereffect">
                 <img class="img-responsive" src="{{ asset('/../assets/images/full.jpg') }}" alt="Fitfood" border="0" />
 
@@ -18,7 +18,7 @@
         </a>
     </div>
     <div class="block-3">
-        <a href="{{ url('order?p=2') }}">
+        <a class="FitfoodPopupImage" href="{{ App::getLocale() == 'en' ? asset('assets/images/package/Fit_Fitpackage_ENG_PNG.png') : asset('assets/images/package/Fit_Fitpackage_VIE_PNG.png') }}">
             <div class="hovereffect">
                 <img class="img-responsive" src="{{ asset('/../assets/images/fit.jpg') }}" alt="Fitfood" border="0" />
                 <div class="overlay">
@@ -32,7 +32,7 @@
         </a>
     </div>
     <div class="block-3">
-        <a href="{{ url('order?p=5') }}">
+        <a class="FitfoodPopupImage" href="{{ App::getLocale() == 'en' ? asset('assets/images/package/Fit_MeatLover_ENG_PNG.png') : asset('assets/images/package/Fit_MeatLover_VIE_PNG.png') }}">
             <div class="hovereffect">
                 <img class="img-responsive" src="{{ asset('/../assets/images/meat.jpg') }}" alt="Fitfood" border="0" />
                 <div class="overlay">
@@ -46,7 +46,7 @@
         </a>
     </div>
     <div class="block-3">
-        <a href="{{ url('order?p=8') }}">
+        <a class="FitfoodPopupImage" href="{{ App::getLocale() == 'en' ? asset('assets/images/package/Fit_Vegetarian_ENG_PNG.png') : asset('assets/images/package/Fit_Vegetarian_VIE_PNG.png') }}">
             <div class="hovereffect">
                 <img class="img-responsive" src="{{ asset('/../assets/images/vegetarian_package.jpg') }}" alt="Fitfood" border="0" />
                 <div class="overlay">
