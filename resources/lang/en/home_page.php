@@ -11,7 +11,7 @@ return [
     'fitMeal' => '2 meals combination',
     'week' => 'week',
     'meatLoverDescription' => 'with 2x protein',
-    'vegetarianMeal' => '2 meat free meals',
+    'vegetarianMeal' => '2 Non-Meat Meals',
     'blogDescription' => "Practicing a healthy lifestyle doesn't have to be boring! Save your time in the kitchen prepping meals under the heat of Saigon, enjoy your meal plan along with our entertaining tips and tasty recipes to fire up your diet!",
     'blog' => 'VIEW BLOG',
     'viewBlog' => 'View more',
