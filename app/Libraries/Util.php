@@ -238,27 +238,49 @@ class Util
         return $times;
     }
 
-    public static function getPaymentMethod($value = null, $lang = null)
+    public static function getPaymentMethod($value = null, $lang = null, $admin = true)
     {
         if($lang == 'en')
         {
-            $methods = [
-                self::PAYMENT_GATEWAY_CASH_VALUE => self::PAYMENT_GATEWAY_CASH_LABEL_EN,
-                self::PAYMENT_GATEWAY_MPOS_VALUE => self::PAYMENT_GATEWAY_MPOS_LABEL_EN,
-                self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_LABEL_EN,
-                self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_LABEL_EN,
-                self::PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_LABEL_EN,
-            ];
+            if($admin == true)
+            {
+                $methods = [
+                    self::PAYMENT_GATEWAY_CASH_VALUE => self::PAYMENT_GATEWAY_CASH_LABEL_EN,
+                    self::PAYMENT_GATEWAY_MPOS_VALUE => self::PAYMENT_GATEWAY_MPOS_LABEL_EN,
+                    self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_LABEL_EN,
+                    self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_LABEL_EN,
+                    self::PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_LABEL_EN,
+                ];
+            }
+            else
+            {
+                $methods = [
+                    self::PAYMENT_GATEWAY_CASH_VALUE => self::PAYMENT_GATEWAY_CASH_LABEL_EN,
+                    self::PAYMENT_GATEWAY_MPOS_VALUE => self::PAYMENT_GATEWAY_MPOS_LABEL_EN,
+                    self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_LABEL_EN,
+                ];
+            }
         }
         else
         {
-            $methods = [
-                self::PAYMENT_GATEWAY_CASH_VALUE => self::PAYMENT_GATEWAY_CASH_LABEL,
-                self::PAYMENT_GATEWAY_MPOS_VALUE => self::PAYMENT_GATEWAY_MPOS_LABEL,
-                self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_LABEL,
-                self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_LABEL,
-                self::PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_LABEL,
-            ];
+            if($admin == true)
+            {
+                $methods = [
+                    self::PAYMENT_GATEWAY_CASH_VALUE => self::PAYMENT_GATEWAY_CASH_LABEL,
+                    self::PAYMENT_GATEWAY_MPOS_VALUE => self::PAYMENT_GATEWAY_MPOS_LABEL,
+                    self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_LABEL,
+                    self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_ACB_LABEL,
+                    self::PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_HSBC_LABEL,
+                ];
+            }
+            else
+            {
+                $methods = [
+                    self::PAYMENT_GATEWAY_CASH_VALUE => self::PAYMENT_GATEWAY_CASH_LABEL_EN,
+                    self::PAYMENT_GATEWAY_MPOS_VALUE => self::PAYMENT_GATEWAY_MPOS_LABEL_EN,
+                    self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_VALUE => self::PAYMENT_GATEWAY_BANK_TRANSFER_VCB_LABEL_EN,
+                ];
+            }
         }
 
         if($value !== null && isset($methods[$value]))

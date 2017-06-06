@@ -87,7 +87,7 @@
                                     <div class="col-lg-6 col-md-6 col-xs-12">
                                         <select class="form-control input-lg" name="payment_gateway" required="required">
                                             <option value="">* @lang('order_form.payment')</option>
-                                            @foreach(App\Libraries\Util::getPaymentMethod(null, App::getLocale()) as $value => $label)
+                                            @foreach(App\Libraries\Util::getPaymentMethod(null, App::getLocale(), false) as $value => $label)
                                                 <option value="{{ $value }}">{{ $label }}</option>
                                             @endforeach
                                         </select>
