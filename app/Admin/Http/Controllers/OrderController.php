@@ -391,7 +391,6 @@ class OrderController extends Controller
                     });
                 }
 
-
                 foreach($formatCells as $formatCell)
                 {
                     $sheet->cells($formatCell['cell'], function($cells) use($formatCell) {
@@ -448,6 +447,7 @@ class OrderController extends Controller
         }, 'orderItems.orderItemMeals.orderItemMealDetails', 'orderDiscount'])
             ->where('ff_order.start_week', '<=', $startWeek)
             ->where('ff_order.end_week', '>=', $date)
+            ->where('ff_order.free', 0)
             ->orderBy('ff_order.id', 'DESC');
 
         if(isset($input['filter']))
@@ -509,6 +509,7 @@ class OrderController extends Controller
                 })
                 ->where('ff_order_item.price', '>', 0)
                 ->where('ff_order_item.main_dish', 1)
+                ->where('ff_order.free', 0)
                 ->count('ff_order_item.id');
         }
         else
@@ -521,6 +522,7 @@ class OrderController extends Controller
             ->where('start_week', '<=', $startWeek)
             ->where('end_week', '>=', $date)
             ->whereNull('cancelled_at')
+            ->where('free', 0)
             ->groupBy('customer_id')
             ->havingRaw('COUNT(id) > 1')
             ->pluck('number_of_order', 'customer_id')
@@ -2553,6 +2555,7 @@ class OrderController extends Controller
         }, 'orderItems.orderItemMeals.orderItemMealDetails'])
             ->where('start_week', '<=', $startWeek)
             ->where('end_week', '>=', $date)
+            ->where('free', 0)
             ->get();
 
         return [$orders, $date, $startWeek];
@@ -2577,7 +2580,8 @@ class OrderController extends Controller
 
         $builder = Order::select('ff_order.*')->with('orderAddress', 'customer')
             ->where('ff_order.start_week', '<=', $startWeek)->where('ff_order.end_week', '>=', $date)
-            ->whereNull('ff_order.cancelled_at');
+            ->whereNull('ff_order.cancelled_at')
+            ->where('ff_order.free', 0);
 
         if(isset($input['filter']))
         {
@@ -2668,7 +2672,8 @@ class OrderController extends Controller
                     $query->where('shipping_date', '>=', $currentDate);
                 }])
                     ->where('ff_order.start_week', '<=', $startWeek)->where('ff_order.end_week', '>=', $date)
-                    ->whereNull('ff_order.cancelled_at');
+                    ->whereNull('ff_order.cancelled_at')
+                    ->where('ff_order.free', 0);
 
                 if(isset($input['filter']))
                 {
@@ -2762,7 +2767,8 @@ class OrderController extends Controller
                     $query->where('shipping_date', '>=', $currentDate);
                 }])
                     ->where('ff_order.start_week', '<=', $startWeek)->where('ff_order.end_week', '>=', $date)
-                    ->whereNull('ff_order.cancelled_at');
+                    ->whereNull('ff_order.cancelled_at')
+                    ->where('ff_order.free', 0);
 
                 if(isset($input['filter']))
                 {
@@ -2828,6 +2834,7 @@ class OrderController extends Controller
         }, 'orderItems.orderItemMeals.orderItemMealDetails', 'orderItems.orderItemMeals.shipper'])
             ->join('ff_order_item_meal', 'ff_order.id', '=', 'ff_order_item_meal.order_id')
             ->where('ff_order_item_meal.shipping_date', $date)
+            ->where('ff_order.free', 0)
             ->where(function($query) {
                 $query->whereNull('ff_order.cancelled_at')->orWhere('ff_order.fulfillment_status', Util::FULFILLMENT_STATUS_FULFILLED_VALUE);
             })
@@ -2883,6 +2890,7 @@ class OrderController extends Controller
                     ->where(function($query) {
                         $query->whereNull('ff_order.cancelled_at')->orWhere('ff_order.fulfillment_status', Util::FULFILLMENT_STATUS_FULFILLED_VALUE);
                     })
+                    ->where('ff_order.free', 0)
                     ->groupBy('ff_order.id')
                     ->get();
 
@@ -2910,6 +2918,7 @@ class OrderController extends Controller
                 $orders = Order::select('*')->with('orderItems.orderItemMeals')
                     ->where('start_week', '<=', $startWeek)
                     ->where('end_week', '>=', $date)
+                    ->where('ff_order.free', 0)
                     ->get();
 
                 foreach($orders as $order)
@@ -3194,10 +3203,182 @@ class OrderController extends Controller
             ->where(function($query) {
                 $query->whereNull('ff_order.cancelled_at')->orWhere('ff_order.fulfillment_status', Util::FULFILLMENT_STATUS_FULFILLED_VALUE);
             })
+            ->where('ff_order.free', 0)
             ->orderBy('ff_order.shipping_priority', 'DESC')
             ->groupBy('ff_order.id')
             ->get();
 
         return [$shipper, $orders];
+    }
+
+    public function listFreeOrder(Request $request)
+    {
+        list($orders, $duplicateOrderCustomerIds, $date, $filter, $queryString) = $this->getListFreeOrder($request, 'list');
+
+        return view('admin.orders.list_free_order', [
+            'orders' => $orders,
+            'duplicateOrderCustomerIds' => $duplicateOrderCustomerIds,
+            'date' => $date,
+            'filter' => $filter,
+            'queryString' => $queryString,
+        ]);
+    }
+
+    public function exportFreeOrder(Request $request)
+    {
+        list($orders, $duplicateOrderCustomerIds, $date, $filter, $queryString) = $this->getListFreeOrder($request, 'export');
+
+        $formatDuplicateCells = array();
+
+        $exportData[] = [
+            'Timestamp',
+            'Tên | Name',
+            'Phone.Reformat',
+            'Địa chỉ giao hàng | Delivery Address',
+            'Thời gian giao hàng mong muốn | Expected delivery time',
+            'Quận | District',
+            '',
+            'Giới tính | Gender',
+            'Email',
+            '',
+            'Số lượng order | Number of order',
+            'Mã khuyến mãi | Promo Code',
+        ];
+
+        $i = 2;
+        foreach($orders as $order)
+        {
+            $phone = Util::formatPhone($order->customer->phone);
+
+            $exportData[] = [
+                $order->created_at,
+                $order->orderAddress->name,
+                $phone,
+                $order->orderAddress->address,
+                Util::getShippingTime($order->shipping_time),
+                $order->orderAddress->district,
+                '',
+                Util::getGender($order->orderAddress->gender),
+                $order->orderAddress->email,
+                '',
+                1,
+                $order->orderDiscount->code,
+            ];
+
+            if(isset($duplicateOrderCustomerIds[$order->customer_id]))
+            {
+                $formatDuplicateCells[] = [
+                    'cell' => 'A' . $i . ':' . 'X' . $i,
+                    'color' => '#fcf8e3',
+                ];
+            }
+
+            $i ++;
+        }
+
+        Excel::create('export-free-order-' . $date, function($excel) use($exportData, $formatDuplicateCells) {
+
+            $excel->sheet('sheet1', function($sheet) use($exportData, $formatDuplicateCells) {
+
+                $sheet->fromArray($exportData, null, 'A1', true, false);
+
+                foreach($formatDuplicateCells as $formatDuplicateCell)
+                {
+                    $sheet->cells($formatDuplicateCell['cell'], function($cells) use($formatDuplicateCell) {
+
+                        $cells->setBackground($formatDuplicateCell['color']);
+
+                    });
+                }
+
+            });
+
+        })->export('xls');
+    }
+
+    protected function getListFreeOrder($request, $action)
+    {
+        $input = $request->all();
+
+        if(!empty($input['date']))
+            $date = $input['date'];
+        else
+            $date = date('Y-m-d');
+
+        $dayOfWeek = date('N', strtotime($date));
+        if($dayOfWeek < 6)
+            $startWeek = date('Y-m-d', strtotime($date) - (Util::TIMESTAMP_ONE_DAY * ($dayOfWeek - 1)));
+        else
+            $startWeek = date('Y-m-d', strtotime($date) + (Util::TIMESTAMP_ONE_DAY * (8 - $dayOfWeek)));
+
+        $queryString = '&date=' . $date;
+
+        $builder = Order::select('ff_order.*')->with(['orderAddress', 'customer', 'orderDiscount'])
+            ->where('ff_order.start_week', '<=', $startWeek)
+            ->where('ff_order.end_week', '>=', $date)
+            ->where('ff_order.free', 1)
+            ->orderBy('ff_order.id', 'DESC');
+
+        if(isset($input['filter']))
+        {
+            if(!empty($input['filter']['order_id']))
+                $builder->where('ff_order.order_id', 'like', '%' . $input['filter']['order_id']);
+
+            if(!empty($input['filter']['phone']))
+            {
+                $sql = $builder->toSql();
+                if(strpos($sql, 'inner join `ff_customer` on') === false)
+                    $builder->join('ff_customer', 'ff_order.customer_id', '=', 'ff_customer.id');
+                $builder->where('ff_customer.phone', 'like', '%' . $input['filter']['phone']);
+            }
+
+            if(!empty($input['filter']['name']))
+            {
+                $sql = $builder->toSql();
+                if(strpos($sql, 'inner join `ff_order_address` on') === false)
+                    $builder->join('ff_order_address', 'ff_order.id', '=', 'ff_order_address.order_id');
+                $builder->where('ff_order_address.name', 'like', '%' . $input['filter']['name'] . '%');
+            }
+
+            if(!empty($input['filter']['email']))
+            {
+                $sql = $builder->toSql();
+                if(strpos($sql, 'inner join `ff_order_address` on') === false)
+                    $builder->join('ff_order_address', 'ff_order.id', '=', 'ff_order_address.order_id');
+                $builder->where('ff_order_address.email', 'like', '%' . $input['filter']['email'] . '%');
+            }
+
+            if(!empty($input['filter']['cancelled']))
+                $builder->whereNotNull('ff_order.cancelled_at')->where('ff_order.fulfillment_status', Util::FULFILLMENT_STATUS_PENDING_VALUE);
+
+            $filter = $input['filter'];
+            $queryString .= '&' . http_build_query(['filter' => $input['filter']]);
+        }
+        else
+            $filter = null;
+
+        if(empty($filter['cancelled']))
+        {
+            $builder->where(function($query) {
+                $query->whereNull('ff_order.cancelled_at')->orWhere('ff_order.fulfillment_status', Util::FULFILLMENT_STATUS_FULFILLED_VALUE);
+            });
+        }
+
+        if($action == 'list')
+            $orders = $builder->paginate(Util::GRID_PER_PAGE);
+        else
+            $orders = $builder->get();
+
+        $duplicateOrderCustomerIds = Order::selectRaw('customer_id, COUNT(id) AS number_of_order')
+            ->where('start_week', '<=', $startWeek)
+            ->where('end_week', '>=', $date)
+            ->whereNull('cancelled_at')
+            ->where('free', 1)
+            ->groupBy('customer_id')
+            ->havingRaw('COUNT(id) > 1')
+            ->pluck('number_of_order', 'customer_id')
+            ->toArray();
+
+        return [$orders, $duplicateOrderCustomerIds, $date, $filter, $queryString];
     }
 }

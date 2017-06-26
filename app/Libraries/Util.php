@@ -102,6 +102,7 @@ class Util
 
     const DISCOUNT_TYPE_FIXED_AMOUNT_VALUED = 'FIXED_AMOUNT';
     const DISCOUNT_TYPE_PERCENTAGE_VALUED = 'PERCENTAGE';
+    const DISCOUNT_TYPE_FREE_MEAL_VALUED = 'FREE_MEAL';
 
     const TRANSACTION_TYPE_PAY_VALUE = 'PAY';
     const TRANSACTION_TYPE_REFUND_VALUE = 'REFUND';
@@ -330,6 +331,7 @@ class Util
         $types = [
             self::DISCOUNT_TYPE_FIXED_AMOUNT_VALUED => self::DISCOUNT_TYPE_FIXED_AMOUNT_VALUED,
             self::DISCOUNT_TYPE_PERCENTAGE_VALUED => self::DISCOUNT_TYPE_PERCENTAGE_VALUED,
+            self::DISCOUNT_TYPE_FREE_MEAL_VALUED => self::DISCOUNT_TYPE_FREE_MEAL_VALUED,
         ];
 
         if($value !== null && isset($types[$value]))

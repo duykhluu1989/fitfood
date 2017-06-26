@@ -112,7 +112,7 @@
                 </div>
                 <div class="panel-body">
                     @if(empty($discount->id))
-                        <input type="text" id="ValueInput" class="form-control" name="discount[value]" value="{{ $discount->value }}" required="required" />
+                        <input type="text" id="ValueInput" class="form-control" name="discount[value]" value="{{ $discount->value }}" />
                     @else
                         <input type="text" class="form-control" value="{{ ($discount->type == App\Libraries\Util::DISCOUNT_TYPE_FIXED_AMOUNT_VALUED ? App\Libraries\Util::formatMoney($discount->value) : $discount->value) }}" readonly="readonly" />
                     @endif

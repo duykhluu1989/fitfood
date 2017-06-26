@@ -113,6 +113,10 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::get('shipping/detail/export/{id}/{date}', 'OrderController@exportDetailShipping');
 
+        Route::get('freeOrder', 'OrderController@listFreeOrder');
+
+        Route::get('freeOrder/export', 'OrderController@exportFreeOrder');
+
         Route::get('mealPack', 'MenuController@listMealPack');
 
         Route::get('mealPack/create', 'MenuController@createMealPack');

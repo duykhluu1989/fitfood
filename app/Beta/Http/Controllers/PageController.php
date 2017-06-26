@@ -911,8 +911,7 @@ class PageController extends Controller
 
                 Log::info($e->getLine() . ' ' . $e->getMessage());
 
-                return redirect('order')
-                    ->with('OrderError', trans('order_form.error'));
+                return redirect('order')->with('OrderError', trans('order_form.error'));
             }
 
             $mailMealPack = '';
@@ -1060,6 +1059,9 @@ class PageController extends Controller
 
             if($request->hasCookie(Util::COOKIE_PLACE_ORDER_CUSTOMER_NAME) == false)
                 Cookie::queue(Util::COOKIE_PLACE_ORDER_CUSTOMER_NAME, true, Util::MINUTE_ONE_YEAR_EXPIRED);
+            
+            if(isset($dataThankYou['trial']) && $dataThankYou['trial'] == true)
+                return view('beta.pages.trial_thank_you', $dataThankYou);
 
             return view('beta.pages.thank_you', $dataThankYou);
         }
@@ -1097,7 +1099,7 @@ class PageController extends Controller
                 if(!empty($input['phone']))
                     $customer = Customer::where('phone', trim($input['phone']))->first();
 
-                if(!empty($discount) && (empty($discount->customer) || (!empty($customer) && $customer->id == $discount->customer->id)))
+                if(!empty($discount) && ($discount->type == Util::DISCOUNT_TYPE_FIXED_AMOUNT_VALUED || $discount->type == Util::DISCOUNT_TYPE_PERCENTAGE_VALUED) && (empty($discount->customer) || (!empty($customer) && $customer->id == $discount->customer->id)))
                 {
                     $time = strtotime('now');
 
@@ -1175,5 +1177,231 @@ class PageController extends Controller
     public function faqs()
     {
         return view('beta.pages.faqs');
+    }
+
+    public function trial(Request $request)
+    {
+        $dayOfWeekForOrder = date('N');
+
+        if($request->isMethod('post'))
+        {
+            $input = $request->all();
+
+            $validator = Validator::make($input, [
+                'phone' => 'required|numeric',
+                'name' => 'required|string',
+                'gender' => 'required|in:' . Util::GENDER_MALE_VALUE . ',' . Util::GENDER_FEMALE_VALUE,
+                'email' => 'required|email',
+                'address' => 'required|string',
+                'district' => 'required|integer|min:1',
+                'shipping_time' => 'required|string',
+                'discount_code' => 'required|alpha_num',
+            ]);
+
+            if(Util::validatePhone($input['phone']) == false)
+                return redirect('trial')->with('OrderError', trans('order_form.validate'));
+
+            $discount = Discount::with('customer')->where('code', trim($input['discount_code']))->first();
+
+            $customer = null;
+            if(!empty($input['phone']))
+                $customer = Customer::where('phone', trim($input['phone']))->first();
+
+            if(!empty($discount) && $discount->type == Util::DISCOUNT_TYPE_FREE_MEAL_VALUED && (empty($discount->customer) || (!empty($customer) && $customer->id == $discount->customer->id)))
+            {
+                $time = strtotime('now');
+
+                if($discount->status == Util::STATUS_ACTIVE_VALUE && (empty($discount->start_time) || $time >= strtotime($discount->start_time)) && (empty($discount->end_time) || $time <= strtotime($discount->end_time))
+                    && (empty($discount->times_limit) || $discount->times_used < $discount->times_limit))
+                {
+                    if($discount->usage_unique == Util::STATUS_ACTIVE_VALUE && !empty($customer))
+                    {
+                        $usedDiscount = OrderDiscount::select('ff_order_discount.*')
+                            ->join('ff_order', 'ff_order_discount.order_id', '=', 'ff_order.id')
+                            ->where('ff_order.customer_id', $customer->id)
+                            ->where('ff_order_discount.code', $discount->code)
+                            ->first();
+
+                        if(!empty($usedDiscount))
+                            return redirect('trial')->with('OrderError', trans('order_form.validate'));
+                    }
+                }
+                else
+                    return redirect('trial')->with('OrderError', trans('order_form.validate'));
+            }
+            else
+                return redirect('trial')->with('OrderError', trans('order_form.validate'));
+
+            if($validator->fails())
+                return redirect('trial')->with('OrderError', trans('order_form.validate'));
+
+            try
+            {
+                DB::beginTransaction();
+
+                $district = Area::where('status', Util::STATUS_ACTIVE_VALUE)->find(trim($input['district']));
+                $customer = Customer::where('phone', trim($input['phone']))->first();
+
+                if(empty($customer))
+                {
+                    $customer = new Customer();
+                    $customer->phone = trim($input['phone']);
+                    $customer->orders_count = 0;
+                    $customer->total_spent = 0;
+                    $customer->created_at = date('Y-m-d H:i:s');
+                    $customer->email = trim($input['email']);
+                    $customer->name = trim($input['name']);
+                    $customer->gender = trim($input['gender']);
+                    $customer->address = trim($input['address']);
+                    $customer->district = $district->name;
+                    $customer->latitude = trim($input['latitude']);
+                    $customer->longitude = trim($input['longitude']);
+                    $customer->address_google = trim($input['address_google']);
+                    $customer->save();
+                }
+
+                $order = new Order();
+                $order->customer_id = $customer->id;
+                $order->created_at = date('Y-m-d H:i:s');
+                $order->financial_status = Util::FINANCIAL_STATUS_PENDING_VALUE;
+                $order->fulfillment_status = Util::FULFILLMENT_STATUS_PENDING_VALUE;
+                $order->shipping_price = 0;
+                $order->total_line_items_price = 0;
+                $order->total_price = 0;
+                $order->total_discounts = 0;
+                $order->total_extra_price = 0;
+                $order->start_week = date('Y-m-d', strtotime('+ ' . (8 - $dayOfWeekForOrder) . ' days'));
+                $order->end_week = date('Y-m-d', strtotime('+ ' . (12 - $dayOfWeekForOrder) . ' days'));
+                $order->payment_gateway = Util::PAYMENT_GATEWAY_CASH_VALUE;
+                $order->shipping_time = trim($input['shipping_time']);
+                $order->shipping_priority = 1;
+                $order->warning = Util::STATUS_INACTIVE_VALUE;
+                $order->free = true;
+                $order->save();
+
+                if(empty($customer->first_order))
+                    $customer->first_order = $order->id;
+
+                $customer->last_order = $order->id;
+                $customer->orders_count += 1;
+                $customer->save();
+
+                $orderAddress = new OrderAddress();
+                $orderAddress->order_id = $order->id;
+                $orderAddress->email = trim($input['email']);
+                $orderAddress->name = trim($input['name']);
+                $orderAddress->gender = trim($input['gender']);
+                $orderAddress->address = trim($input['address']);
+                $orderAddress->district = $district->name;
+                $orderAddress->latitude = trim($input['latitude']);
+                $orderAddress->longitude = trim($input['longitude']);
+                $orderAddress->address_google = trim($input['address_google']);
+                $orderAddress->save();
+
+                $orderDiscount = new OrderDiscount();
+                $orderDiscount->order_id = $order->id;
+                $orderDiscount->code = $discount->code;
+                $orderDiscount->type = $discount->type;
+                $orderDiscount->value = $discount->value;
+                $orderDiscount->amount = 0;
+                $orderDiscount->save();
+
+                $discount->times_used += 1;
+                $discount->save();
+
+                DB::commit();
+            }
+            catch(\Exception $e)
+            {
+                DB::rollBack();
+
+                Log::info($e->getLine() . ' ' . $e->getMessage());
+
+                return redirect('trial')->with('OrderError', trans('order_form.error'));
+            }
+
+            if($order->shipping_time != Util::SHIPPING_TIME_NIGHT_BEFORE_VALUE)
+            {
+                $startShippingDate = $order->start_week;
+                $deliveryTime = $order->shipping_time;
+            }
+            else
+            {
+                $startShippingDate = date('Y-m-d', (strtotime($order->start_week) - Util::TIMESTAMP_ONE_DAY));
+
+                if(App::getLocale() == 'en')
+                    $deliveryTime = Util::SHIPPING_TIME_NIGHT_BEFORE_LABEL_EN;
+                else
+                    $deliveryTime = Util::SHIPPING_TIME_NIGHT_BEFORE_LABEL;
+            }
+
+            register_shutdown_function([get_class(new self), 'sendTrialConfirmEmail'], $order, $orderAddress, $customer, $deliveryTime, $startShippingDate);
+
+            return redirect('thankYou')->with('OrderThankYou', json_encode([
+                'trial' => true,
+                'name' => $orderAddress->name,
+                'phone' => $customer->phone,
+                'address' => $orderAddress->address,
+                'district' => $orderAddress->district,
+                'deliveryTime' => $deliveryTime,
+                'email' => $order->orderAddress->email,
+                'startShippingDate' => $startShippingDate,
+            ]));
+        }
+
+        $areas = Area::getModelActiveArea();
+
+        return view('beta.pages.trial', [
+            'areas' => $areas,
+        ]);
+    }
+
+    public static function sendTrialConfirmEmail($order, $orderAddress, $customer, $deliveryTime, $startShippingDate)
+    {
+        try
+        {
+            Mail::send('beta.emails.trail_confirm', [
+                'name' => $orderAddress->name,
+                'phone' => $customer->phone,
+                'address' => $orderAddress->address,
+                'district' => $orderAddress->district,
+                'deliveryTime' => $deliveryTime,
+                'email' => $order->orderAddress->email,
+                'startShippingDate' => $startShippingDate,
+            ], function($message) use($orderAddress) {
+
+                $message->from('order@fitfood.vn', 'Fitfood');
+                $message->to($orderAddress->email, $orderAddress->name);
+                $message->subject('[FITFOOD.VN] Xác nhận order | Order Confirmation');
+
+            });
+        }
+        catch(\Exception $e)
+        {
+
+        }
+
+        try
+        {
+            Mail::send('beta.emails.trail_confirm', [
+                'name' => $orderAddress->name,
+                'phone' => $customer->phone,
+                'address' => $orderAddress->address,
+                'district' => $orderAddress->district,
+                'deliveryTime' => $deliveryTime,
+                'email' => $order->orderAddress->email,
+                'startShippingDate' => $startShippingDate,
+            ], function($message) use($orderAddress) {
+
+                $message->from('order@fitfood.vn', 'Fitfood');
+                $message->to('info@fitfood.vn', 'Fitfood');
+                $message->subject('[FITFOOD.VN] Xác nhận order | Order Confirmation');
+
+            });
+        }
+        catch(\Exception $e)
+        {
+
+        }
     }
 }

@@ -168,6 +168,9 @@
                             <li {{ (Request::is('admin/shipping') ? 'class="active"' : '') }}>
                                 <a href="{{ url('admin/shipping') }}">List Shipping</a>
                             </li>
+                            <li {{ (Request::is('admin/freeOrder') ? 'class="active"' : '') }}>
+                                <a href="{{ url('admin/freeOrder') }}">List Free Order</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>

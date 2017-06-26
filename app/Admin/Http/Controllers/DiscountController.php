@@ -79,7 +79,12 @@ class DiscountController extends Controller
             {
                 $discount->code = isset($input['code']) ? trim($input['code']) : '';
                 $discount->type = isset($input['type']) ? trim($input['type']) : '';
-                $discount->value = isset($input['value']) ? trim(str_replace('.', '', $input['value'])) : '';
+
+                if($discount->type == Util::DISCOUNT_TYPE_FREE_MEAL_VALUED)
+                    $discount->value = 1;
+                else
+                    $discount->value = isset($input['value']) ? trim(str_replace('.', '', $input['value'])) : '';
+
                 $discount->times_used = 0;
                 $discount->created_at = date('Y-m-d H:i:s');
                 $discount->customer_id_str = !empty($input['customer_id_str']) ? trim($input['customer_id_str']) : null;
@@ -174,7 +179,12 @@ class DiscountController extends Controller
             $discount->character = isset($input['character']) ? trim($input['character']) : '';
             $discount->quantity = isset($input['quantity']) ? trim($input['quantity']) : '';
             $discount->type = isset($input['type']) ? trim($input['type']) : '';
-            $discount->value = isset($input['value']) ? trim(str_replace('.', '', $input['value'])) : '';
+
+            if($discount->type == Util::DISCOUNT_TYPE_FREE_MEAL_VALUED)
+                $discount->value = 1;
+            else
+                $discount->value = isset($input['value']) ? trim(str_replace('.', '', $input['value'])) : '';
+
             $discount->times_used = 0;
             $discount->created_at = date('Y-m-d H:i:s');
             $discount->times_limit = !empty($input['times_limit']) ? trim($input['times_limit']) : 0;

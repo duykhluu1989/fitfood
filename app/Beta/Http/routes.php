@@ -35,4 +35,8 @@ Route::group(['middleware' => ['locale']], function() {
 
     Route::get('faqs', 'PageController@faqs');
 
+    Route::get('trial', 'PageController@trial');
+
+    Route::post('trial', 'PageController@trial');
+
 });
