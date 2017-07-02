@@ -3305,17 +3305,10 @@ class OrderController extends Controller
         else
             $date = date('Y-m-d');
 
-        $dayOfWeek = date('N', strtotime($date));
-        if($dayOfWeek < 6)
-            $startWeek = date('Y-m-d', strtotime($date) - (Util::TIMESTAMP_ONE_DAY * ($dayOfWeek - 1)));
-        else
-            $startWeek = date('Y-m-d', strtotime($date) + (Util::TIMESTAMP_ONE_DAY * (8 - $dayOfWeek)));
-
         $queryString = '&date=' . $date;
 
         $builder = Order::select('ff_order.*')->with(['orderAddress', 'customer', 'orderDiscount'])
-            ->where('ff_order.start_week', '<=', $startWeek)
-            ->where('ff_order.end_week', '>=', $date)
+            ->where('ff_order.start_week', $date)
             ->where('ff_order.free', 1)
             ->orderBy('ff_order.id', 'DESC');
 
@@ -3370,8 +3363,7 @@ class OrderController extends Controller
             $orders = $builder->get();
 
         $duplicateOrderCustomerIds = Order::selectRaw('customer_id, COUNT(id) AS number_of_order')
-            ->where('start_week', '<=', $startWeek)
-            ->where('end_week', '>=', $date)
+            ->where('start_week', $date)
             ->whereNull('cancelled_at')
             ->where('free', 1)
             ->groupBy('customer_id')

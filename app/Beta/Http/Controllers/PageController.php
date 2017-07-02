@@ -1181,8 +1181,6 @@ class PageController extends Controller
 
     public function trial(Request $request)
     {
-        $dayOfWeekForOrder = date('N');
-
         if($request->isMethod('post'))
         {
             $input = $request->all();
@@ -1260,6 +1258,8 @@ class PageController extends Controller
                     $customer->save();
                 }
 
+                $dayOfWeekForOrder = date('N');
+
                 $order = new Order();
                 $order->customer_id = $customer->id;
                 $order->created_at = date('Y-m-d H:i:s');
@@ -1270,8 +1270,18 @@ class PageController extends Controller
                 $order->total_price = 0;
                 $order->total_discounts = 0;
                 $order->total_extra_price = 0;
-                $order->start_week = date('Y-m-d', strtotime('+ ' . (8 - $dayOfWeekForOrder) . ' days'));
-                $order->end_week = date('Y-m-d', strtotime('+ ' . (12 - $dayOfWeekForOrder) . ' days'));
+
+                if(($dayOfWeekForOrder + 2) == 6 || ($dayOfWeekForOrder + 2) == 7)
+                {
+                    $order->start_week = date('Y-m-d', strtotime('+ ' . (8 - $dayOfWeekForOrder) . ' days'));
+                    $order->end_week = date('Y-m-d', strtotime('+ ' . (8 - $dayOfWeekForOrder) . ' days'));
+                }
+                else
+                {
+                    $order->start_week = date('Y-m-d', strtotime('+ 2 days'));
+                    $order->end_week = date('Y-m-d', strtotime('+ 2 days'));
+                }
+
                 $order->payment_gateway = Util::PAYMENT_GATEWAY_CASH_VALUE;
                 $order->shipping_time = trim($input['shipping_time']);
                 $order->shipping_priority = 1;
