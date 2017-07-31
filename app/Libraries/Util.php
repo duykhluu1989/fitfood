@@ -573,4 +573,33 @@ class Util
 
         return $types;
     }
+
+    public static function getValueByLocale($obj, $attributeName)
+    {
+        $locate = app()->getLocale();
+
+        if($locate == 'en')
+            $locateAttributeName = $attributeName . '_en';
+        else
+            $locateAttributeName = $attributeName;
+
+        if(is_object($obj))
+        {
+            if(!empty($obj->$locateAttributeName))
+                return $obj->$locateAttributeName;
+
+            if(!empty($obj->$attributeName))
+                return $obj->$attributeName;
+        }
+        else
+        {
+            if(!empty($obj[$locateAttributeName]))
+                return $obj[$locateAttributeName];
+
+            if(!empty($obj[$attributeName]))
+                return $obj[$attributeName];
+        }
+
+        return '';
+    }
 }

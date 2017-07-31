@@ -45,6 +45,26 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Note</h3>
+                </div>
+                <div class="panel-body">
+                    <input type="text" class="form-control" name="area[note]" value="{{ $area->note }}" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Note EN</h3>
+                </div>
+                <div class="panel-body">
+                    <input type="text" class="form-control" name="area[note_en]" value="{{ $area->note_en }}" />
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

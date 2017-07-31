@@ -72,7 +72,7 @@
                                         <select class="form-control input-lg" id="FitfoodOrderDropDownDistrict" name="district" required="required">
                                             <option value="">* @lang('order_form.district')</option>
                                             @foreach($areas as $area)
-                                                <option value="{{ $area->id }}">{{ $area->name . (!empty($area->shipping_price) ? ' (Ship: ' . App\Libraries\Util::formatMoney($area->shipping_price * $normalMenuDays / 5) . ')' : '') }}</option>
+                                                <option value="{{ $area->id }}">{{ $area->name . (!empty($area->shipping_price) ? ' (Ship: ' . App\Libraries\Util::formatMoney($area->shipping_price * $normalMenuDays / 5) . ')' : '') . ' ' . \App\Libraries\Util::getValueByLocale($area, 'note') }}</option>
                                             @endforeach
                                         </select>
                                     </div>

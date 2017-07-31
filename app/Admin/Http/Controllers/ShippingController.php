@@ -144,6 +144,8 @@ class ShippingController extends Controller
             $area->shipping_price = !empty($input['shipping_price']) ? trim(str_replace('.', '', $input['shipping_price'])) : 0;
             $area->shipping_time = isset($input['shipping_time']) ? json_encode($input['shipping_time']) : '';
             $area->status = isset($input['status']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
+            $area->note = isset($input['note']) ? trim($input['note']) : '';
+            $area->note_en = isset($input['note_en']) ? trim($input['note_en']) : '';
 
             $errors = $area->validate();
 
