@@ -84,7 +84,7 @@ class MenuController extends Controller
             $mealPack->description_en = isset($input['description_en']) ? trim($input['description_en']) : '';
             $mealPack->mini_description = isset($input['mini_description']) ? trim($input['mini_description']) : '';
             $mealPack->mini_description_en = isset($input['mini_description_en']) ? trim($input['mini_description_en']) : '';
-            $mealPack->status = isset($input['status']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
+            $mealPack->status = isset($input['status']) ? $input['status'] : Util::STATUS_INACTIVE_VALUE;
             $mealPack->breakfast = isset($input['breakfast']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
             $mealPack->lunch = isset($input['lunch']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
             $mealPack->dinner = isset($input['dinner']) ? Util::STATUS_ACTIVE_VALUE : Util::STATUS_INACTIVE_VALUE;
