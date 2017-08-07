@@ -1220,9 +1220,16 @@ class PageController extends Controller
                 'district' => 'required|integer|min:1',
                 'shipping_time' => 'required|string',
                 'discount_code' => 'required|alpha_num',
+                'shipping_date' => 'required|date',
             ]);
 
             if(Util::validatePhone($input['phone']) == false)
+                return redirect('trial')->with('OrderError', trans('order_form.validate'));
+
+            $shippingDate = date('Y-m-d', strtotime($input['shipping_date']));
+            $dayOfWeekForOrder = date('N', strtotime($input['shipping_date']));
+
+            if($dayOfWeekForOrder == 6 || $dayOfWeekForOrder == 7)
                 return redirect('trial')->with('OrderError', trans('order_form.validate'));
 
             $discount = Discount::with('customer')->where('code', trim($input['discount_code']))->first();
@@ -1284,8 +1291,6 @@ class PageController extends Controller
                     $customer->save();
                 }
 
-                $dayOfWeekForOrder = date('N');
-
                 $order = new Order();
                 $order->customer_id = $customer->id;
                 $order->created_at = date('Y-m-d H:i:s');
@@ -1296,18 +1301,8 @@ class PageController extends Controller
                 $order->total_price = 0;
                 $order->total_discounts = 0;
                 $order->total_extra_price = 0;
-
-                if(($dayOfWeekForOrder + 2) == 6 || ($dayOfWeekForOrder + 2) == 7)
-                {
-                    $order->start_week = date('Y-m-d', strtotime('+ ' . (8 - $dayOfWeekForOrder) . ' days'));
-                    $order->end_week = date('Y-m-d', strtotime('+ ' . (8 - $dayOfWeekForOrder) . ' days'));
-                }
-                else
-                {
-                    $order->start_week = date('Y-m-d', strtotime('+ 2 days'));
-                    $order->end_week = date('Y-m-d', strtotime('+ 2 days'));
-                }
-
+                $order->start_week = $shippingDate;
+                $order->end_week = $shippingDate;
                 $order->payment_gateway = Util::PAYMENT_GATEWAY_CASH_VALUE;
                 $order->shipping_time = trim($input['shipping_time']);
                 $order->shipping_priority = 1;
@@ -1408,7 +1403,7 @@ class PageController extends Controller
 
                 $message->from('order@fitfood.vn', 'Fitfood');
                 $message->to($orderAddress->email, $orderAddress->name);
-                $message->subject('[FITFOOD.VN] Xác nhận order | Order Confirmation');
+                $message->subject('[FITFOOD.VN] Fitfood FREE MEAL');
 
             });
         }
@@ -1431,7 +1426,7 @@ class PageController extends Controller
 
                 $message->from('order@fitfood.vn', 'Fitfood');
                 $message->to('info@fitfood.vn', 'Fitfood');
-                $message->subject('[FITFOOD.VN] Xác nhận order | Order Confirmation');
+                $message->subject('[FITFOOD.VN] Fitfood FREE MEAL');
 
             });
         }

@@ -87,7 +87,7 @@
                                     <div class="col-lg-6 col-md-6 col-xs-12">
                                         <select class="form-control input-lg" name="payment_gateway" required="required">
                                             <option value="">* @lang('order_form.payment')</option>
-                                            @foreach(App\Libraries\Util::getPaymentMethod(null, App::getLocale()) as $value => $label)
+                                            @foreach(App\Libraries\Util::getPaymentMethod(null, App::getLocale(), false) as $value => $label)
                                                 <option value="{{ $value }}">{{ $label }}</option>
                                             @endforeach
                                         </select>
@@ -188,11 +188,11 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                                <h5>@lang('order_form.chooseAddon')</h5>
+                                <h5></h5>
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th>@lang('order_form.package')</th>
+                                        <th>@lang('order_form.chooseAddon')</th>
                                         <th>@lang('order_form.price')</th>
                                         <th>@lang('order_form.quantity')</th>
                                         <th>@lang('order_form.packageTotal')</th>

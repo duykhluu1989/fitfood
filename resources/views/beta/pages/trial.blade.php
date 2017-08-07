@@ -4,7 +4,7 @@
 
     @include('beta.layouts.partials.menu')
 
-    @include('beta.layouts.partials.header', ['banner' => asset('assets/images/page-header/order.jpg'), 'title' => 'Order'])
+    @include('beta.layouts.partials.header', ['banner' => asset('assets/images/page-header/order.jpg'), 'title' => 'Order Trial'])
 
     <div class="container">
         <div class="row">
@@ -36,7 +36,7 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="page-title">
-                            <h2>Order form</h2>
+                            <h2>Order Trial form</h2>
                         </div>
                         <form role="form" action="{{ url('trial') }}" method="post" id="FitfoodOrderForm">
                             <div class="frm-order">
@@ -65,12 +65,18 @@
                                     <div class="clearfix"></div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
                                         <input type="text" class="form-control input-lg" id="FitfoodOrderInputAddress" name="address" placeholder="* @lang('order_form.address')" autocomplete="off" required="required" />
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 col-xs-12">
+                                        <input type="text" class="form-control input-lg DatePicker" name="shipping_date" placeholder="* @lang('order_form.date')" autocomplete="off" required="required" />
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-xs-12">
                                         <select class="form-control input-lg" id="FitfoodOrderDropDownDistrict" name="district" required="required">
-                                            <option value="">* @lang('order_form.district')</option>
+                                            <option value="">* @lang('order_form.districtNoFee')</option>
                                             @foreach($areas as $area)
                                                 <option value="{{ $area->id }}">{{ $area->name }}</option>
                                             @endforeach
@@ -86,6 +92,12 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-xs-12">
                                         <input type="text" class="form-control input-lg" name="discount_code" autocomplete="off" placeholder="* @lang('order_form.inputDiscount')" required="required" />
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-12 col-md-12 col-xs-12">
+                                        <textarea class="form-control" name="note" placeholder="@lang('order_form.trialNote')"></textarea>
                                     </div>
                                     <div class="clearfix"></div>
                                 </div>
@@ -246,6 +258,21 @@
         }
 
         $(document).ready(function() {
+
+            $('.DatePicker').datepicker({
+
+                dateFormat: 'dd-mm-yy',
+                changeMonth: true,
+                changeYear: true,
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                minDate: 3,
+                beforeShowDay: function(date) {
+                    var day = date.getDay();
+                    return [day != 0 && day != 6, ''];
+                }
+
+            });
 
             $('#FitfoodOrderInputPhone').focusout(function() {
 
