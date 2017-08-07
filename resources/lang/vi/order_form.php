@@ -14,11 +14,11 @@ return [
     'name' => 'Họ tên',
     'gender' => 'Giới tính',
     'address' => 'Địa chỉ giao hàng',
-    'district' => 'Vui lòng chọn quận (phí ship 1 tuần)',
+    'district' => 'Vui lòng chọn quận (phí giao hàng 1 tuần)',
     'time' => 'Thời gian giao hàng',
     'payment' => 'Hình thức thanh toán',
     'note' => 'Ghi chú (bạn vui lòng TỰ BỎ RA giúp fitfood các yêu cầu không rau thơm, không ớt chuông)',
-    'choosePack' => 'Chọn số lượng gói',
+    'choosePack' => 'Chọn số lượng',
     'shippingPrice' => 'Phí giao hàng',
     'extraPrice' => 'Phí thay đổi',
     'discountPrice' => 'Khuyến mãi',
@@ -52,5 +52,7 @@ return [
     'noCallNote' => 'Lưu ý: Bạn nhận được email từ order@fitfood.vn tức hệ thống đã ghi nhận. Fitfood sẽ không gọi điện xác nhận. Xin cám ơn!',
     'shipNote' => 'Hướng dẫn giao hàng (VD: đổi giờ giao, SDT người liên hệ, gửi bảo vệ, tên tòa nhà VP)',
     'districtMessage' => 'Nếu bạn có yêu cầu giao tận nơi nhưng bảo vệ tòa nhà hoặc chung cư yêu cầu shipper Fitfood phải gửi xe, bạn vui lòng gửi lại chi phí gửi xe cho shipper. Fitfood sẽ không tính vào phí giao hàng. Xin chân thành cám ơn !',
+    'chooseAddon' => 'Thêm',
+    'mondayPolicy' => 'Lưu ý: Các phần ăn order vào ngày hôm nay (Thứ 2) sẽ được giao từ ngày thứ 4 và bạn chỉ cần thanh toán 3 ngày. Xin cám ơn !',
 
 ];

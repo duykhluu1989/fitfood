@@ -113,84 +113,157 @@
                                     </thead>
                                     <tbody>
                                     @foreach($mealPacks as $mealPack)
-                                        <tr>
-                                            <td>
-                                                @if(!empty($mealPack->image_src))
-                                                    <a class="FitfoodPopupImage" href="{{ $mealPack->image_src }}">
-                                                @endif
-                                                        <strong id="FitfoodOrderFormMealPackName_{{ $mealPack->id }}">
-                                                            @if(App::getLocale() == 'en' && !empty($mealPack->name_en))
-                                                                {{ $mealPack->name_en }}
-                                                            @else
-                                                                {{ $mealPack->name }}
-                                                            @endif
-                                                        </strong>
-                                                        <?php
-                                                        $description = null;
-                                                        $miniDescription = null;
+                                        @if(!empty($mealPack->breakfast) || !empty($mealPack->lunch) || !empty($mealPack->dinner))
+                                            <tr>
+                                                <td>
+                                                    @if(!empty($mealPack->image_src))
+                                                        <a class="FitfoodPopupImage" href="{{ $mealPack->image_src }}">
+                                                    @endif
+                                                            <strong id="FitfoodOrderFormMealPackName_{{ $mealPack->id }}">
+                                                                @if(App::getLocale() == 'en' && !empty($mealPack->name_en))
+                                                                    {{ $mealPack->name_en }}
+                                                                @else
+                                                                    {{ $mealPack->name }}
+                                                                @endif
+                                                            </strong>
+                                                            <?php
+                                                            $description = null;
+                                                            $miniDescription = null;
 
-                                                        if(App::getLocale() == 'en' && !empty($mealPack->description_en))
-                                                            $description = $mealPack->description_en;
-                                                        else if(!empty($mealPack->description))
-                                                            $description = $mealPack->description;
+                                                            if(App::getLocale() == 'en' && !empty($mealPack->description_en))
+                                                                $description = $mealPack->description_en;
+                                                            else if(!empty($mealPack->description))
+                                                                $description = $mealPack->description;
 
-                                                        if(App::getLocale() == 'en' && !empty($mealPack->mini_description_en))
-                                                            $miniDescription = $mealPack->mini_description_en;
-                                                        else if(!empty($mealPack->mini_description))
-                                                            $miniDescription = $mealPack->mini_description;
-                                                        ?>
-                                                        <span class="hidden-md hidden-lg">
-                                                            @if(!empty($miniDescription))
-                                                                {{ ' (' . $miniDescription . ')' }}
-                                                            @endif
-                                                        </span>
-                                                        <span class="hidden-xs hidden-sm">
-                                                            @if(!empty($description))
-                                                                {{ ' (' . $description . ')' }}
-                                                            @endif
-                                                        </span>
-                                                @if(!empty($mealPack->image_src))
-                                                    </a>
-                                                @endif
-                                            </td>
-                                            <td>
-                                                @if(!empty($mealPack->breakfast) || !empty($mealPack->lunch) || !empty($mealPack->dinner))
+                                                            if(App::getLocale() == 'en' && !empty($mealPack->mini_description_en))
+                                                                $miniDescription = $mealPack->mini_description_en;
+                                                            else if(!empty($mealPack->mini_description))
+                                                                $miniDescription = $mealPack->mini_description;
+                                                            ?>
+                                                            <span class="hidden-md hidden-lg">
+                                                                @if(!empty($miniDescription))
+                                                                    {{ ' (' . $miniDescription . ')' }}
+                                                                @endif
+                                                            </span>
+                                                            <span class="hidden-xs hidden-sm">
+                                                                @if(!empty($description))
+                                                                    {{ ' (' . $description . ')' }}
+                                                                @endif
+                                                            </span>
+                                                    @if(!empty($mealPack->image_src))
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                                <td>
                                                     {{ App\Libraries\Util::formatMoney($mealPack->price * $normalMenuDays / 5) }}
-                                                @else
-                                                    {{ App\Libraries\Util::formatMoney($mealPack->price) }}
-                                                @endif
-                                            </td>
-                                            <td>
-                                                <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-number" data-type="minus" data-field="mealPack[{{ $mealPack->id }}]" disabled="disabled">
-                                                            <i class="fa fa-angle-left" aria-hidden="true"></i>
-                                                        </button>
-                                                    </span>
-                                                    <input type="text" id="OrderFormMealPackQuantityInput_{{ $mealPack->id }}" name="mealPack[{{ $mealPack->id }}]" value="0" min="0" max="5"
-                                                        class="form-control input-number FitfoodOrderFormMealPackQuantityInput<?php echo ((!empty($mealPack->breakfast) || !empty($mealPack->lunch) || !empty($mealPack->dinner)) ? ' FitfoodMainMealPack' : ''); ?>" />
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="btn btn-number" data-type="plus" data-field="mealPack[{{ $mealPack->id }}]">
-                                                            <i class="fa fa-angle-right" aria-hidden="true"></i>
-                                                        </button>
-                                                    </span>
-                                                    @if(!empty($mealPack->breakfast) || !empty($mealPack->lunch) || !empty($mealPack->dinner))
+                                                </td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-number" data-type="minus" data-field="mealPack[{{ $mealPack->id }}]" disabled="disabled">
+                                                                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
+                                                        <input type="text" id="OrderFormMealPackQuantityInput_{{ $mealPack->id }}" name="mealPack[{{ $mealPack->id }}]" value="0" min="0" max="5"
+                                                            class="form-control input-number FitfoodOrderFormMealPackQuantityInput FitfoodMainMealPack" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-number" data-type="plus" data-field="mealPack[{{ $mealPack->id }}]">
+                                                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
                                                         <input type="hidden" id="FitfoodOrderFormMealPackPrice_{{ $mealPack->id }}" value="{{ $mealPack->price * $normalMenuDays / 5 }}" />
-                                                    @else
+                                                        <?php
+                                                        $doubles = array();
+                                                        if(!empty($mealPack->double))
+                                                            $doubles = json_decode($mealPack->double, true);
+                                                        ?>
+                                                        @if(empty($mealPack->breakfast) && (!empty($mealPack->lunch) || !empty($mealPack->dinner)) && isset($doubles['lunch']) && isset($doubles['dinner']))
+                                                            <input type="hidden" id="FitfoodNoBreakfastMainMealPack_{{ $mealPack->id }}" value="{{ $mealPack->id }}" />
+                                                        @endif
+                                                    </div>
+                                                </td>
+                                                <td id="FitfoodOrderFormTotalPricePerPack_{{ $mealPack->id }}">0</td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                <h5>@lang('order_form.chooseAddon')</h5>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>@lang('order_form.package')</th>
+                                        <th>@lang('order_form.price')</th>
+                                        <th>@lang('order_form.quantity')</th>
+                                        <th>@lang('order_form.packageTotal')</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($mealPacks as $mealPack)
+                                        @if(empty($mealPack->breakfast) && empty($mealPack->lunch) && empty($mealPack->dinner))
+                                            <tr>
+                                                <td>
+                                                    @if(!empty($mealPack->image_src))
+                                                        <a class="FitfoodPopupImage" href="{{ $mealPack->image_src }}">
+                                                            @endif
+                                                            <strong id="FitfoodOrderFormMealPackName_{{ $mealPack->id }}">
+                                                                @if(App::getLocale() == 'en' && !empty($mealPack->name_en))
+                                                                    {{ $mealPack->name_en }}
+                                                                @else
+                                                                    {{ $mealPack->name }}
+                                                                @endif
+                                                            </strong>
+                                                            <?php
+                                                            $description = null;
+                                                            $miniDescription = null;
+
+                                                            if(App::getLocale() == 'en' && !empty($mealPack->description_en))
+                                                                $description = $mealPack->description_en;
+                                                            else if(!empty($mealPack->description))
+                                                                $description = $mealPack->description;
+
+                                                            if(App::getLocale() == 'en' && !empty($mealPack->mini_description_en))
+                                                                $miniDescription = $mealPack->mini_description_en;
+                                                            else if(!empty($mealPack->mini_description))
+                                                                $miniDescription = $mealPack->mini_description;
+                                                            ?>
+                                                            <span class="hidden-md hidden-lg">
+                                                                @if(!empty($miniDescription))
+                                                                    {{ ' (' . $miniDescription . ')' }}
+                                                                @endif
+                                                            </span>
+                                                            <span class="hidden-xs hidden-sm">
+                                                                @if(!empty($description))
+                                                                    {{ ' (' . $description . ')' }}
+                                                                @endif
+                                                            </span>
+                                                            @if(!empty($mealPack->image_src))
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    {{ App\Libraries\Util::formatMoney($mealPack->price) }}
+                                                </td>
+                                                <td>
+                                                    <div class="input-group">
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-number" data-type="minus" data-field="mealPack[{{ $mealPack->id }}]" disabled="disabled">
+                                                                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
+                                                        <input type="text" id="OrderFormMealPackQuantityInput_{{ $mealPack->id }}" name="mealPack[{{ $mealPack->id }}]" value="0" min="0" max="5"
+                                                               class="form-control input-number FitfoodOrderFormMealPackQuantityInput" />
+                                                        <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-number" data-type="plus" data-field="mealPack[{{ $mealPack->id }}]">
+                                                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                                            </button>
+                                                        </span>
                                                         <input type="hidden" id="FitfoodOrderFormMealPackPrice_{{ $mealPack->id }}" value="{{ $mealPack->price }}" />
-                                                    @endif
-                                                    <?php
-                                                    $doubles = array();
-                                                    if(!empty($mealPack->double))
-                                                        $doubles = json_decode($mealPack->double, true);
-                                                    ?>
-                                                    @if(empty($mealPack->breakfast) && (!empty($mealPack->lunch) || !empty($mealPack->dinner)) && isset($doubles['lunch']) && isset($doubles['dinner']))
-                                                        <input type="hidden" id="FitfoodNoBreakfastMainMealPack_{{ $mealPack->id }}" value="{{ $mealPack->id }}" />
-                                                    @endif
-                                                </div>
-                                            </td>
-                                            <td id="FitfoodOrderFormTotalPricePerPack_{{ $mealPack->id }}">0</td>
-                                        </tr>
+                                                    </div>
+                                                </td>
+                                                <td id="FitfoodOrderFormTotalPricePerPack_{{ $mealPack->id }}">0</td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -1177,7 +1250,7 @@
             sweetAlert({
 
                 title: '',
-                text: '@lang('order_form.sundayPolicy')',
+                text: '<?php echo ($showOrderPolicyPopup == 1 ? trans('order_form.sundayPolicy') : trans('order_form.mondayPolicy')); ?>',
                 allowOutsideClick: true
 
             });

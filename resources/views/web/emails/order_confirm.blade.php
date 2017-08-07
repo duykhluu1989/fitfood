@@ -10,7 +10,7 @@
     <li>Hình thức thanh toán | Payment Method: {{ $paymentGateway }}</li>
     <li>Thời gian giao hàng | Delivery time: {{ $deliveryTime }}</li>
     <li>Yêu cầu đặc biệt | Special Request: {{ $extraRequest }}</li>
-    <li>Tổng giá tiền | Total bill: {{ $totalPrice }}</li>
+    <li>Tổng giá tiền | Total bill: {{ $totalPrice }} ({{ $normalMenuDays }} ngày + phí giao hàng | {{ $normalMenuDays }} days + ship fee)</li>
     <li>Ghi chú | Note: {{ $note }}</li>
 </ul>
 <p style="color: red">​Đơn hàng của bạn sẽ được bắt đầu giao vào ngày | Your order will be delivered starting from: {{ $startShippingDate }}​</p>

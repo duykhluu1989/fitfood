@@ -18,7 +18,7 @@ return [
     'time' => 'Shipping time',
     'payment' => 'Payment method',
     'note' => 'NOTE (please specify what you are allergic to)',
-    'choosePack' => 'Choose package quantity',
+    'choosePack' => 'Choose package',
     'shippingPrice' => 'Shipping fee',
     'extraPrice' => 'Extra fee',
     'discountPrice' => 'Discount',
@@ -52,5 +52,7 @@ return [
     'noCallNote' => '',
     'shipNote' => 'Delivery guidance (office building, name & contact of meal receiver)',
     'districtMessage' => 'Advance Notice: If you have a door to door delivery request, but the building or office security ask Fitfood delivery guy to pay parking fee, please kindly reimburse the delivery guy. We will not collect the fee from them as well as not include them in the shipping fee email sent to you. Thanks for your understanding!',
+    'chooseAddon' => 'Addon',
+    'mondayPolicy' => 'Note: All orders placed today will be delivered starting from Wednesday and you will be charged for 3 days. Please note that we close order taking on every Saturday. Thank you !',
 
 ];

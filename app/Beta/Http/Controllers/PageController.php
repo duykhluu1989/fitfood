@@ -380,6 +380,24 @@ class PageController extends Controller
                 $normalMenuDays -= 1;
             }
         }
+        else if($dayOfWeekForOrder == 1 && $offTimeWeeks == 0)
+        {
+            $key = array_search(1, $normalMenuDayOfWeek);
+            if($key !== false)
+            {
+                unset($normalMenuDayOfWeek[$key]);
+                $normalMenuDays -= 1;
+            }
+            $key = array_search(2, $normalMenuDayOfWeek);
+            if($key !== false)
+            {
+                unset($normalMenuDayOfWeek[$key]);
+                $normalMenuDays -= 1;
+            }
+
+            $dayOfWeekForOrder = 8;
+        }
+
 
         if($request->isMethod('post'))
         {
@@ -948,7 +966,7 @@ class PageController extends Controller
             if(in_array($order->payment_gateway, $bankTransferGatewayValues))
                 $bankNumber = Util::getBankAccountNumber($order->payment_gateway);
 
-            register_shutdown_function([get_class(new self), 'sendConfirmEmail'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate);
+            register_shutdown_function([get_class(new self), 'sendConfirmEmail'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate, $normalMenuDays);
 
             return redirect('thankYou')->with('OrderThankYou', json_encode([
                 'name' => $orderAddress->name,
@@ -964,6 +982,7 @@ class PageController extends Controller
                 'email' => $order->orderAddress->email,
                 'bankNumber' => $bankNumber,
                 'startShippingDate' => $startShippingDate,
+                'normalMenuDays' => $normalMenuDays,
             ]));
         }
 
@@ -975,7 +994,12 @@ class PageController extends Controller
         if($dayOfWeekForOrder == 7 && $offTimeWeeks == 0 && $request->hasCookie(Util::COOKIE_READ_ORDER_POLICY_NAME) == false)
         {
             Cookie::queue(Util::COOKIE_READ_ORDER_POLICY_NAME, true, Util::MINUTE_ONE_HOUR_EXPIRED);
-            $showOrderPolicyPopup = true;
+            $showOrderPolicyPopup = 1;
+        }
+        else if($dayOfWeekForOrder == 8 && $offTimeWeeks == 0 && $request->hasCookie(Util::COOKIE_READ_ORDER_POLICY_NAME) == false)
+        {
+            Cookie::queue(Util::COOKIE_READ_ORDER_POLICY_NAME, true, Util::MINUTE_ONE_HOUR_EXPIRED);
+            $showOrderPolicyPopup = 2;
         }
         else
             $showOrderPolicyPopup = false;
@@ -990,7 +1014,7 @@ class PageController extends Controller
         ]);
     }
 
-    public static function sendConfirmEmail($order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate)
+    public static function sendConfirmEmail($order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate, $normalMenuDays)
     {
         try
         {
@@ -1008,6 +1032,7 @@ class PageController extends Controller
                 'email' => $order->orderAddress->email,
                 'bankNumber' => $bankNumber,
                 'startShippingDate' => $startShippingDate,
+                'normalMenuDays' => $normalMenuDays,
             ], function($message) use($orderAddress) {
 
                 $message->from('order@fitfood.vn', 'Fitfood');
@@ -1037,6 +1062,7 @@ class PageController extends Controller
                 'email' => $order->orderAddress->email,
                 'bankNumber' => $bankNumber,
                 'startShippingDate' => $startShippingDate,
+                'normalMenuDays' => $normalMenuDays,
             ], function($message) use($orderAddress) {
 
                 $message->from('order@fitfood.vn', 'Fitfood');

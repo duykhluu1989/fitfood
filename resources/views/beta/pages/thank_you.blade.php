@@ -38,7 +38,7 @@
                                 <li>Hình thức thanh toán | Payment Method: {{ $paymentGateway }}</li>
                                 <li>Thời gian giao hàng | Delivery time: {{ $deliveryTime }}</li>
                                 <li>Yêu cầu đặc biệt | Special Request: {{ $extraRequest }}</li>
-                                <li>Tổng giá tiền | Total bill: {{ $totalPrice }}</li>
+                                <li>Tổng giá tiền | Total bill: {{ $totalPrice }} ({{ $normalMenuDays }} ngày + phí giao hàng | {{ $normalMenuDays }} days + ship fee)</li>
                                 <li>Ghi chú | Note: {{ $note }}</li>
                             </ul>
                             <br />
