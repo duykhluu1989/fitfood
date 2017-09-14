@@ -124,5 +124,6 @@ if(request()->hasCookie(App\Libraries\Util::COOKIE_SEE_BANNER_NAME) == false)
     }
 }
 ?>
+<script type="text/javascript">(function(){window.abKiteCallAsyncInit=function(){abKiteCallSDK.init({credential:'yLrvCyup6ypoDvxFJGzL',realm:'fitfoodvn.anttel-pro.ab-kz-02.antbuddy.com',kiteRoom:'Kite_uyG155pswFHCzL0xsHFEHGKp6oJ3Kw',abKiteServer:'kite.antbuddy.com',isHttps:"https:"===window.location.protocol});};(function(d, s, id){var js, fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id)){return;} js=d.createElement(s);js.id=id;js.src='https://kite.antbuddy.com/call/sdk/v0.0.0/sdk.js';fjs.parentNode.insertBefore(js, fjs);}(document,'script','ab-call-kite-jssdk'));})();</script>
 </body>
 </html>
