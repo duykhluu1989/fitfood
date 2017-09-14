@@ -2359,7 +2359,7 @@ textarea.form-control{
 {
     position: fixed;
     bottom: 0;
-    right: 100px;
+    left: 50px;
     border: 1px solid #c53f27;
     border-radius: 16px 16px 0 0;
 }
