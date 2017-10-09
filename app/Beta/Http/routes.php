@@ -39,4 +39,8 @@ Route::group(['middleware' => ['locale']], function() {
 
     Route::post('trial', 'PageController@trial');
 
+    Route::get('chinh-sach', 'PageController@chinhSach');
+
+    Route::get('bao-mat', 'PageController@baoMat');
+
 });

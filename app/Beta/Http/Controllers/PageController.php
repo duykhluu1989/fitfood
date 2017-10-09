@@ -1435,4 +1435,14 @@ class PageController extends Controller
 
         }
     }
+
+    public function chinhSach()
+    {
+        return view('beta.pages.chinh_sach');
+    }
+
+    public function baoMat()
+    {
+        return view('beta.pages.bao_mat');
+    }
 }

@@ -73,6 +73,29 @@ Remarketing tags may not be associated with personally identifiable information 
             <a href="https://www.instagram.com/fitfoodvn" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
             <a href="https://m.me/fitfoodvietnam" target="_blank"><i class="fa fa-comment" aria-hidden="true"></i></a>
         </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <ul style="list-style-type: none">
+                    <li style="margin-top: 20px">
+                        <a style="color: white" href="{{ url('chinh-sach') }}">* Chính Sách & Quy Định Chung</a>
+                    </li>
+                    <li style="margin-top: 20px">
+                        <a style="color: white" href="{{ url('bao-mat') }}">* Chính Sách Bảo Mật Thông Tin</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-6">
+                <h5 style="color: white">Công ty trách nhiệm hữu hạn Fitfood</h5>
+                <p style="color: white">Người đại diện: Thái Quốc Kim</p>
+                <p style="color: white">Số CMND: 024113138</p>
+                <p style="color: white">Ngày cấp: 07/03/2006 Nơi cấp: CA TP HCM</p>
+                <p style="color: white">Địa chỉ: 33 Đường số 14, Khu dân cư Bình Hưng, Ấp 2 – xã Bình Hưng – huyện Bình Chánh – TP HCM – VN</p>
+                <p style="color: white">Điện thoại: (+84) 932 788 120 - (+84) 938 074 120</p>
+                <p style="color: white">Email: info@fitfood.vn</p>
+                <p style="color: white">Số chứng nhận đăng kí kinh doanh của doanh nghiệp: 0313272749</p>
+                <p style="color: white">Ngày cấp: 26/05/2015 Nơi cấp: TP HCM</p>
+            </div>
+        </div>
     </div>
 </div>
 <div class="footer">
