@@ -86,10 +86,6 @@ Remarketing tags may not be associated with personally identifiable information 
             </div>
             <div class="col-sm-6">
                 <h5 style="color: white">Công ty trách nhiệm hữu hạn Fitfood</h5>
-                <p style="color: white">Người đại diện: Thái Quốc Kim</p>
-                <p style="color: white">Số CMND: 024113138</p>
-                <p style="color: white">Ngày cấp: 07/03/2006 Nơi cấp: CA TP HCM</p>
-                <p style="color: white">Địa chỉ: 33 Đường số 14, Khu dân cư Bình Hưng, Ấp 2 – xã Bình Hưng – huyện Bình Chánh – TP HCM – VN</p>
                 <p style="color: white">Điện thoại: (+84) 932 788 120 - (+84) 938 074 120</p>
                 <p style="color: white">Email: info@fitfood.vn</p>
                 <p style="color: white">Số chứng nhận đăng kí kinh doanh của doanh nghiệp: 0313272749</p>
