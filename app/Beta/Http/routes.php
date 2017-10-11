@@ -41,6 +41,10 @@ Route::group(['middleware' => ['locale']], function() {
 
     Route::get('chinh-sach-quy-dinh-chung', 'PageController@chinhSachQuyDinhChung');
 
-    Route::get('bao-mat', 'PageController@baoMat');
+    Route::get('quy-dinh-hinh-thuc-thanh-toan', 'PageController@quyDinhHinhThucThanhToan');
+
+    Route::get('chinh-sach-van-chuyen-giao-hang', 'PageController@quyDinhHinhThucThanhToan');
+
+    Route::get('chinh-sach-bao-mat-thong-tin', 'PageController@chinhSachBaoMatThongTin');
 
 });

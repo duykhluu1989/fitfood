@@ -74,17 +74,23 @@ Remarketing tags may not be associated with personally identifiable information 
             <a href="https://m.me/fitfoodvietnam" target="_blank"><i class="fa fa-comment" aria-hidden="true"></i></a>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <ul style="list-style-type: none">
-                    <li style="margin-top: 20px">
+                    <li style="margin-top: 15px">
                         <a style="color: white" href="{{ url('chinh-sach-quy-dinh-chung') }}">* Chính Sách & Quy Định Chung</a>
                     </li>
-                    <li style="margin-top: 20px">
-                        <a style="color: white" href="{{ url('bao-mat') }}">* Chính Sách Bảo Mật Thông Tin</a>
+                    <li style="margin-top: 15px">
+                        <a style="color: white" href="{{ url('quy-dinh-hinh-thuc-thanh-toan') }}">* Quy Định & Hình Thức Thanh Toán</a>
+                    </li>
+                    <li style="margin-top: 15px">
+                        <a style="color: white" href="{{ url('chinh-sach-van-chuyen-giao-hang') }}">* Chính Sách Vận Chuyển & Giao Hàng</a>
+                    </li>
+                    <li style="margin-top: 15px">
+                        <a style="color: white" href="{{ url('chinh-sach-bao-mat-thong-tin') }}">* Chính Sách Bảo Mật Thông Tin</a>
                     </li>
                 </ul>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <h5 style="color: white">Công ty trách nhiệm hữu hạn Fitfood</h5>
                 <p style="color: white">Điạ chỉ: 33 đường 14, KDC Bình Hưng, Ấp 2, Huyện Bình Chánh, TPHCM</p>
                 <p style="color: white">Điện thoại: (+84) 932 788 120 - (+84) 938 074 120</p>

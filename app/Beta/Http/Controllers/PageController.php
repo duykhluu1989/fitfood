@@ -1441,8 +1441,18 @@ class PageController extends Controller
         return view('beta.pages.chinh_sach_quy_dinh_chung');
     }
 
-    public function baoMat()
+    public function quyDinhHinhThucThanhToan()
     {
-        return view('beta.pages.bao_mat');
+        return view('beta.pages.quy_dinh_hinh_thuc_thanh_toan');
+    }
+
+    public function chinhSachVanChuyenGiaoHang()
+    {
+        return view('beta.pages.chinh_sach_van_chuyen_giao_hang');
+    }
+
+    public function chinhSachBaoMatThongTin()
+    {
+        return view('beta.pages.chinh_sach_bao_mat_thong_tin');
     }
 }
