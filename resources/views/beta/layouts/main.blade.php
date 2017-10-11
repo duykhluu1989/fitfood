@@ -77,7 +77,7 @@ Remarketing tags may not be associated with personally identifiable information 
             <div class="col-sm-6">
                 <ul style="list-style-type: none">
                     <li style="margin-top: 20px">
-                        <a style="color: white" href="{{ url('chinh-sach') }}">* Chính Sách & Quy Định Chung</a>
+                        <a style="color: white" href="{{ url('chinh-sach-quy-dinh-chung') }}">* Chính Sách & Quy Định Chung</a>
                     </li>
                     <li style="margin-top: 20px">
                         <a style="color: white" href="{{ url('bao-mat') }}">* Chính Sách Bảo Mật Thông Tin</a>
@@ -86,10 +86,10 @@ Remarketing tags may not be associated with personally identifiable information 
             </div>
             <div class="col-sm-6">
                 <h5 style="color: white">Công ty trách nhiệm hữu hạn Fitfood</h5>
+                <p style="color: white">Điạ chỉ: 33 đường 14, KDC Bình Hưng, Ấp 2, Huyện Bình Chánh, TPHCM</p>
                 <p style="color: white">Điện thoại: (+84) 932 788 120 - (+84) 938 074 120</p>
                 <p style="color: white">Email: info@fitfood.vn</p>
-                <p style="color: white">Số chứng nhận đăng kí kinh doanh của doanh nghiệp: 0313272749</p>
-                <p style="color: white">Ngày cấp: 26/05/2015 Nơi cấp: TP HCM</p>
+                <p style="color: white">Mã số thuế: 0313272749 do Sở kế hoạch và đầu tư TPHCM cấp ngày 26/05/2015</p>
             </div>
         </div>
     </div>
