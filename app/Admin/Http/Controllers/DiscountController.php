@@ -25,6 +25,14 @@ class DiscountController extends Controller
             if(!empty($input['filter']['type']))
                 $builder->where('type', $input['filter']['type']);
 
+            if(isset($input['filter']['used']) && $input['filter']['used'] !== '')
+            {
+                if($input['filter']['used'] == '0')
+                    $builder->where('times_used', '>', 0);
+                else
+                    $builder->where('times_used', 0);
+            }
+
             if(!empty($input['filter']['campaign']))
                 $builder->where('campaign', $input['filter']['campaign']);
 

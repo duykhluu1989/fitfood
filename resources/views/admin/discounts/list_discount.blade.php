@@ -69,7 +69,18 @@
                                 </select>
                             </td>
                             <td></td>
-                            <td></td>
+                            <td>
+                                <select class="form-control DropDownFilterForm" name="filter[used]">
+                                    <option value=""></option>
+                                    @foreach(['0' => 'Used', '1' => 'Not Used'] as $value => $label)
+                                        @if(isset($filter['used']) && $filter['used'] == $value)
+                                            <option selected="selected" value="{{ $value }}">{{ $label }}</option>
+                                        @else
+                                            <option value="{{ $value }}">{{ $label }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </td>
                             <td></td>
                             <td></td>
                             <td>
