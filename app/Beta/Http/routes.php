@@ -47,4 +47,6 @@ Route::group(['middleware' => ['locale']], function() {
 
     Route::get('chinh-sach-bao-mat-thong-tin', 'PageController@chinhSachBaoMatThongTin');
 
+    Route::get('product/{pro}', 'PageController@product');
+
 });

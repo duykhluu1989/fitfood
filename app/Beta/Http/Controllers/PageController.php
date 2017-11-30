@@ -1455,4 +1455,14 @@ class PageController extends Controller
     {
         return view('beta.pages.chinh_sach_bao_mat_thong_tin');
     }
+
+    public function product($pro)
+    {
+        if($pro == 'nuts')
+            return view('beta.pages.product_nuts');
+        else if($pro == 'tempeh')
+            return view('beta.pages.product_nuts');
+        else
+            return view('beta.errors.404');
+    }
 }

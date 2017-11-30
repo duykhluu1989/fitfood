@@ -18,7 +18,6 @@ class AppServiceProvider extends ServiceProvider
             __DIR__ . '/../../vendor/tinymce/tinymce/skins' => base_path('assets/js/tinymce/skins'),
             __DIR__ . '/../../vendor/tinymce/tinymce/themes' => base_path('assets/js/tinymce/themes'),
             __DIR__ . '/../../vendor/tinymce/tinymce/jquery.tinymce.min.js' => base_path('assets/js/tinymce/jquery.tinymce.min.js'),
-            __DIR__ . '/../../vendor/tinymce/tinymce/tinymce.jquery.min.js' => base_path('assets/js/tinymce/tinymce.jquery.min.js'),
             __DIR__ . '/../../vendor/tinymce/tinymce/tinymce.min.js' => base_path('assets/js/tinymce/tinymce.min.js'),
         ], 'tinymce');
 
