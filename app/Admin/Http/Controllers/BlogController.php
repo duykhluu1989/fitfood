@@ -223,6 +223,7 @@ class BlogController extends Controller
             $article->tags = isset($input['tags']) ? trim($input['tags']) : '';
             $article->author = isset($input['author']) ? trim($input['author']) : '';
             $article->status = isset($input['status']) ? trim($input['status']) : $article->status;
+            $article->type = isset($input['type']) ? trim($input['type']) : $article->type;
 
             if($article->status == Util::STATUS_ARTICLE_PUBLISH_VALUE)
                 $article->published_at = !empty($input['published_at']) ? trim($input['published_at']) : date('Y-m-d H:i:s');

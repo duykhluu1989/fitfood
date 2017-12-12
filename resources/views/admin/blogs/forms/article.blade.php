@@ -96,13 +96,31 @@
 
 <div class="col-sm-12">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">Tags</h3>
                 </div>
                 <div class="panel-body">
                     <input type="text" id="TagsInput" class="form-control" name="article[tags]" value="{{ $article->tags }}" />
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Type</h3>
+                </div>
+                <div class="panel-body">
+                    <select class="form-control" name="article[type]">
+                        @foreach(App\Libraries\Util::getArticleType() as $value => $label)
+                            @if($article->type == $value)
+                                <option selected="selected" value="{{ $value }}">{{ $label }}</option>
+                            @else
+                                <option value="{{ $value }}">{{ $label }}</option>
+                            @endif
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>

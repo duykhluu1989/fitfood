@@ -44,6 +44,7 @@ class PageController extends Controller
         {
             $latestArticles = Article::where('category_id', $category->id)
                 ->where('status', Util::STATUS_ARTICLE_PUBLISH_VALUE)
+                ->where('type', Util::ARTICLE_PAGE_TYPE_VALUE)
                 ->orderBy('published_at', 'desc')
                 ->limit(3)
                 ->get();
@@ -110,6 +111,7 @@ class PageController extends Controller
 
         $popularArticles = Article::with('category')
             ->where('status', Util::STATUS_ARTICLE_PUBLISH_VALUE)
+            ->where('type', Util::ARTICLE_PAGE_TYPE_VALUE)
             ->whereIn('category_id', $categoryIds)
             ->orderBy('view', 'desc')
             ->limit(3)
@@ -181,6 +183,7 @@ class PageController extends Controller
 
                     $builder = Article::with('category')
                         ->where('status', Util::STATUS_ARTICLE_PUBLISH_VALUE)
+                        ->where('type', Util::ARTICLE_PAGE_TYPE_VALUE)
                         ->whereIn('category_id', $categoryIds)
                         ->orderBy('published_at', 'desc');
 
@@ -211,6 +214,7 @@ class PageController extends Controller
                 {
                     $articles = Article::with('category')
                         ->where('status', Util::STATUS_ARTICLE_PUBLISH_VALUE)
+                        ->where('type', Util::ARTICLE_PAGE_TYPE_VALUE)
                         ->whereIn('category_id', $categoryIds)
                         ->where('tags', 'like', '%' . $tagName . '%')
                         ->orderBy('published_at', 'desc')
@@ -221,6 +225,7 @@ class PageController extends Controller
             {
                 $articles = Article::with('category')
                     ->where('status', Util::STATUS_ARTICLE_PUBLISH_VALUE)
+                    ->where('type', Util::ARTICLE_PAGE_TYPE_VALUE)
                     ->whereIn('category_id', $categoryIds)
                     ->orderBy('published_at', 'desc')
                     ->paginate(Util::BLOG_ARTICLE_PER_PAGE);
@@ -250,6 +255,7 @@ class PageController extends Controller
 
             $articles = Article::with('category')
                 ->where('status', Util::STATUS_ARTICLE_PUBLISH_VALUE)
+                ->where('type', Util::ARTICLE_PAGE_TYPE_VALUE)
                 ->where('category_id', $currentCategory->id)
                 ->orderBy('published_at', 'desc')
                 ->paginate(Util::BLOG_ARTICLE_PER_PAGE);
@@ -278,6 +284,7 @@ class PageController extends Controller
                 return view('beta.errors.404');
 
             $article = Article::where('status', Util::STATUS_ARTICLE_PUBLISH_VALUE)
+                ->where('type', Util::ARTICLE_PAGE_TYPE_VALUE)
                 ->where('category_id', $currentCategory->id)
                 ->where(function($query) use($articleSlug) {
 
@@ -1456,13 +1463,22 @@ class PageController extends Controller
         return view('beta.pages.chinh_sach_bao_mat_thong_tin');
     }
 
-    public function product($pro)
+    public function product($slug)
     {
-        if($pro == 'nuts')
-            return view('beta.pages.product_nuts');
-        else if($pro == 'tempeh')
-            return view('beta.pages.product_nuts');
-        else
+        $productPage = Article::where('status', Util::STATUS_ARTICLE_PUBLISH_VALUE)
+            ->where('type', Util::ARTICLE_PRODUCT_TYPE_VALUE)
+            ->where(function($query) use($slug) {
+
+                $query->where('slug_en', $slug)->orWhere('slug', $slug);
+
+            })
+            ->first();
+
+        if(empty($productPage))
             return view('beta.errors.404');
+
+        return view('beta.products.detail', [
+            'productPage' => $productPage,
+        ]);
     }
 }

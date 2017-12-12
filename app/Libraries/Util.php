@@ -177,6 +177,11 @@ class Util
     const COOKIE_SEE_BANNER_NAME = 'see_banner';
     const COOKIE_HIDE_ONLINE_SUPPORT_WINDOW_NAME = 'hide_online_support_window';
 
+    const ARTICLE_PAGE_TYPE_VALUE = 0;
+    const ARTICLE_PRODUCT_TYPE_VALUE = 1;
+    const ARTICLE_PAGE_TYPE_LABEL = 'Article';
+    const ARTICLE_PRODUCT_TYPE_LABEL = 'Product';
+
     const UPLOAD_IMAGE_DIR = '/assets/upload';
 
     public static function formatMoney($money)
@@ -603,5 +608,18 @@ class Util
         }
 
         return '';
+    }
+
+    public static function getArticleType($value = null)
+    {
+        $types = [
+            self::ARTICLE_PAGE_TYPE_VALUE => self::ARTICLE_PAGE_TYPE_LABEL,
+            self::ARTICLE_PRODUCT_TYPE_VALUE => self::ARTICLE_PRODUCT_TYPE_LABEL,
+        ];
+
+        if($value !== null && isset($types[$value]))
+            return $types[$value];
+
+        return $types;
     }
 }
