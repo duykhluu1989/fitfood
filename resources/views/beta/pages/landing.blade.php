@@ -25,12 +25,12 @@
         '/../assets/landing/fractionSlider/css/fractionslider.css',
         '/../assets/landing/bootstrap-4/css/bootstrap.min.css',
         '/../assets/landing/slick/slick.css',
-        '/../assets/landing/slick/slick-theme.css',
         '/../assets/landing/easyResponsiveTab/css/easy-responsive-tabs.css',
         '/../assets/landing/css/OpenSans.css',
-        '/../assets/landing/css/style.css',
     ])->withFullUrl();
     ?>
+    <link href="{{ asset('assets/landing/slick/slick-theme.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/landing/css/style.css') }}" rel="stylesheet">
 </head>
 <body style="min-height: 2000px;" class="" data-spy="scroll" data-target="#headNav" data-offset="100">
 <nav id="headNav" class="navbar navbar-expand-lg navbar-dark" style="background-color: #222425;">
