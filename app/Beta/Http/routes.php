@@ -49,4 +49,6 @@ Route::group(['middleware' => ['locale']], function() {
 
     Route::get('product/{slug}', 'PageController@product');
 
+    Route::get('landing', 'PageController@landing');
+
 });

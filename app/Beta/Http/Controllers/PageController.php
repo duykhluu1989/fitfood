@@ -1481,4 +1481,9 @@ class PageController extends Controller
             'productPage' => $productPage,
         ]);
     }
+
+    public function landing()
+    {
+        return view('beta.pages.landing');
+    }
 }
