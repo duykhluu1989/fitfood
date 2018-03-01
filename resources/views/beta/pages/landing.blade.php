@@ -380,16 +380,15 @@
         <img style="width: 3em;" src="{{ asset('assets/landing/img/Instagram-color.svg') }}" />
     </a>
 </footer>
-<div id="online-support" class="hidden-xs">
-    <div id="online-support-header">
-        <span id="online-support-title">
+<div style="text-align: center">
+    <div id="online-support">
+        <div id="online-support-header">
             <i class="fa fa-comment" aria-hidden="true"></i>
             @lang('home_page.onlineSupport')
+        </div>
+        <span id="online-support-body">
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffitfoodvietnam&tabs=messages&width=340&height=300&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=1499077570417040" width="340px" height="300px" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
         </span>
-        <i id="online-support-hide" class="fa fa-times pull-right" aria-hidden="true"<?php echo (isset($_COOKIE[App\Libraries\Util::COOKIE_HIDE_ONLINE_SUPPORT_WINDOW_NAME]) ? ' style="display: none"' : ''); ?>></i>
-    </div>
-    <div id="online-support-body"<?php echo (isset($_COOKIE[App\Libraries\Util::COOKIE_HIDE_ONLINE_SUPPORT_WINDOW_NAME]) ? ' style="display: none"' : ''); ?>>
-        <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ffitfoodvietnam&tabs=messages&width=340&height=300&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=1499077570417040" width="340px" height="300px" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
     </div>
 </div>
 <?php

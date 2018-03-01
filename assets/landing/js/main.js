@@ -269,45 +269,4 @@
     $('.nav a, .nav-overlay').on('click', function () {       
         $('.navbar-toggler').click()
     });
-
-    $('#online-support-hide').click(function() {
-        var cookieName = 'hide_online_support_window';
-        setCookie(cookieName, true, 1);
-        $(this).hide();
-        $('#online-support-body').hide();
-    });
-    $('#online-support-title').click(function() {
-        var cookieName = 'hide_online_support_window';
-        if(getCookie(cookieName))
-            setCookie(cookieName, true, -1);
-        $('#online-support-hide').show();
-        $('#online-support-body').show();
-    });
 });
-
-function setCookie(cname, cvalue, exdays)
-{
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-function getCookie(cname)
-{
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0;i < ca.length;i ++)
-    {
-        var c = ca[i];
-        while(c.charAt(0) == ' ')
-        {
-            c = c.substring(1);
-        }
-        if(c.indexOf(name) == 0)
-        {
-            return c.substring(name.length,c.length);
-        }
-    }
-    return "";
-}

@@ -801,15 +801,14 @@ footer{
 
 #online-support
 {
-    position: fixed;
-    bottom: 0;
-    left: 50px;
     border: 1px solid #c53f27;
     border-radius: 16px 16px 0 0;
+    display: inline-block;
 }
 
 #online-support-header
 {
+    text-align: left;
     background: #c53f27;
     color: #fff;
     height: 30px;
@@ -818,15 +817,4 @@ footer{
     border-radius: 15px 15px 0 0;
     font-weight: bold;
     width: 340px;
-}
-
-#online-support-title
-{
-    cursor: pointer;
-}
-
-#online-support-hide
-{
-    cursor: pointer;
-    margin-top: 4px;
 }
