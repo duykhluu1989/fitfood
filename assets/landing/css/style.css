@@ -70,7 +70,7 @@ a.register_button {
 .head-banner {
     height: 40vw;
     position: relative;
-    background-image: url(/Content/img/s1-bg-1.png);
+    background-image: url(../img/s1-bg-1.png);
     background-size: auto 100%;
     background-position: bottom top;
     background-repeat: no-repeat;
