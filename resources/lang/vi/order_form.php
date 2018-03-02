@@ -42,7 +42,7 @@ return [
     'phoneInvalid' => 'Vui lòng nhập đúng số điện thoại',
     'package' => 'GÓI',
     'price' => 'ĐƠN GIÁ',
-    'quantity' => 'SỐ LƯỢNG',
+    'quantity' => 'SỐ GÓI',
     'packageTotal' => 'TỔNG',
     'subTotalPrice' => 'Tổng phụ',
     'cartTotal' => 'Tổng đơn hàng',
