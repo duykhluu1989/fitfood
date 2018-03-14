@@ -33,6 +33,50 @@
     <link href="{{ asset('assets/landing/css/style.css') }}" rel="stylesheet">
 </head>
 <body style="min-height: 2000px;" class="" data-spy="scroll" data-target="#headNav" data-offset="100">
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-75679054-1', 'auto');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+</script>
+<!-- Google Code for Order Complete Conversion Page -->
+<script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 940209987;
+    var google_conversion_language = "en";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "YS_7COfzxWcQw-6pwAM";
+    var google_remarketing_only = false;
+    /* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/940209987/?label=YS_7COfzxWcQw-6pwAM&amp;guid=ON&amp;script=0"/>
+    </div>
+</noscript>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-75679054-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-75679054-1');
+</script>
+<!-- Global site tag (gtag.js) - AdWords: 940209987 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-940209987"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-940209987');
+</script>
 <nav id="headNav" class="navbar navbar-expand-lg navbar-dark" style="background-color: #222425;">
     <a id="brandLogo" class="navbar-brand" href="{{ url('/') }}">
         <img src="{{ asset('assets/landing/img/logo-fitfood.png') }}" />
