@@ -56,24 +56,6 @@
     ga('require', 'displayfeatures');
     ga('send', 'pageview');
 </script>
-<!-- Google Code for Order Complete Conversion Page -->
-<script type="text/javascript">
-    /* <![CDATA[ */
-    var google_conversion_id = 940209987;
-    var google_conversion_language = "en";
-    var google_conversion_format = "3";
-    var google_conversion_color = "ffffff";
-    var google_conversion_label = "YS_7COfzxWcQw-6pwAM";
-    var google_remarketing_only = false;
-    /* ]]> */
-</script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-</script>
-<noscript>
-    <div style="display:inline;">
-        <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/940209987/?label=YS_7COfzxWcQw-6pwAM&amp;guid=ON&amp;script=0"/>
-    </div>
-</noscript>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-75679054-1"></script>
 <script>
