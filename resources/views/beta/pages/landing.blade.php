@@ -109,7 +109,7 @@
                 <a class="nav-link" href="#sec4">KHÁCH HÀNG</a>
             </li>
             <li class="nav-item register_button d-none d-lg-inline-block">
-                <a class="nav-link" href="{{ url('order') }}">ĐĂNG KÝ NGAY</a>
+                <a class="nav-link" href="{{ url('order') . '?utm_source=gg&utm_medium=referral&utm_campaign=gg-landing' }}">ĐĂNG KÝ NGAY</a>
             </li>
         </ul>
         <div class="nav-overlay d-lg-none"></div>
@@ -338,7 +338,7 @@
             <div class="brace-left"></div>
             <div class="brace-right"></div>
             <h6><i>Chỉ với 3 phút đăng ký, lấy lại vóc dáng chuẩn</i></h6>
-            <a class="calltoaction" href="{{ url('order') }}">Đăng ký ngay</a>
+            <a class="calltoaction" href="{{ url('order') . '?utm_source=gg&utm_medium=referral&utm_campaign=gg-landing' }}">Đăng ký ngay</a>
             <div class="clearfix"></div>
         </div>
         <div style="padding-bottom: 30px;">&nbsp;</div>
