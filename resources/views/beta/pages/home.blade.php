@@ -377,6 +377,25 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
+            <div class="row">
+                <div class="list-thinking">
+                    <div class="col-sm-2">
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <img src="{{ asset('assets/images/partner/chephouse.png') }}" alt="Fitfood" border="0" width="140px" style="opacity: 0.8;margin-top: 30px" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <img src="{{ asset('assets/images/partner/wefit.png') }}" alt="Fitfood" border="0" width="120px" style="opacity: 0.8;margin-top: 20px;background: black;padding: 10px" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <img src="{{ asset('assets/images/partner/vshape.png') }}" alt="Fitfood" border="0" width="140px" style="opacity: 0.8;margin-top: 40px;background: black;padding: 10px" />
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <img src="{{ asset('assets/images/partner/vivayoga.png') }}" alt="Fitfood" border="0" width="120px" style="opacity: 0.8;margin-top: 30px" />
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
         </div>
     </div>
 
