@@ -23,5 +23,7 @@ return [
     'partner' => 'ĐỐI TÁC',
     'partnerDescription' => 'Chất lượng luôn được chú trọng bởi Fitfood từ các nhà cung cấp và đối tác hàng đầu',
     'singer_actor' => 'Ca sỹ - diễn viên',
+    'client' => 'KHÁCH HÀNG',
+    'clientDescription' => 'Fitfood luôn là lựa chọn hàng đầu của các khách hàng lớn trong nước và quốc tế',
 
 ];

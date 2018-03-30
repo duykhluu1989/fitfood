@@ -434,6 +434,47 @@
         </div>
     </div>
 
+    <div class="home-talk">
+        <div class="info">
+            <h3>@lang('home_page.client')</h3>
+            <p>@lang('home_page.partnerDescription')</p>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="list-thinking">
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <a href="https://www.facebook.com/fitfoodvietnam/posts/1615840338484167" target="_blank">
+                            <img src="{{ asset('assets/images/client/aia.gif') }}" alt="Fitfood" border="0" width="80px" style="opacity: 0.8;margin-top: 25px" />
+                        </a>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <a href="https://www.facebook.com/fitfoodvietnam/posts/1089813967753476" target="_blank">
+                            <img src="{{ asset('assets/images/client/mega.jpg') }}" alt="Fitfood" border="0" width="90px" style="opacity: 0.8;margin-top: 25px" />
+                        </a>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <a href="https://www.facebook.com/fitfoodvietnam/posts/1497494200318782" target="_blank">
+                            <img src="{{ asset('assets/images/client/capitaland.png') }}" alt="Fitfood" border="0" width="120px" style="opacity: 0.8;margin-top: 35px" />
+                        </a>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <a href="https://www.facebook.com/fitfoodvietnam/posts/1554723061262562" target="_blank">
+                            <img src="{{ asset('assets/images/client/calikids.png') }}" alt="Fitfood" border="0" width="80px" style="opacity: 0.8;margin-top: 25px" />
+                        </a>
+                    </div>
+                    <div class="col-sm-2 text-center">
+                        <a href="https://www.facebook.com/fitfoodvietnam/posts/1563990160335852" target="_blank">
+                            <img src="{{ asset('assets/images/client/yogaplus.png') }}" alt="Fitfood" border="0" width="100px" style="opacity: 0.8;margin-top: 35px" />
+                        </a>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Facebook Pixel Code -->
     <script>
         !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?

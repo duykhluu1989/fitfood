@@ -23,5 +23,7 @@ return [
     'partner' => 'PARTNERS',
     'partnerDescription' => 'We work with our top suppliers and partners for the best quality products',
     'singer_actor' => 'Singer - actor',
+    'client' => 'CLIENT',
+    'clientDescription' => 'We are pleased to serve some of the biggest clients in the market',
 
 ];
