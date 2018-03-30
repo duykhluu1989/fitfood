@@ -22,5 +22,6 @@ return [
     'onlineSupport' => 'Online support',
     'partner' => 'PARTNERS',
     'partnerDescription' => 'We work with our top suppliers and partners for the best quality products',
+    'singer_actor' => 'Singer - actor',
 
 ];

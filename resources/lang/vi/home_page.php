@@ -22,5 +22,6 @@ return [
     'onlineSupport' => 'Hỗ trợ trực tuyến',
     'partner' => 'ĐỐI TÁC',
     'partnerDescription' => 'Chất lượng luôn được chú trọng bởi Fitfood từ các nhà cung cấp và đối tác hàng đầu',
+    'singer_actor' => 'Ca sỹ - diễn viên',
 
 ];

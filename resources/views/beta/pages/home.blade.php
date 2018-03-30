@@ -345,6 +345,41 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
+            <div class="row">
+                <div class="list-thinking">
+                    <div class="block-3">
+                        <div class="think">
+                            <p>Sau mấy ngày chiến đấu có Fitfood bên cạnh, mình đã giảm được 2kg.</p>
+                        </div>
+                        <img src="{{ asset('assets/images/story/sonngocminh.png') }}" alt="Fitfood" border="0" class="avatar FitfoodPopupImage" data-mfp-src="{{ asset('assets/images/story/sonngocminh-story.png') }}" />
+                        <div class="name">
+                            <h5><a class="FitfoodPopupImage" href="{{ asset('assets/images/story/sonngocminh-story.png') }}">Sơn Ngọc Minh</a></h5>
+                            <span class="post-meta">@lang('home_page.singer_actor')</span>
+                        </div>
+                    </div>
+                    <div class="block-3">
+                        <div class="think">
+                            <p>Simply thank you Fitfood VN for bringing on my doorstep every morning this amazing and delicious food!</p>
+                        </div>
+                        <img src="{{ asset('assets/images/story/paulorothhaar.png') }}" alt="Fitfood" border="0" class="avatar FitfoodPopupImage" data-mfp-src="{{ asset('assets/images/story/paulorothhaar-story.png') }}" />
+                        <div class="name">
+                            <h5><a class="FitfoodPopupImage" href="{{ asset('assets/images/story/paulorothhaar-story.png') }}">Paulo Rothhaar</a></h5>
+                            <span class="post-meta">@lang('home_page.model')</span>
+                        </div>
+                    </div>
+                    <div class="block-3">
+                        <div class="think">
+                            <p>Bạn chỉ cần ăn mọi chuyện còn lại để Fitfood lo, rau củ thịt đầy ắp, đủ no vị cũng tuyệt nữa.</p>
+                        </div>
+                        <img src="{{ asset('assets/images/story/levantien.png') }}" alt="Fitfood" border="0" class="avatar FitfoodPopupImage" data-mfp-src="{{ asset('assets/images/story/levantien-story.png') }}" />
+                        <div class="name">
+                            <h5><a class="FitfoodPopupImage" href="{{ asset('assets/images/story/levantien-story.png') }}">Lê Văn Tiến</a></h5>
+                            <span class="post-meta">@lang('home_page.model')</span>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
         </div>
     </div>
 
