@@ -20,7 +20,7 @@ return [
     'vegetarianMenu' => 'Thực đơn chay',
     'lastWeekVegetarian' => 'Tuần trước',
     'nextWeekVegetarian' => 'Tuần tới',
-    'signature' => 'CÁC GÓI TIÊU BIỂU',
+    'signature' => 'SẢN PHẨM TIÊU BIỂU',
     'meal' => 'Bữa',
 
 ];

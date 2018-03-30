@@ -61,3 +61,34 @@
     </div>
     <div class="clearfix"></div>
 </div>
+<div class="signature-dish" style="margin-top: 30px">
+    <div class="block-3">
+        <a href="{{ url('order') }}">
+            <div class="hovereffect">
+                <img class="img-responsive" src="{{ asset('/../assets/images/package/nuts.png') }}" alt="Fitfood" border="0" />
+            </div>
+        </a>
+    </div>
+    <div class="block-3">
+        <a href="{{ url('order') }}">
+            <div class="hovereffect">
+                <img class="img-responsive" src="{{ asset('/../assets/images/package/cookie.png') }}" alt="Fitfood" border="0" />
+            </div>
+        </a>
+    </div>
+    <div class="block-3">
+        <a href="{{ url('order') }}">
+            <div class="hovereffect">
+                <img class="img-responsive" src="{{ asset('/../assets/images/package/tempeh.jpg') }}" alt="Fitfood" border="0" />
+            </div>
+        </a>
+    </div>
+    <div class="block-3">
+        <a href="{{ url('order') }}">
+            <div class="hovereffect">
+                <img class="img-responsive" src="{{ asset('/../assets/images/package/khoga.jpg') }}" alt="Fitfood" border="0" />
+            </div>
+        </a>
+    </div>
+    <div class="clearfix"></div>
+</div>
