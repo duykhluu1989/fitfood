@@ -26,9 +26,9 @@
                         <p>mPOS: li&ecirc;n kết với Payoo quẹt thẻ tại chỗ</p>
                         <p>Chuyển khoản: Ng&acirc;n h&agrave;ng Vietcombank</p>
                         <img src="{{ asset('assets/images/chinh-sach/tt.png') }}" alt="Fitfood" />
-                        <p>T&ecirc;n t&agrave;i khoản: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>C&Ocirc;NG TY TNHH FITFOOD</strong></p>
-                        <p>Số t&agrave;i khoản:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>0421000478101</strong></p>
-                        <p>Chi nh&aacute;nh: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>H&ugrave;ng Vương</strong></p>
+                        <p>T&ecirc;n t&agrave;i khoản: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>PHẠM THỊ NGỌC HIẾU</strong></p>
+                        <p>Số t&agrave;i khoản:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>007101176931</strong></p>
+                        <p>Chi nh&aacute;nh: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Hồ Chí Minh</strong></p>
                         <p>&nbsp;</p>
                         <p>Đối với trường hợp chuyển khoản, sau khi thanh to&aacute;n, quý khách vui lòng th&ocirc;ng báo cho Fitfood bi&ecirc;́t v&ecirc;̀ th&ocirc;ng tin giao dịch g&ocirc;̀m&nbsp;t&ecirc;n chủ tài khoản chuy&ecirc;̉n ti&ecirc;̀n, s&ocirc;́ ti&ecirc;̀n đã chuy&ecirc;̉n, ng&acirc;n hàng chuy&ecirc;̉n ti&ecirc;̀n&nbsp;bằng cách</p>
                         <ul>
