@@ -14,6 +14,7 @@
     <meta property="og:site_name" content="Fitfood" />
     <meta property="og:image" content="{{ asset('assets/img/logo.png') }}" />
     <meta property="og:locale" content="vi_VN" />
+    <meta name="google-site-verification" content="XgWB6foH32EuFHgoa0ZDvRxl5TnDmQCd2bpg_HSRjLg" />
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <title>Fitfood - Weekly meals for a healthy lifestyle</title>
     <link href='https://fonts.googleapis.com/css?family=Delius' rel='stylesheet' type='text/css'>
