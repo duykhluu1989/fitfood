@@ -99,7 +99,10 @@ Remarketing tags may not be associated with personally identifiable information 
                 <p style="color: white">Mã số thuế: 0313272749 do Sở kế hoạch và đầu tư TPHCM cấp ngày 26/05/2015</p>
             </div>
         </div>
-        <div class="row" id="GovernmentDiv">
+        <div class="row">
+            <a href="http://online.gov.vn/HomePage/CustomWebsiteDisplay.aspx?DocId=34289" class="col-sm-offset-3">
+                <img src="http://online.gov.vn/PublicImages/2015/08/27/11/20150827110756-dathongbao.png" width="150px" />
+            </a>
         </div>
     </div>
 </div>
@@ -152,13 +155,5 @@ if(request()->hasCookie(App\Libraries\Util::COOKIE_SEE_BANNER_NAME) == false)
     }
 }
 ?>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#GovernmentDiv').html('' +
-                '<a href="http://online.gov.vn/HomePage/CustomWebsiteDisplay.aspx?DocId=34289" class="col-sm-offset-3">' +
-                '<img src="http://online.gov.vn/PublicImages/2015/08/27/11/20150827110756-dathongbao.png" width="150px" />' +
-                '</a>');
-    });
-</script>
 </body>
 </html>
