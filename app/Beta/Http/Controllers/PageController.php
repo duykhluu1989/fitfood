@@ -29,6 +29,7 @@ use App\Models\BlogCategory;
 use App\Models\Article;
 use App\Models\Tag;
 use App\Models\Setting;
+use App\Models\EmailBanner;
 
 class PageController extends Controller
 {
@@ -928,6 +929,13 @@ class PageController extends Controller
 
                 $order->save();
 
+                if(EmailBanner::count('id') < 2000)
+                {
+                    $emailBanner = new EmailBanner();
+                    $emailBanner->order_id = $order->id;
+                    $emailBanner->save();
+                }
+
                 DB::commit();
             }
             catch(\Exception $e)
@@ -973,7 +981,10 @@ class PageController extends Controller
             if(in_array($order->payment_gateway, $bankTransferGatewayValues))
                 $bankNumber = Util::getBankAccountNumber($order->payment_gateway);
 
-            register_shutdown_function([get_class(new self), 'sendConfirmEmail'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate, $normalMenuDays);
+            if(!empty($emailBanner))
+                register_shutdown_function([get_class(new self), 'sendConfirmEmailWithBanner'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate, $normalMenuDays);
+            else
+                register_shutdown_function([get_class(new self), 'sendConfirmEmail'], $order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate, $normalMenuDays);
 
             return redirect('thankYou')->with('OrderThankYou', json_encode([
                 'name' => $orderAddress->name,
@@ -1056,6 +1067,69 @@ class PageController extends Controller
         try
         {
             Mail::send('web.emails.order_confirm', [
+                'name' => $orderAddress->name,
+                'phone' => $customer->phone,
+                'address' => $orderAddress->address,
+                'district' => $orderAddress->district,
+                'mealPacks' => $mailMealPack,
+                'paymentGateway' => Util::getPaymentMethod($order->payment_gateway, App::getLocale()),
+                'deliveryTime' => $deliveryTime,
+                'extraRequest' => $extraRequest,
+                'totalPrice' => Util::formatMoney($order->total_price),
+                'note' => $order->customer_note,
+                'email' => $order->orderAddress->email,
+                'bankNumber' => $bankNumber,
+                'startShippingDate' => $startShippingDate,
+                'normalMenuDays' => $normalMenuDays,
+            ], function($message) use($orderAddress) {
+
+                $message->from('order@fitfood.vn', 'Fitfood');
+                $message->to('info@fitfood.vn', 'Fitfood');
+                $message->subject('[FITFOOD.VN] Xác nhận order | Order Confirmation');
+
+            });
+        }
+        catch(\Exception $e)
+        {
+
+        }
+    }
+
+    public static function sendConfirmEmailWithBanner($order, $orderAddress, $customer, $mailMealPack, $deliveryTime, $extraRequest, $bankNumber, $startShippingDate, $normalMenuDays)
+    {
+        try
+        {
+            Mail::send('beta.emails.order_confirm_with_banner', [
+                'name' => $orderAddress->name,
+                'phone' => $customer->phone,
+                'address' => $orderAddress->address,
+                'district' => $orderAddress->district,
+                'mealPacks' => $mailMealPack,
+                'paymentGateway' => Util::getPaymentMethod($order->payment_gateway, App::getLocale()),
+                'deliveryTime' => $deliveryTime,
+                'extraRequest' => $extraRequest,
+                'totalPrice' => Util::formatMoney($order->total_price),
+                'note' => $order->customer_note,
+                'email' => $order->orderAddress->email,
+                'bankNumber' => $bankNumber,
+                'startShippingDate' => $startShippingDate,
+                'normalMenuDays' => $normalMenuDays,
+            ], function($message) use($orderAddress) {
+
+                $message->from('order@fitfood.vn', 'Fitfood');
+                $message->to($orderAddress->email, $orderAddress->name);
+                $message->subject('[FITFOOD.VN] Xác nhận order | Order Confirmation');
+
+            });
+        }
+        catch(\Exception $e)
+        {
+
+        }
+
+        try
+        {
+            Mail::send('beta.emails.order_confirm_with_banner', [
                 'name' => $orderAddress->name,
                 'phone' => $customer->phone,
                 'address' => $orderAddress->address,
