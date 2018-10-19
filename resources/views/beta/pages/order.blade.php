@@ -1259,6 +1259,6 @@
         });
 
     </script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAS1R7TJDy4-n3tloeAILG5mB8mBVqjcE&libraries=places&callback=initMap"></script>
 
 @stop
