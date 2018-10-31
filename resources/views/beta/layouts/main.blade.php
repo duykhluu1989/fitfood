@@ -101,7 +101,7 @@ Remarketing tags may not be associated with personally identifiable information 
         </div>
         <div class="row">
             <a href="http://online.gov.vn/HomePage/CustomWebsiteDisplay.aspx?DocId=34289" class="col-sm-offset-3">
-                <img src="http://online.gov.vn/PublicImages/2015/08/27/11/20150827110756-dathongbao.png" width="150px" />
+                <img src="{{ asset('assets/images/bo-cong-thuong.png') }}" width="150px" />
             </a>
         </div>
     </div>
