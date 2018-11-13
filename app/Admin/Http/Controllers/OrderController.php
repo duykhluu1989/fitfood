@@ -131,6 +131,8 @@ class OrderController extends Controller
             'Thứ 6',
             '',
             '',
+            'Latitude',
+            'Longitude',
         ];
 
         $exportData[] = [
@@ -173,6 +175,8 @@ class OrderController extends Controller
             'SA',
             'TR',
             'TO',
+            '',
+            '',
         ];
 
         $i = 3;
@@ -351,6 +355,8 @@ class OrderController extends Controller
                         isset($meals[5][Util::MEAL_BREAKFAST_LABEL]) ? $meals[5][Util::MEAL_BREAKFAST_LABEL] : '',
                         isset($meals[5][Util::MEAL_LUNCH_LABEL]) ? $meals[5][Util::MEAL_LUNCH_LABEL] : '',
                         isset($meals[5][Util::MEAL_DINNER_LABEL]) ? $meals[5][Util::MEAL_DINNER_LABEL] : '',
+                        $order->orderAddress->latitude,
+                        $order->orderAddress->longitude,
                     ];
 
                     if($order->warning)
