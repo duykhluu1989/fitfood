@@ -57,5 +57,6 @@ return [
     'trialNote' => 'Note',
     'date' => 'Shipping date',
     'districtNoFee' => 'Please choose district',
+    'monthly_order' => 'Monthly Order: please contact our hotline 0932 788 120 for detail pricing',
 
 ];

@@ -57,5 +57,6 @@ return [
     'trialNote' => 'Ghi chú',
     'date' => 'Ngày giao hàng',
     'districtNoFee' => 'Vui lòng chọn quận',
+    'monthly_order' => 'Order Tháng: vui lòng gọi số hotline 0932 788 120 để được báo giá chi tiết',
 
 ];
