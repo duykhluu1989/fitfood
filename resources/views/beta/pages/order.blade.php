@@ -112,6 +112,11 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    <tr>
+                                        <td colspan="4" style="color: #c53f27;text-align: center">
+                                            <strong>@lang('order_form.monthly_order')</strong>
+                                        </td>
+                                    </tr>
                                     @foreach($mealPacks as $mealPack)
                                         @if(!empty($mealPack->breakfast) || !empty($mealPack->lunch) || !empty($mealPack->dinner))
                                             <tr>
@@ -272,12 +277,6 @@
                                 <div class="block">
                                     <div class="box">
                                         <h4>@lang('order_form.request')</h4>
-                                        <div class="checkbox">
-                                            <label>
-                                                <span style="position: absolute;top: 14px;left: 0;height: 13px;width: 13px;background-color: #c53f27;border-radius: 50%"></span>
-                                                <span>@lang('order_form.monthly_order')</span>
-                                            </label>
-                                        </div>
                                         <div class="checkbox">
                                             <label>
                                                 <input type="checkbox" id="FitfoodOrderCheckChangeIngredient" disabled="disabled" />
