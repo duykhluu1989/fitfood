@@ -38,6 +38,8 @@ class PageController extends Controller
     public function home()
     {
         $widgets = Widget::getModelActiveWidget();
+
+        /*
         $categories = BlogCategory::getModelActiveCategory();
         $articles = array();
 
@@ -60,6 +62,23 @@ class PageController extends Controller
         }
 
         krsort($articles);
+        */
+
+        $articles = array();
+
+        $latestArticles = Article::where('status', Util::STATUS_ARTICLE_PUBLISH_VALUE)
+            ->where('type', Util::ARTICLE_PAGE_TYPE_VALUE)
+            ->orderBy('published_at', 'desc')
+            ->limit(3)
+            ->get();
+
+        foreach($latestArticles as $latestArticle)
+        {
+            $articles[] = [
+                'article' => $latestArticle,
+                'category' => $latestArticle->category,
+            ];
+        }
 
         return view('beta.pages.home', [
             'widgets' => $widgets,
