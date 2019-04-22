@@ -1,4 +1,6 @@
 <p>Hi {{ $name }},</p>
+<p style="color: red">​Đơn hàng của bạn sẽ được bắt đầu giao vào ngày | Your order will be delivered starting from: <b>{{ $startShippingDate }}​</b></p>
+<p style="color: red">​Bạn vui lòng thực hiện thanh toán vào ngày đầu tiên khi shipper giao hàng | Please make your payment in the first day of delivery</p>
 <p>Cám ơn bạn đã order tại Fitfood.vn, Email này xác nhận thông tin order của bạn đã được ghi nhận trên hệ thống của chúng tôi. Vui lòng không trả lời lại, bạn kiểm tra lại thông tin bên dưới và đừng ngần ngại gọi cho chúng tôi 0932 788 120 nếu bạn muốn thay đổi thông tin.</p>
 <p>Thanks for placing your order at Fitfood.vn. This automated email confirms that we have recorded your order information in our system. Please kindly check the information below and feel free to contact us 0932 788 120 if you would like to change any info.</p>
 <ul>
@@ -13,8 +15,6 @@
     <li>Tổng giá tiền | Total bill: {{ $totalPrice }} ({{ $normalMenuDays }} ngày + phí giao hàng | {{ $normalMenuDays }} days + ship fee)</li>
     <li>Ghi chú | Note: {{ $note }}</li>
 </ul>
-<p style="color: red">​Đơn hàng của bạn sẽ được bắt đầu giao vào ngày | Your order will be delivered starting from: <b>{{ $startShippingDate }}​</b></p>
-<p style="color: red">​Bạn vui lòng thực hiện thanh toán vào ngày đầu tiên khi shipper giao hàng | Please make your payment in the first day of delivery</p>
 @if(!empty($bankNumber))
     <p>Thông tin chuyển khoản | Bank transfer information</p>
     <ul>
