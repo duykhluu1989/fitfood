@@ -13,7 +13,7 @@
     <li>Tổng giá tiền | Total bill: {{ $totalPrice }} ({{ $normalMenuDays }} ngày + phí giao hàng | {{ $normalMenuDays }} days + ship fee)</li>
     <li>Ghi chú | Note: {{ $note }}</li>
 </ul>
-<p style="color: red">​Đơn hàng của bạn sẽ được bắt đầu giao vào ngày | Your order will be delivered starting from: {{ $startShippingDate }}​</p>
+<p style="color: red">​Đơn hàng của bạn sẽ được bắt đầu giao vào ngày | Your order will be delivered starting from: <b>{{ $startShippingDate }}​</b></p>
 <p style="color: red">​Bạn vui lòng thực hiện thanh toán vào ngày đầu tiên khi shipper giao hàng | Please make your payment in the first day of delivery</p>
 @if(!empty($bankNumber))
     <p>Thông tin chuyển khoản | Bank transfer information</p>

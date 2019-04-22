@@ -42,7 +42,7 @@
                                 <li>Ghi chú | Note: {{ $note }}</li>
                             </ul>
                             <br />
-                            <p style="color: red">​Đơn hàng của bạn sẽ được bắt đầu giao vào ngày | Your order will be delivered starting from: {{ $startShippingDate }}​</p>
+                            <p style="color: red">​Đơn hàng của bạn sẽ được bắt đầu giao vào ngày | Your order will be delivered starting from: <b>{{ $startShippingDate }}​</b></p>
                             @if(!empty($bankNumber))
                                 <br />
                                 <p>
