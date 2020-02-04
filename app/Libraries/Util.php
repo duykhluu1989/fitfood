@@ -92,7 +92,7 @@ class Util
     const ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL = 'Đổi bữa ăn linh hoạt (T2 sáng trưa, T3 trưa tối ...)';
     const ORDER_EXTRA_REQUEST_CHANGE_MEAL_COURSE_LABEL_EN = 'Change meal (breakfast-lunch on Mon, lunch-dinner on Tue ...)';
 
-    const ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE = 200000;
+    const ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_PRICE = 250000;
     const ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_VALUE = 'EXTRA_BREAKFAST';
     const ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL = 'Thêm phần ăn sáng dành cho gói MEAT LOVER';
     const ORDER_EXTRA_REQUEST_EXTRA_BREAKFAST_LABEL_EN = 'Add extra breakfast for MEAT LOVER';
